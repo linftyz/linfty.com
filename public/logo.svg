@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <path id="leaf" d="
+      M256 118
+      C206 118 168 154 168 204
+      C168 260 214 300 238 318
+      Q256 331 274 318
+      C298 300 344 260 344 204
+      C344 154 306 118 256 118
+      Z" />
+  </defs>
+
+  <!-- 全局轻微缩放，留安全边距（避免你调 d 时出界） -->
+  <g transform="translate(256 256) scale(0.96) translate(-256 -256)" fill="#3F9C87CC">
+    <!-- d：推离中心距离；建议 62~82 之间调 -->
+    <!-- 当前 d = 72，中心留白接近原图 -->
+    <use href="#leaf" transform="rotate(45 256 256) translate(0,-95)" fill="#3F9C8766"/>
+    <use href="#leaf" transform="rotate(135 256 256) translate(0,-95)"/>
+    <use href="#leaf" transform="rotate(225 256 256) translate(0,-95)"/>
+    <use href="#leaf" transform="rotate(315 256 256) translate(0,-95)"/>
+  </g>
+</svg>

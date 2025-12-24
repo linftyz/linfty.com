@@ -10,15 +10,8 @@
       Z" />
   </defs>
 
-  <style>
-    .logo { fill: #3F9C87; }
-    @media (prefers-color-scheme: dark) {
-      .logo { fill: #5DBFA6; }
-    }
-  </style>
-
-  <g transform="translate(256 256) scale(0.96) translate(-256 -256)" class="logo">
-    <use href="#leaf" transform="rotate(45 256 256) translate(0,-95)" opacity="0.4"/>
+  <g transform="translate(256 256) scale(0.96) translate(-256 -256)" fill="#5DBFA6">
+    <use href="#leaf" transform="rotate(45 256 256) translate(0,-95)" opacity="0.5"/>
     <use href="#leaf" transform="rotate(135 256 256) translate(0,-95)"/>
     <use href="#leaf" transform="rotate(225 256 256) translate(0,-95)"/>
     <use href="#leaf" transform="rotate(315 256 256) translate(0,-95)"/>
