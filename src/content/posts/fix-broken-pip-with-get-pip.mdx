@@ -1,0 +1,59 @@
+---
+title: "pip 救砖指南：get-pip.py 使用全解"
+createdAt: 2025-12-14
+category: "programming"
+tags: ["pip", "python", "memo"]
+---
+
+之前在工作的时候，遇到过几次 pip 由于更新到不兼容的版本导致语法出现错误，pip 的所有子命令都无法运行，无法直接重新安装，这时候就需要用到 `get-pip.py` 脚本来手动安装。
+
+## `get-pip.py` 是什么
+
+简单来说，`get-pip.py` 是一个能够在尚未安装 pip 的 python 环境中安装 pip 的 python 脚本。
+
+脚本可以直接从 [https://bootstrap.pypa.io/](https://bootstrap.pypa.io/) 网站中下载到，打开网站基本的目录结构（这里主要关注 get-pip 相关的目录）：
+
+```
+├── pip
+│   ├── 2.6
+│   │   └── get-pip.py
+│   ├── 2.7
+│   │   └── get-pip.py
+│   ├── 3.2
+│   │   └── get-pip.py
+│   ├── ...
+│   ├── ...
+│   ├── 3.7
+│   │   └── get-pip.py
+│   ├── 3.8
+│   │   └── get-pip.py
+│   ├── zipapp/
+│   ├── get-pip.py
+│   └── pip.pyz
+├── virtualenv/
+├── bootstrap-buildout.py
+├── ez_setup.py
+├── get-pip.py
+└── virtualenv.pyz
+```
+
+可以看到，其中 2.6 到 3.8 是对应 python 版本的脚本，比如要给 python3.8 重新安装 pip, 就需要使用 `pip/3.8/get-pip.py` 这个脚本，那么更新的版本应该使用哪一个脚本呢，通常使用根目录下的 get-pip.py 就可以，脚本中写明了最小版本号是 3.9。
+
+## 基本的使用方法
+
+1. 下载脚本：`` `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py` ``
+
+2. 指定 pip 版本安装:
+
+```
+python get-pip.py "pip < 21.0"
+python get-pip.py "pip == 21.0"
+```
+
+2. 指定从本地目录（默认是从 PyPI ）来安装:
+
+```
+python get-pip.py --no-index --find-links=/path/
+```
+
+关于脚本具体的用法和源码，可以查看 [get-pip](https://github.com/pypa/get-pip) 的 Github 仓库来了解更多。

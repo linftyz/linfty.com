@@ -1,0 +1,77 @@
+import { file, glob } from "astro/loaders";
+import { z } from "astro:content";
+import { defineCollection } from "astro:content";
+
+function slug() {
+  return z
+    .string()
+    .min(3)
+    .max(200)
+    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/i, "Invalid slug");
+}
+
+const posts = defineCollection({
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: "./src/content/posts",
+  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().max(128),
+      createdAt: z.coerce.date(),
+      updatedAt: z.coerce.date().optional(),
+      category: z.string(),
+      tags: z.array(z.string()).optional().default([]),
+      summary: z.string().optional().default(""),
+      cover: image().optional(),
+      draft: z.boolean().default(false),
+      new: z.boolean().default(false),
+    }),
+});
+
+const categories = defineCollection({
+  loader: file("./src/content/miscs/categories.json"),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string().max(32),
+      slug: slug(),
+      cover: image().optional(),
+      description: z
+        .string()
+        .max(512)
+        .optional()
+        .default("")
+        .describe("In markdown format"),
+    }),
+});
+
+const tags = defineCollection({
+  loader: file("./src/content/miscs/tags.json"),
+  schema: z.object({
+    name: z.string().max(32),
+    slug: slug(),
+    description: z
+      .string()
+      .max(512)
+      .optional()
+      .default("")
+      .describe("In markdown format"),
+  }),
+});
+
+const friends = defineCollection({
+  loader: file("./src/content/miscs/friends.json"),
+  schema: z.object({
+    name: z.string().max(64),
+    description: z.string().optional().describe("One line string"),
+    link: z.string().url(),
+    avatar: z.string(),
+  }),
+});
+
+export const collections = {
+  posts,
+  categories,
+  tags,
+  friends,
+};

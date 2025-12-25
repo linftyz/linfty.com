@@ -1,0 +1,47 @@
+[
+  {
+    "name": "python",
+    "slug": "python"
+  },
+  {
+    "name": "pip",
+    "slug": "pip"
+  },
+  {
+    "name": "TailwindCSS",
+    "slug": "tailwindcss"
+  },
+  {
+    "name": "代码片段",
+    "slug": "code-snippets"
+  },
+  {
+    "name": "前端开发",
+    "slug": "frontend-development"
+  },
+  {
+    "name": "后端开发",
+    "slug": "backend-development"
+  },
+  {
+    "name": "备忘录",
+    "slug": "memo",
+    "description": "记录一些可能常见又容易忘记的内容。"
+  },
+  {
+    "name": "字体",
+    "slug": "font"
+  },
+  {
+    "name": "环境配置",
+    "slug": "env"
+  },
+  {
+    "name": "素材",
+    "slug": "material"
+  },
+  {
+    "name": "编程",
+    "slug": "programming"
+  }
+]
