@@ -1,0 +1,54 @@
+---
+import { getPosts } from "@/utils/post";
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const allTags = await getCollection("tags");
+const allPosts = await getPosts();
+
+// 统计每个标签下的文章数量
+const tagCounts = allPosts.reduce((acc: Record<string, number>, post) => {
+  post.data.tags.forEach((tagRef) => {
+    acc[tagRef.id] = (acc[tagRef.id] || 0) + 1; // 此处根据实际引用逻辑微调
+  });
+  // 简便起见，这里演示逻辑
+  return acc;
+}, {});
+---
+
+<Layout title="文章标签" description="本站可能会写的文章标签。">
+  <div class="mx-auto max-w-2xl p-8 md:p-16">
+    <header class="mb-16">
+      <!-- <div class="text-[10px] font-bold text-primary tracking-[0.4em] uppercase mb-4 opacity-70">
+        Tags Explorer / 标签检索
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight">全部标签</h2> -->
+
+      <h2 class="mb-4 text-3xl font-bold">文章标签 / Tags</h2>
+      <p class="mb-12 text-sm font-light text-muted-foreground italic">
+        本站可能会写的内容，共 {allTags.length} 个标签。
+      </p>
+    </header>
+
+    <div class="flex flex-wrap gap-4">
+      {
+        allTags.map((tag) => (
+          <a
+            href={`/tags/${tag.data.slug}`}
+            class="group flex items-center gap-2 rounded-2xl border border-border/50 bg-muted/30 px-5 py-2.5 transition-all hover:border-primary/40 hover:bg-card"
+          >
+            <span class="text-muted-foreground italic transition-colors group-hover:text-primary">
+              #
+            </span>
+            <span class="text-sm font-medium text-foreground/80 transition-colors group-hover:text-primary">
+              {tag.data.name}
+            </span>
+            <span class="font-mono text-[10px] font-bold text-muted-foreground/40 transition-colors group-hover:text-primary/60">
+              {tagCounts[tag.data.slug] || 0}
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

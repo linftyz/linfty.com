@@ -1,12 +1,17 @@
 ---
 import { formatDate } from "@/utils/date";
 import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
 
 interface Props {
   post: CollectionEntry<"posts">;
 }
 
 const { post } = Astro.props;
+const category = await getEntry(
+  post.data.category.collection,
+  post.data.category.id,
+);
 ---
 
 <article
@@ -22,7 +27,10 @@ const { post } = Astro.props;
     <p
       class="mt-2 font-mono text-[11px] text-muted-foreground italic opacity-60"
     >
-      {formatDate(post.data.createdAt)} — {post.data.category}
+      {formatDate(post.data.createdAt)} —
+      <a href={`/categories/${category?.id}`} class="hover:text-primary">
+        {category?.data.name}
+      </a>
     </p>
   </div>
   <span

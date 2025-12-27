@@ -11,8 +11,3 @@
   background: var(--border);
   border-radius: 10px;
 }
-
-/* 强制所有元素在切换主题时使用 0.8s 的缓慢呼吸感 */
-/* * {
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-} */

@@ -1,0 +1,54 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getPosts } from "@/utils/post";
+import { getCollection } from "astro:content";
+
+const allCategories = await getCollection("categories");
+const allPosts = await getPosts();
+
+const categoryCounts = allPosts.reduce((acc: Record<string, number>, post) => {
+  const catId = post.data.category.id;
+  acc[catId] = (acc[catId] || 0) + 1;
+  return acc;
+}, {});
+---
+
+<Layout title="文章分类" description="本站可能会写的各种不同内容。">
+  <div class="animate-in fade-in mx-auto max-w-2xl p-8 duration-700 md:p-16">
+    <header class="mb-16">
+      <!-- <div class="flex items-center gap-2 text-[10px] font-bold text-primary tracking-[0.3em] uppercase mb-4 opacity-70">
+        <span>Classification / 分类索引</span>
+      </div> -->
+      <h2 class="mb-4 text-3xl font-bold">文章分类 / Category</h2>
+      <p class="mb-12 text-sm font-light text-muted-foreground italic">
+        本站可能会写的内容，共 {allCategories.length} 个分类。
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {
+        allCategories.map((cat) => (
+          <a
+            href={`/categories/${cat.data.slug}`}
+            class="group relative flex h-full flex-col rounded-3xl border border-border/50 bg-muted/20 p-8 shadow-sm transition-all hover:border-primary/30 hover:bg-card"
+          >
+            <div class="mb-6 flex items-start justify-between">
+              <h3 class="text-xl font-bold transition-colors group-hover:text-primary">
+                {cat.data.name}
+              </h3>
+              <span class="rounded-lg bg-border/30 px-2 py-1 font-mono text-[10px] text-muted-foreground">
+                {categoryCounts[cat.id] || 0}
+              </span>
+            </div>
+            <p class="flex-1 text-sm leading-relaxed font-light text-muted-foreground italic">
+              {cat.data.description || "暂无分类描述"}
+            </p>
+            <div class="mt-6 text-[10px] font-bold text-primary opacity-0 transition-opacity group-hover:opacity-100">
+              查看全部文章 →
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

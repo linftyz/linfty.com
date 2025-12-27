@@ -12,6 +12,10 @@
     "slug": "tailwindcss"
   },
   {
+    "name": "CSS",
+    "slug": "css"
+  },
+  {
     "name": "代码片段",
     "slug": "code-snippets"
   },

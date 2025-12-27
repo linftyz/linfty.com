@@ -1,5 +1,5 @@
 import { file, glob } from "astro/loaders";
-import { z } from "astro:content";
+import { reference, z } from "astro:content";
 import { defineCollection } from "astro:content";
 
 function slug() {
@@ -20,8 +20,8 @@ const posts = defineCollection({
       title: z.string().max(128),
       createdAt: z.coerce.date(),
       updatedAt: z.coerce.date().optional(),
-      category: z.string(),
-      tags: z.array(z.string()).optional().default([]),
+      category: reference("categories"),
+      tags: z.array(reference("tags")).optional().default([]),
       summary: z.string().optional().default(""),
       cover: image().optional(),
       draft: z.boolean().default(false),
@@ -52,7 +52,6 @@ const categories = defineCollection({
     z.object({
       name: z.string().max(32),
       slug: slug(),
-      cover: image().optional(),
       description: z
         .string()
         .max(512)

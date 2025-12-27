@@ -3,8 +3,9 @@ import { render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { formatDate } from "@/utils/date";
+import { getEntry } from "astro:content";
+import { getEntries } from "astro:content";
 
-// 1. 生成所有文章的路径
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
   return posts.map((post) => ({
@@ -15,6 +16,8 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const category = await getEntry(post.data.category);
+const tags = (await getEntries(post.data.tags)).filter((value) => value);
 ---
 
 <Layout title={post.data.title} description={post.data.summary}>
@@ -42,6 +45,10 @@ const { Content } = await render(post);
       >
         <time>{formatDate(post.data.createdAt)}</time>
         <span>·</span>
+        <a href={`/categories/${category?.id}`} class="hover:text-primary">
+          {category?.data.name}
+        </a>
+        <span>·</span>
         <span>约 {post.body?.length} 字</span>
       </div>
     </header>
@@ -57,7 +64,18 @@ const { Content } = await render(post);
       <Content />
     </div>
 
-    <!-- 文章底部：快速返回 -->
+    <section
+      class="flex items-center gap-3 font-mono text-xs text-muted-foreground/60 italic"
+    >
+      {
+        tags.map((tag) => (
+          <a href={`/tags/${tag.data.slug}`} class="hover:text-primary">
+            #{tag.data.name}
+          </a>
+        ))
+      }
+    </section>
+
     <footer
       class="mt-20 flex items-center justify-between border-t border-border/50 pt-10"
     >
