@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+:root {
+  /* --- 亮色模式：Sage Mist (鼠尾草薄雾) --- */
+  /* 极其柔和的灰绿色底，通透、自然、极度护眼 */
+  --background: oklch(0.98 0.008 165); /* 极淡的青苔白 */
+  --foreground: oklch(0.25 0.02 165); /* 深森林灰文字 */
+
+  --card: oklch(0.99 0.005 165); /* 接近白但带有绿意的卡片 */
+  --card-foreground: oklch(0.25 0.02 165);
+
+  --primary: oklch(0.5 0.12 165); /* 核心：清冷而高级的鼠尾草绿 */
+  --primary-foreground: oklch(0.98 0.01 165);
+
+  --muted: oklch(0.94 0.01 165); /* 辅助背景 */
+  --muted-foreground: oklch(0.35 0.02 165);
+
+  --border: oklch(0.92 0.01 165); /* 极淡的植物线条感 */
+  --shadow-main: 0 10px 40px -10px oklch(0.3 0.05 165 / 0.05);
+}
+
+.dark {
+  /* --- 暗色模式：Deep Moss (深邃苔藓) --- */
+  /* 避开死灰，采用带有森林深处质感的墨绿，文字温润不刺眼 */
+  --background: oklch(0.14 0.02 165); /* 深墨绿背景 */
+  --foreground: oklch(0.92 0.005 165); /* 带有绿意的银白文字 */
+
+  --card: oklch(0.18 0.02 165); /* 建立层次感的深苔色卡片 */
+  --card-foreground: oklch(0.88 0.01 165);
+
+  --primary: oklch(0.75 0.15 160); /* 提亮的柔绿，具有呼吸灯质感 */
+  --primary-foreground: oklch(0.1 0.02 165);
+
+  --muted: oklch(0.28 0.02 160);
+  --muted-foreground: oklch(0.75 0.015 165);
+
+  --border: oklch(0.26 0.02 165); /* 带有有机感的精致描边 */
+  --shadow-main: 0 30px 60px -15px oklch(0 0 0 / 0.5);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --shadow-main: var(--shadow-main);
+}
+
+/* 增强过渡：800ms 丝滑呼吸感切换 */
+/* * {
+  transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+} */

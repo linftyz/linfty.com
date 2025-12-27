@@ -1,0 +1,130 @@
+---
+import site from "@/config/site";
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav
+  class="no-scrollbar flex flex-1 flex-wrap gap-4 overflow-x-auto max-md:justify-between md:flex-col md:gap-4 md:overflow-x-visible"
+>
+  {
+    site.navigation.map((item) => {
+      const isActive =
+        currentPath === item.href ||
+        (item.href !== "/" && currentPath.startsWith(item.href));
+      return (
+        <a
+          href={item.href}
+          class:list={[
+            "group flex min-w-24 items-center justify-center rounded-2xl border border-transparent px-4 py-3 transition-all md:min-w-0 md:justify-between md:py-4",
+            isActive
+              ? "border-primary/20 bg-primary/10 md:hover:border-primary/20 md:hover:bg-primary/15"
+              : "hover:bg-muted/50",
+          ]}
+        >
+          <div class="flex flex-col">
+            <span
+              class:list={[
+                "text-sm font-bold",
+                isActive
+                  ? "text-primary"
+                  : "text-muted-foreground group-hover:text-primary",
+              ]}
+            >
+              {item.name}
+            </span>
+            <span
+              class:list={[
+                "text-[10px] tracking-widest uppercase",
+                isActive ? "text-primary/60" : "text-muted-foreground/50",
+              ]}
+            >
+              {item.englishName}
+            </span>
+          </div>
+
+          {isActive ? (
+            <span class="hidden text-primary md:block">→</span>
+          ) : (
+            <span class="hidden -translate-x-2 text-primary opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100 md:block">
+              →
+            </span>
+          )}
+        </a>
+      );
+    })
+  }
+</nav>
+
+<!-- <nav
+  class="no-scrollbar flex flex-1 gap-6 overflow-x-auto pb-2 md:flex-col md:gap-4 md:overflow-x-visible md:pb-0"
+>
+  <a
+    href="#"
+    class="group flex min-w-30 items-center justify-between rounded-2xl border border-transparent px-4 py-3 transition-all md:min-w-0 md:bg-muted/30 md:py-4 md:hover:border-primary/20 md:hover:bg-card"
+  >
+    <div class="flex flex-col">
+      <span
+        class="text-sm font-bold text-foreground transition-colors group-hover:text-primary"
+      >
+        文章专栏
+      </span>
+      <span
+        class="text-[10px] tracking-widest text-muted-foreground uppercase transition-colors group-hover:text-primary/60"
+      >
+        Writing
+      </span>
+    </div>
+    <span
+      class="hidden -translate-x-2 text-primary opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100 md:block"
+    >
+      →
+    </span>
+  </a>
+
+  <a
+    href="#"
+    class="group flex min-w-30 items-center justify-between rounded-2xl px-4 py-3 transition-all md:min-w-0 md:py-4"
+  >
+    <div class="flex flex-col">
+      <span
+        class="text-sm font-bold text-muted-foreground transition-colors group-hover:text-primary"
+      >
+        项目作品
+      </span>
+      <span
+        class="text-[10px] tracking-widest text-muted-foreground/50 uppercase"
+      >
+        Projects
+      </span>
+    </div>
+    <span
+      class="hidden -translate-x-2 text-primary opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100 md:block"
+    >
+      →
+    </span>
+  </a>
+
+  <a
+    href="#"
+    class="group flex min-w-30 items-center justify-between rounded-2xl px-4 py-3 transition-all md:min-w-0 md:py-4"
+  >
+    <div class="flex flex-col">
+      <span
+        class="text-sm font-bold text-muted-foreground transition-colors group-hover:text-primary"
+      >
+        关于本人
+      </span>
+      <span
+        class="text-[10px] tracking-widest text-muted-foreground/50 uppercase"
+      >
+        About
+      </span>
+    </div>
+    <span
+      class="hidden -translate-x-2 text-primary opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100 md:block"
+    >
+      →
+    </span>
+  </a>
+</nav> -->

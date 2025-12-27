@@ -1,0 +1,84 @@
+---
+import { render } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { formatDate } from "@/utils/date";
+
+// 1. 生成所有文章的路径
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title} description={post.data.summary}>
+  <article
+    class="animate-in fade-in mx-auto max-w-2xl p-8 duration-1000 md:p-16"
+  >
+    <!-- 文章头部 -->
+    <header class="mb-16 border-b border-border/50 pb-12">
+      <div
+        class="mb-6 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-primary uppercase"
+      >
+        <a href="/posts" class="hover:underline">Writing</a>
+        <span class="text-muted-foreground/30">/</span>
+        <span>Detail</span>
+      </div>
+
+      <h1
+        class="mb-8 text-3xl leading-[1.4] font-bold text-foreground md:text-4xl"
+      >
+        {post.data.title}
+      </h1>
+
+      <div
+        class="flex items-center gap-2 font-mono text-xs text-muted-foreground/60 italic"
+      >
+        <time>{formatDate(post.data.createdAt)}</time>
+        <span>·</span>
+        <span>约 {post.body?.length} 字</span>
+      </div>
+    </header>
+
+    <div
+      class:list={[
+        "prose max-w-none dark:prose-invert",
+        "prose-headings:tracking-tight",
+        "prose-p:mb-8 prose-p:leading-loose prose-p:font-normal prose-p:text-muted-foreground",
+        "prose-code:rounded-sm prose-code:bg-primary/15 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary prose-code:before:content-none prose-code:after:content-none",
+      ]}
+    >
+      <Content />
+    </div>
+
+    <!-- 文章底部：快速返回 -->
+    <footer
+      class="mt-20 flex items-center justify-between border-t border-border/50 pt-10"
+    >
+      <a
+        href="/posts"
+        class="group flex items-center gap-2 text-sm text-muted-foreground transition-all hover:text-primary"
+      >
+        <span class="transition-transform group-hover:-translate-x-1">←</span> 返回文章列表
+      </a>
+      <div
+        class="font-mono text-[10px] tracking-widest text-muted-foreground/30 uppercase"
+      >
+        End of Post
+      </div>
+    </footer>
+  </article>
+</Layout>
+
+<style is:global>
+  .prose p {
+    text-align: justify;
+    word-break: break-word;
+  }
+</style>

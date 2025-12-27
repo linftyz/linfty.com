@@ -13,7 +13,7 @@ tags: ["pip", "python", "memo"]
 
 脚本可以直接从 [https://bootstrap.pypa.io/](https://bootstrap.pypa.io/) 网站中下载到，打开网站基本的目录结构（这里主要关注 get-pip 相关的目录）：
 
-```
+```sh
 ├── pip
 │   ├── 2.6
 │   │   └── get-pip.py
@@ -41,18 +41,22 @@ tags: ["pip", "python", "memo"]
 
 ## 基本的使用方法
 
-1. 下载脚本：`` `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py` ``
+1. 下载脚本：
+
+```sh
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py`
+```
 
 2. 指定 pip 版本安装:
 
-```
+```sh
 python get-pip.py "pip < 21.0"
 python get-pip.py "pip == 21.0"
 ```
 
 2. 指定从本地目录（默认是从 PyPI ）来安装:
 
-```
+```sh
 python get-pip.py --no-index --find-links=/path/
 ```
 

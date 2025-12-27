@@ -1,0 +1,83 @@
+---
+import site from "@/config/site";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="关于" description="关于本站和作者">
+  <div class="animate-in fade-in mx-auto max-w-2xl p-8 duration-700 md:p-16">
+    <header class="mb-14">
+      <h2 class="mb-6 text-3xl font-bold tracking-tight text-foreground/90">
+        关于我
+      </h2>
+      <div
+        class="space-y-4 text-base leading-relaxed font-normal text-muted-foreground"
+      >
+        <p>
+          你好，我是 <span class="font-medium text-foreground">宇风</span
+          >。一名爱折腾的业余全栈开发者。
+        </p>
+        <p>
+          开始写博客好像已经好几年，搭建博客的各种平台和工具都折腾过，无论是
+          Wordpress、Typecho、Halo 和 Ghost 等动态网站平台，还是 Hexo、Hugo
+          之类的静态博客生成器，甚至尝试自己用 Python
+          写过，最后都是无疾而终，没留下什么好的内容。
+        </p>
+        <p>
+          这次使用
+          Astro开发了本站，一个极简风格个人网站，希望能够更加专注内容本身，留下一些有价值的内容。
+        </p>
+        <p>
+          在这里，主要会记录我的开发笔记、折腾记录、数字生活，以及一些优质网站和工具的分享。
+        </p>
+      </div>
+    </header>
+
+    <section
+      class="grid grid-cols-1 gap-12 border-y border-border/50 py-12 md:grid-cols-2"
+    >
+      <div class="space-y-4">
+        <h4
+          class="text-[10px] font-bold tracking-[0.3em] text-primary uppercase"
+        >
+          技术栈 / Stack
+        </h4>
+        <ul class="space-y-2 text-sm font-light text-muted-foreground/80">
+          <li class="flex items-center gap-2">主要使用 Python 和 C++</li>
+          <li class="flex items-center gap-2">正在学习 Astro 和 Tailwind</li>
+          <li class="flex items-center gap-2">熟练安装各种 Linux 发行版 😄</li>
+        </ul>
+      </div>
+      <div class="space-y-4">
+        <h4
+          class="text-[10px] font-bold tracking-[0.3em] text-primary uppercase"
+        >
+          近况 / Now
+        </h4>
+        <ul class="space-y-2 text-sm font-light text-muted-foreground/80">
+          <li class="flex items-center gap-2">📍 定居在西安，某公司搬砖中</li>
+          <li class="flex items-center gap-2">📚 啃不动了</li>
+          <li class="flex items-center gap-2">🎮 最喜欢《泰拉瑞亚》</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="mt-14 space-y-6">
+      <h4 class="text-[10px] font-bold tracking-[0.3em] text-primary uppercase">
+        找到我 / Contact
+      </h4>
+      <div class="flex flex-wrap gap-4">
+        {
+          site.social.map((item) => (
+            <a
+              href={item.href}
+              class="border-b border-border pb-0.5 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+              title={item.name}
+            >
+              {item.name}
+            </a>
+          ))
+        }
+      </div>
+    </footer>
+  </div>
+</Layout>

@@ -1,0 +1,49 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<section class="mb-16">
+  <h2 class="mb-6 text-3xl font-bold tracking-tight">👋 你好，我是宇风</h2>
+  <p class="text-lg leading-relaxed font-light text-muted-foreground">
+    一名热爱探索新技术的业余全栈开发者。我在这里分享关于 <span
+      class="font-medium text-foreground underline decoration-primary/30"
+      >Web 开发</span
+    >、<span class="font-medium text-foreground underline decoration-primary/30"
+      >折腾笔记</span
+    > 以及 <span
+      class="font-medium text-foreground underline decoration-primary/30"
+      >数字生活</span
+    > 的思考。
+  </p>
+</section>
+
+<div class="mb-16 grid grid-cols-1 gap-4 md:grid-cols-2">
+  <div
+    class="group flex gap-4 rounded-2xl border border-border/50 bg-muted/30 p-5"
+  >
+    <div class="text-lg">
+      <Icon name={"mdi:explore"} />
+    </div>
+    <div class="flex flex-col">
+      <span
+        class="text-[10px] font-bold tracking-widest text-muted-foreground uppercase"
+        >当前状态 / Status</span
+      >
+      <span class="text-sm text-foreground/80">
+        尝试使用 Astro 搭建个人网站
+      </span>
+    </div>
+  </div>
+  <div class="flex gap-4 rounded-2xl border border-border/50 bg-muted/30 p-5">
+    <div class="text-lg">
+      <Icon name={"mdi:location"} />
+    </div>
+    <div class="flex flex-col">
+      <span
+        class="text-[10px] font-bold tracking-widest text-muted-foreground uppercase"
+        >所在城市 / Location</span
+      >
+      <span class="text-sm text-foreground/80">中国 · 西安</span>
+    </div>
+  </div>
+</div>

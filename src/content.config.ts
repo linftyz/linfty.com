@@ -29,6 +29,23 @@ const posts = defineCollection({
     }),
 });
 
+const projects = defineCollection({
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: "./src/content/projects",
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    tech: z.array(z.string()),
+    link: z.string().url().optional(),
+    status: z
+      .enum(["planning", "in-progress", "completed", "archived"])
+      .default("completed"),
+    image: z.string().optional(),
+  }),
+});
+
 const categories = defineCollection({
   loader: file("./src/content/miscs/categories.json"),
   schema: ({ image }) =>
@@ -71,6 +88,7 @@ const friends = defineCollection({
 
 export const collections = {
   posts,
+  projects,
   categories,
   tags,
   friends,

@@ -1,6 +1,7 @@
 ---
 import site from "@/config/site";
 import type { HeadProps } from "@/types";
+import { ClientRouter } from "astro:transitions";
 
 type Props = HeadProps;
 
@@ -63,4 +64,7 @@ const { title, description, image = site.ogImage } = Astro.props;
 
   <!-- Sitemap -->
   <link rel="sitemap" href="/sitemap-index.xml" />
+
+  <!-- View Transtions -->
+  <ClientRouter />
 </head>
