@@ -5,6 +5,8 @@ import { getCollection } from "astro:content";
 import { formatDate } from "@/utils/date";
 import { getEntry } from "astro:content";
 import { getEntries } from "astro:content";
+import Link from "@/components/md/Link.astro";
+import Img from "@/components/md/Img.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -58,10 +60,11 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
         "prose-headings:tracking-tight",
         "prose-p:mb-8 prose-p:leading-loose prose-p:font-normal prose-p:text-muted-foreground",
         "prose-code:rounded-sm prose-code:bg-primary/15 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary prose-code:before:content-none prose-code:after:content-none",
+        "prose-",
       ]}
       data-pagefind-body
     >
-      <Content />
+      <Content components={{ a: Link, img: Img }} />
     </div>
 
     <section

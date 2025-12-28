@@ -17,6 +17,11 @@
 
   --border: oklch(0.92 0.01 165); /* 极淡的植物线条感 */
   --shadow-main: 0 10px 40px -10px oklch(0.3 0.05 165 / 0.05);
+
+  --callout-info: oklch(0.65 0.12 250); /* 稳重的冷蓝色 */
+  --callout-warning: oklch(0.7 0.15 85); /* 温暖但不刺眼的琥珀色 */
+  --callout-danger: oklch(0.62 0.18 28); /* 明确的珊瑚红 */
+  --callout-success: oklch(0.6 0.14 160); /* 与主色一致的健康绿 */
 }
 
 .dark {
@@ -36,6 +41,11 @@
 
   --border: oklch(0.26 0.02 165); /* 带有有机感的精致描边 */
   --shadow-main: 0 30px 60px -15px oklch(0 0 0 / 0.5);
+
+  --callout-info: oklch(0.75 0.12 250);
+  --callout-warning: oklch(0.8 0.15 85);
+  --callout-danger: oklch(0.75 0.18 28);
+  --callout-success: oklch(0.72 0.14 160);
 }
 
 @theme inline {
