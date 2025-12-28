@@ -49,4 +49,5 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --shadow-main: var(--shadow-main);
+  --font-display: var(--font-display);
 }

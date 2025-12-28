@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
@@ -24,4 +24,14 @@ export default defineConfig({
     icon(),
     sitemap(),
   ],
+
+  experimental: {
+    fonts: [
+      {
+        provider: fontProviders.fontsource(),
+        name: "Space Grotesk",
+        cssVariable: "--font-display",
+      },
+    ],
+  },
 });
