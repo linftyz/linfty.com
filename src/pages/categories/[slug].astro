@@ -8,7 +8,6 @@ export async function getStaticPaths() {
   const allPosts = await getCollection("posts");
 
   return allCategories.map((cat) => {
-    // 过滤出属于该分类的文章
     const filteredPosts = allPosts.filter(
       (post) => post.data.category.id === cat.id,
     );
