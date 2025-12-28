@@ -1,5 +1,6 @@
 ---
 import site from "@/config/site";
+import { Icon } from "astro-icon/components";
 
 const currentPath = Astro.url.pathname;
 ---
@@ -44,10 +45,12 @@ const currentPath = Astro.url.pathname;
           </div>
 
           {isActive ? (
-            <span class="hidden text-primary md:block">→</span>
+            <span class="hidden text-primary md:block">
+              <Icon name="mdi:arrow-right" />
+            </span>
           ) : (
             <span class="hidden -translate-x-2 text-primary opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100 md:block">
-              →
+              <Icon name="mdi:arrow-right" />
             </span>
           )}
         </a>

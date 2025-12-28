@@ -2,6 +2,7 @@
 import PostPreview from "@/components/blocks/PostPreview.astro";
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
+import { Icon } from "astro-icon/components";
 
 export async function getStaticPaths() {
   const allCategories = await getCollection("categories");
@@ -29,9 +30,9 @@ const { category, posts } = Astro.props;
     <header class="mb-16">
       <a
         href="/categories"
-        class="mb-6 block text-[10px] font-bold tracking-widest text-muted-foreground/60 uppercase transition-colors hover:text-primary"
+        class="mb-6 flex items-center gap-1 text-[10px] font-bold tracking-widest text-muted-foreground/60 uppercase transition-colors hover:text-primary"
       >
-        ← 返回分类列表
+        <Icon name="mdi:arrow-left" size={14} /> 返回分类列表
       </a>
       <h2 class="mb-4 text-3xl font-bold tracking-tight">
         分类：<span class="text-primary">{category.data.name}</span>

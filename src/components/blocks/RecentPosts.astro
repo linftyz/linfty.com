@@ -1,6 +1,7 @@
 ---
 import PostPreview from "@/components/blocks/PostPreview.astro";
 import { getRecentPosts } from "@/utils/post";
+import { Icon } from "astro-icon/components";
 
 const recentPosts = await getRecentPosts(5);
 ---
@@ -14,8 +15,8 @@ const recentPosts = await getRecentPosts(5);
     </p>
     <a
       href="/posts"
-      class="border-b border-transparent text-[11px] text-muted-foreground transition-colors hover:border-primary hover:text-primary"
-      >查看全部 →</a
+      class="flex items-center gap-1 border-b border-transparent text-[11px] text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+      >查看全部 <Icon name="mdi:arrow-right" /></a
     >
   </div>
 

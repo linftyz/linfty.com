@@ -7,6 +7,7 @@ import { getEntry } from "astro:content";
 import { getEntries } from "astro:content";
 import Link from "@/components/md/Link.astro";
 import Img from "@/components/md/Img.astro";
+import { Icon } from "astro-icon/components";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -86,7 +87,9 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
         href="/posts"
         class="group flex items-center gap-2 text-sm text-muted-foreground transition-all hover:text-primary"
       >
-        <span class="transition-transform group-hover:-translate-x-1">←</span> 返回文章列表
+        <span class="transition-transform group-hover:-translate-x-1">
+          <Icon name="mdi:arrow-left" size={14} />
+        </span> 返回文章列表
       </a>
       <div
         class="font-mono text-[10px] tracking-widest text-muted-foreground/30 uppercase"

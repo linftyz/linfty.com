@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { getPosts } from "@/utils/post";
+import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
 
 const allCategories = await getCollection("categories");
@@ -43,8 +44,8 @@ const categoryCounts = allPosts.reduce((acc: Record<string, number>, post) => {
             <p class="flex-1 text-sm leading-relaxed font-light text-muted-foreground italic">
               {cat.data.description || "暂无分类描述"}
             </p>
-            <div class="mt-6 text-[10px] font-bold text-primary opacity-0 transition-opacity group-hover:opacity-100">
-              查看全部文章 →
+            <div class="mt-6 flex items-center gap-1 text-[10px] font-bold text-primary opacity-0 transition-opacity group-hover:opacity-100">
+              查看全部文章 <Icon name="mdi:arrow-right" />
             </div>
           </a>
         ))
