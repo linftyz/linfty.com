@@ -15,7 +15,7 @@ const categoryCounts = allPosts.reduce((acc: Record<string, number>, post) => {
 ---
 
 <Layout title="文章分类" description="本站可能会写的各种不同内容。">
-  <div class="animate-in fade-in mx-auto max-w-2xl p-8 duration-700 md:p-16">
+  <div class="mx-auto max-w-2xl p-8 md:p-16">
     <header class="mb-16">
       <!-- <div class="flex items-center gap-2 text-[10px] font-bold text-primary tracking-[0.3em] uppercase mb-4 opacity-70">
         <span>Classification / 分类索引</span>
@@ -31,10 +31,10 @@ const categoryCounts = allPosts.reduce((acc: Record<string, number>, post) => {
         allCategories.map((cat) => (
           <a
             href={`/categories/${cat.data.slug}`}
-            class="group relative flex h-full flex-col rounded-3xl border border-border/50 bg-muted/20 p-8 shadow-sm transition-all hover:border-primary/30 hover:bg-card"
+            class="group relative flex h-full flex-col rounded-3xl border border-border/50 bg-muted/20 p-8 shadow-sm hover:border-primary/30 hover:bg-card"
           >
             <div class="mb-6 flex items-start justify-between">
-              <h3 class="text-xl font-bold transition-colors group-hover:text-primary">
+              <h3 class="text-xl font-bold group-hover:text-primary">
                 {cat.data.name}
               </h3>
               <span class="rounded-lg bg-border/30 px-2 py-1 font-mono text-[10px] text-muted-foreground">
@@ -44,7 +44,7 @@ const categoryCounts = allPosts.reduce((acc: Record<string, number>, post) => {
             <p class="flex-1 text-sm leading-relaxed font-light text-muted-foreground italic">
               {cat.data.description || "暂无分类描述"}
             </p>
-            <div class="mt-6 flex items-center gap-1 text-[10px] font-bold text-primary opacity-0 transition-opacity group-hover:opacity-100">
+            <div class="mt-6 flex items-center gap-1 text-[10px] font-bold text-primary opacity-0 group-hover:opacity-100">
               查看全部文章 <Icon name="mdi:arrow-right" />
             </div>
           </a>

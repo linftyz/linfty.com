@@ -16,12 +16,12 @@ const category = await getEntry(
 ---
 
 <article
-  class="group flex cursor-pointer items-center justify-between border-b border-border/40 py-6 transition-all last:border-0"
+  class="group flex cursor-pointer items-center justify-between border-b border-border/40 py-6 last:border-0"
 >
   <div>
     <a
       href={`/posts/${post.id}`}
-      class="text-lg font-semibold text-foreground/80 transition-all group-hover:text-primary"
+      class="text-lg font-semibold text-foreground/80 group-hover:text-primary"
     >
       {post.data.title}
     </a>
@@ -34,9 +34,7 @@ const category = await getEntry(
       </a>
     </p>
   </div>
-  <span
-    class="text-border transition-all group-hover:translate-x-1 group-hover:text-primary"
-  >
+  <span class="text-border group-hover:translate-x-1 group-hover:text-primary">
     <Icon name="mdi:arrow-right" />
   </span>
 </article>
