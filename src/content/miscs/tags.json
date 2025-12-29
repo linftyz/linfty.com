@@ -47,5 +47,13 @@
   {
     "name": "编程",
     "slug": "programming"
+  },
+  {
+    "name": "MacOS",
+    "slug": "macos"
+  },
+  {
+    "name": "应用程序",
+    "slug": "application"
   }
 ]
