@@ -55,5 +55,21 @@
   {
     "name": "应用程序",
     "slug": "application"
+  },
+  {
+    "name": "Astro",
+    "slug": "astro"
+  },
+  {
+    "name": "Artalk",
+    "slug": "artalk"
+  },
+  {
+    "name": "Docker",
+    "slug": "docker"
+  },
+  {
+    "name": "Docker Compose",
+    "slug": "docker-compose"
   }
 ]

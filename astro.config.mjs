@@ -18,7 +18,7 @@ export default defineConfig({
   integrations: [
     expressiveCode({
       themeCssSelector: (theme) => `.${theme.type}`,
-      themes: ["github-dark", "github-light"],
+      themes: ["material-theme-darker", "material-theme-lighter"],
     }),
     mdx(),
     icon(),
