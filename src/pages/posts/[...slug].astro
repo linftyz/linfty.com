@@ -8,6 +8,8 @@ import { getEntries } from "astro:content";
 import Link from "@/components/md/Link.astro";
 import Img from "@/components/md/Img.astro";
 import { Icon } from "astro-icon/components";
+import Toast from "@/components/blocks/Toast.astro";
+import Comments from "@/components/blocks/Comments.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -79,9 +81,11 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
         ))
       }
     </section>
+  </article>
 
-    <footer
-      class="mt-20 flex items-center justify-between border-t border-border/50 pt-10"
+  <footer class="mt-16 space-y-12 px-8 md:px-16">
+    <div
+      class="flex items-center justify-between border-t border-b border-border/50 py-5"
     >
       <a
         href="/posts"
@@ -96,8 +100,11 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
       >
         End of Post
       </div>
-    </footer>
-  </article>
+    </div>
+
+    <Toast />
+    <Comments />
+  </footer>
 </Layout>
 
 <style is:global>

@@ -1,0 +1,91 @@
+---
+
+---
+
+<div class="animate-in fade-in duration-1000">
+  <div id="atk-comments"></div>
+</div>
+
+<script>
+  import "artalk/dist/Artalk.css";
+  import Artalk from "artalk";
+  import site from "@/config/site";
+
+  document.addEventListener("astro:page-load", () => {
+    const atkElement = document.querySelector("#atk-comments");
+    if (!atkElement) {
+      return;
+    }
+
+    const artalk = Artalk.init({
+      el: "#atk-comments",
+      server: "https://atk.linfty.com",
+      site: site.meta.title,
+      pageTitle: document.title,
+      pageKey: document.location.pathname,
+    });
+
+    artalk.on("comment-inserted", function () {
+      if (Object.hasOwn(window, "showToast")) {
+        window.showToast("评论已送达", "success");
+      }
+    });
+  });
+</script>
+
+<style is:global>
+  .artalk,
+  .atk-layer-wrap {
+    --at-color-main: var(--primary) !important;
+    --at-color-primary: var(--primary) !important;
+
+    --at-color-font: var(--foreground) !important;
+    --at-color-deep: var(--foreground) !important;
+    --at-color-sub: var(--muted-foreground) !important;
+    --at-color-grey: var(--muted-foreground) !important;
+    --at-color-meta: var(--muted-foreground) !important;
+
+    --at-color-border: var(--border) !important;
+    --at-color-bg: var(--card) !important;
+    --at-color-bg-transl: oklch(from var(--card) l c h / 0.95) !important;
+
+    --at-color-bg-grey: oklch(from var(--muted) l c h / 0.1) !important;
+    --at-color-bg-grey-transl: oklch(from var(--muted) l c h / 0.05) !important;
+
+    --at-color-bg-light: oklch(from var(--primary) l c h / 0.05) !important;
+
+    --at-color-gradient: linear-gradient(
+      180deg,
+      transparent,
+      var(--card)
+    ) !important;
+  }
+
+  .dark .artalk,
+  .dark .atk-layer-wrap {
+    --at-color-bg: var(--card) !important;
+    --at-color-bg-transl: oklch(from var(--card) l c h / 0.95) !important;
+    --at-color-bg-grey: oklch(from var(--muted) l c h / 0.3) !important;
+
+    --at-color-gradient: linear-gradient(
+      180deg,
+      transparent,
+      var(--background)
+    ) !important;
+  }
+
+  .atk-send-btn {
+    border-radius: 2rem !important; /* 匹配你的 2.5rem 大圆角 */
+    font-weight: 700 !important;
+    box-shadow: 0 4px 12px oklch(from var(--primary) l c h / 0.2) !important;
+  }
+
+  .atk-main-editor {
+    border-radius: 1.5rem !important;
+    overflow: hidden;
+  }
+
+  .atk-main-editor:focus-within {
+    box-shadow: 0 0 0 2px oklch(from var(--primary) l c h / 0.15) !important;
+  }
+</style>
