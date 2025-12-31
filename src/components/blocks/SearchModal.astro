@@ -88,14 +88,14 @@
 </script>
 
 <style is:global>
-  /* --- 基础配置 --- */
   :root {
     --pagefind-ui-primary: var(--primary);
     --pagefind-ui-text: var(--foreground);
     --pagefind-ui-font: inherit;
+    --pagefind-ui-background: var(--background);
+    --pagefind-ui-border: var(--primary) / 10;
   }
 
-  /* --- 1. 彻底移除顶部空白 --- */
   .pagefind-ui__drawer {
     margin-top: 0 !important;
     padding-top: 0 !important;
@@ -103,7 +103,6 @@
     overflow-y: auto !important;
   }
 
-  /* 紧凑显示“搜索结果数” */
   .pagefind-ui__message {
     padding: 0 0.5rem 1rem 0.5rem !important;
     margin: 0 !important;
@@ -113,7 +112,6 @@
     opacity: 0.6 !important;
   }
 
-  /* --- 2. 修复单项结果的布局（解决巨大空档） --- */
   .pagefind-ui__result {
     display: flex !important;
     flex-direction: column !important;
@@ -122,7 +120,6 @@
     margin: 0 !important;
   }
 
-  /* 彻底禁用缩略图占位符，这是消除空白的关键 */
   .pagefind-ui__result-thumb {
     display: none !important;
   }
@@ -135,9 +132,6 @@
     margin: 0 !important; /* 移除缩略图留下的左边距 */
   }
 
-  /* --- 3. 内容美化 --- */
-
-  /* 文章主标题（现在应该是正确的文章名了） */
   .pagefind-ui__result-link {
     font-size: 1.1rem !important;
     font-weight: 800 !important;
@@ -152,7 +146,6 @@
     color: var(--foreground) !important;
   }
 
-  /* 预览正文：提升清晰度 */
   .pagefind-ui__result-excerpt {
     font-size: 0.8rem !important;
     color: oklch(from var(--muted-foreground) 0.6 c h) !important;
@@ -161,7 +154,6 @@
     margin-top: 0.4rem !important;
   }
 
-  /* 子标题（↳ get-pip.py 是什么）样式 */
   .pagefind-ui__result-nested .pagefind-ui__result-link {
     display: flex !important;
     flex-direction: column !important;
@@ -183,7 +175,6 @@
     line-height: 24px;
   }
 
-  /* 高亮效果 mark */
   mark {
     background-color: oklch(from var(--primary) l c h / 0.15) !important;
     color: var(--primary) !important;
@@ -193,7 +184,6 @@
     border-radius: 2px !important;
   }
 
-  /* --- 4. 输入框焦点修正 --- */
   .pagefind-ui__search-input:focus {
     outline: none !important;
     border-color: var(--primary) !important;
