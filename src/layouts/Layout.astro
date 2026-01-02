@@ -14,7 +14,9 @@ const head = Astro.props;
   >
     <Sidebar />
 
-    <main class="custom-scrollbar flex-1 overflow-y-auto md:h-200">
+    <main
+      class="custom-scrollbar flex-1 overflow-x-hidden overflow-y-auto md:h-200"
+    >
       <slot />
     </main>
   </div>

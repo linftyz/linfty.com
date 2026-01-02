@@ -27,7 +27,7 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
 
 <Layout title={post.data.title} description={post.data.summary}>
   <article
-    class="animate-in fade-in mx-auto max-w-2xl p-8 duration-1000 md:p-16"
+    class="animate-in fade-in mx-auto max-w-2xl overflow-x-hidden p-8 duration-1000 md:p-16"
   >
     <header class="mb-16 border-b border-border/50 pb-12">
       <div
@@ -45,15 +45,51 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
       </h1>
 
       <div
-        class="flex items-center gap-2 font-mono text-xs text-muted-foreground/60 italic"
+        class="animate-in fade-in flex flex-wrap gap-2 font-mono text-[11px] tracking-tight duration-1000 md:gap-3"
       >
-        <time>{formatDate(post.data.createdAt)}</time>
-        <span>·</span>
-        <a href={`/categories/${category?.id}`} class="hover:text-primary">
-          {category?.data.name}
-        </a>
-        <span>·</span>
-        <span>约 {post.body?.length} 字</span>
+        <div
+          class="flex items-center gap-3 rounded-full border border-border/40 bg-muted/40 px-3 py-1 text-muted-foreground"
+        >
+          <div class="flex items-center gap-1.5">
+            <Icon name={"mdi:calendar-blank"} />
+            <span>{post.data.createdAt.toLocaleDateString("zh-CN")}</span>
+          </div>
+          <span class="h-3 w-px bg-border/60"></span>
+          <a
+            href={`/categories/${category.data.slug}`}
+            class="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-primary"
+          >
+            <Icon name={"mdi:category-outline"} />
+            <span>{category.data.name}</span>
+          </a>
+        </div>
+
+        <div
+          class="flex items-center gap-4 rounded-full border border-border/20 bg-muted/20 px-3 py-1 text-muted-foreground/60"
+        >
+          <div class="flex items-center gap-1.5">
+            <span class="post-words-count">{post.body?.length} </span>
+            <span class="text-[9px] uppercase opacity-90">Words</span>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <span
+              class="artalk-pv-count"
+              data-page-key={Astro.url.pathname}
+              class="font-bold text-foreground/80">-</span
+            >
+            <span class="text-[9px] uppercase opacity-90">Views</span>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <span
+              class="artalk-comment-count"
+              data-page-key={Astro.url.pathname}
+              class="font-bold text-foreground/80">-</span
+            >
+            <span class="text-[9px] uppercase opacity-90">Comments</span>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -111,5 +147,13 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
   .prose p {
     text-align: justify;
     word-break: break-word;
+  }
+
+  .post-words-count,
+  .artalk-pv-count,
+  .artalk-comment-count {
+    color: var(--primary);
+    font-weight: 400;
+    opacity: 0.8;
   }
 </style>
