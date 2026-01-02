@@ -45,16 +45,22 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
       </h1>
 
       <div
-        class="animate-in fade-in flex flex-wrap gap-2 font-mono text-[11px] tracking-tight duration-1000 md:gap-3"
+        class="animate-in fade-in flex flex-wrap gap-2 font-mono text-[12px] tracking-tight duration-1000 md:gap-3"
       >
         <div
           class="flex items-center gap-3 rounded-full border border-border/40 bg-muted/40 px-3 py-1 text-muted-foreground"
         >
           <div class="flex items-center gap-1.5">
             <Icon name={"mdi:calendar-blank"} />
-            <span>{post.data.createdAt.toLocaleDateString("zh-CN")}</span>
+            <span
+              id="post-date"
+              data-updated={`${post.data.updatedAt ? "更新于 " + formatDate(post.data.updatedAt) : "未更新"}`}
+              >{formatDate(post.data.createdAt)}{
+                post.data.updatedAt ? " (已编辑)" : ""
+              }</span
+            >
           </div>
-          <span class="h-3 w-px bg-border/60"></span>
+          <span class="h-3 w-px bg-border"></span>
           <a
             href={`/categories/${category.data.slug}`}
             class="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-primary"
@@ -69,7 +75,7 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
         >
           <div class="flex items-center gap-1.5">
             <span class="post-words-count">{post.body?.length} </span>
-            <span class="text-[9px] uppercase opacity-90">Words</span>
+            <span class="text-[10px] uppercase opacity-90">Words</span>
           </div>
 
           <div class="flex items-center gap-1.5">
@@ -78,7 +84,7 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
               data-page-key={Astro.url.pathname}
               class="font-bold text-foreground/80">-</span
             >
-            <span class="text-[9px] uppercase opacity-90">Views</span>
+            <span class="text-[10px] uppercase opacity-90">Views</span>
           </div>
 
           <div class="flex items-center gap-1.5">
@@ -87,7 +93,7 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
               data-page-key={Astro.url.pathname}
               class="font-bold text-foreground/80">-</span
             >
-            <span class="text-[9px] uppercase opacity-90">Comments</span>
+            <span class="text-[10px] uppercase opacity-90">Comments</span>
           </div>
         </div>
       </div>
@@ -106,7 +112,7 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
       <Content components={{ a: Link, img: Img }} />
     </div>
 
-    <section
+    <!-- <section
       class="flex items-center gap-3 font-mono text-xs text-muted-foreground/60 italic"
     >
       {
@@ -116,7 +122,27 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
           </a>
         ))
       }
-    </section>
+    </section> -->
+
+    <div
+      class="animate-in fade-in mt-12 mb-8 flex flex-wrap gap-2 duration-1000"
+    >
+      {
+        tags.map((tag) => (
+          <a
+            href={`/tags/${tag.data.slug}`}
+            class="group flex items-center gap-1.5 rounded-xl border border-border/50 bg-muted/30 px-3 py-1.5 transition-all hover:border-primary/40 hover:bg-card"
+          >
+            <span class="font-mono text-xs text-primary/40 italic group-hover:text-primary">
+              #
+            </span>
+            <span class="text-xs font-medium text-muted-foreground transition-colors group-hover:text-foreground">
+              {tag.data.name}
+            </span>
+          </a>
+        ))
+      }
+    </div>
   </article>
 
   <footer class="mt-16 space-y-12 px-8 md:px-16">
@@ -155,5 +181,23 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
     color: var(--primary);
     font-weight: 400;
     opacity: 0.8;
+  }
+
+  #post-date {
+    position: relative;
+  }
+
+  #post-date:hover:before {
+    position: absolute;
+    content: attr(data-updated);
+    top: -33px;
+    width: fit-content;
+    border: 1px solid var(--border);
+    border-radius: 2rem;
+    text-align: center;
+    background-color: var(--muted);
+    padding: 2px 4px;
+    flex-wrap: nowrap;
+    color: var(--muted-foreground);
   }
 </style>

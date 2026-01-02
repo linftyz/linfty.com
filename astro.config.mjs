@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig, envField, fontProviders } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
@@ -24,6 +24,21 @@ export default defineConfig({
     icon(),
     sitemap(),
   ],
+
+  env: {
+    schema: {
+      UMAMI_URL: envField.string({
+        context: "server",
+        access: "public",
+        optional: true,
+      }),
+      UMAMI_WEBSITE_ID: envField.string({
+        context: "server",
+        access: "public",
+        optional: true,
+      }),
+    },
+  },
 
   experimental: {
     fonts: [
