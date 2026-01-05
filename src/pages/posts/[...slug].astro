@@ -10,6 +10,7 @@ import Img from "@/components/md/Img.astro";
 import { Icon } from "astro-icon/components";
 import Toast from "@/components/blocks/Toast.astro";
 import Comments from "@/components/blocks/Comments.astro";
+import TableOfContents from "@/components/blocks/TableOfContents.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -20,7 +21,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 const category = await getEntry(post.data.category);
 const tags = (await getEntries(post.data.tags)).filter((value) => value);
 ---
@@ -99,6 +100,8 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
       </div>
     </header>
 
+    <TableOfContents headings={headings} />
+
     <div
       class:list={[
         "prose max-w-none dark:prose-invert",
@@ -111,18 +114,6 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
     >
       <Content components={{ a: Link, img: Img }} />
     </div>
-
-    <!-- <section
-      class="flex items-center gap-3 font-mono text-xs text-muted-foreground/60 italic"
-    >
-      {
-        tags.map((tag) => (
-          <a href={`/tags/${tag.data.slug}`} class="hover:text-primary">
-            #{tag.data.name}
-          </a>
-        ))
-      }
-    </section> -->
 
     <div
       class="animate-in fade-in mt-12 mb-8 flex flex-wrap gap-2 duration-1000"
