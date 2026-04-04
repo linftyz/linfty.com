@@ -1,0 +1,104 @@
+[
+  {
+    "name": "编辑器",
+    "slug": "editors",
+    "order": 1,
+    "items": [
+      {
+        "name": "VS Code",
+        "link": "https://code.visualstudio.com",
+        "logo": "vscode.svg",
+        "icon": "mdi:microsoft-visual-studio-code"
+      },
+      {
+        "name": "Zed",
+        "link": "https://zed.dev",
+        "logo": {
+          "light": "zed-light.svg",
+          "dark": "zed-dark.svg"
+        },
+        "icon": "mdi:flash-outline"
+      },
+      {
+        "name": "Ghostty",
+        "link": "https://ghostty.org",
+        "logo": "ghostty.svg",
+        "icon": "mdi:terminal"
+      },
+      {
+        "name": "Obsidian",
+        "link": "https://obsidian.md",
+        "logo": "obsidian.svg",
+        "icon": "mdi:diamond-stone"
+      },
+      {
+        "name": "Typora",
+        "link": "https://typora.io",
+        "icon": "mdi:language-markdown-outline"
+      }
+    ]
+  },
+  {
+    "name": "效率",
+    "slug": "productivity",
+    "order": 2,
+    "items": [
+      {
+        "name": "Raycast",
+        "link": "https://www.raycast.com",
+        "logo": "raycast.svg",
+        "icon": "mdi:lightning-bolt"
+      },
+      {
+        "name": "Snipaste",
+        "link": "https://www.snipaste.com",
+        "icon": "mdi:content-cut"
+      }
+    ]
+  },
+  {
+    "name": "环境",
+    "slug": "environment",
+    "order": 3,
+    "items": [
+      {
+        "name": "Mac Mini",
+        "icon": "mdi:desktop-mac"
+      },
+      {
+        "name": "Arch Linux",
+        "icon": "mdi:linux"
+      }
+    ]
+  },
+  {
+    "name": "AI",
+    "slug": "ai-tools",
+    "order": 4,
+    "items": [
+      {
+        "name": "YouMind",
+        "link": "https://youmind.ai",
+        "icon": "mdi:brain"
+      },
+      {
+        "name": "Monica",
+        "link": "https://monica.im",
+        "icon": "mdi:robot-outline"
+      },
+      {
+        "name": "Claude Code",
+        "logo": "claude.svg",
+        "icon": "mdi:console-line"
+      },
+      {
+        "name": "Codex",
+        "logo": {
+          "light": "codex-light.svg",
+          "dark": "codex-dark.svg"
+        },
+        "icon": "mdi:code-braces-box"
+      }
+    ]
+  }
+]

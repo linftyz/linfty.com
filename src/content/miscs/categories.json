@@ -1,25 +1,36 @@
 [
   {
-    "name": "Technology",
-    "slug": "technology",
-    "description": "Articles about web development and programming",
-    "icon": "mdi:code-tags"
+    "name": "编程开发",
+    "slug": "programming",
+    "description": "涵盖所有编程开发类博客",
+    "icon": "mdi:code-braces"
   },
   {
-    "name": "Design",
-    "slug": "design",
-    "description": "Thoughts on UI/UX and visual design",
-    "icon": "mdi:palette"
+    "name": "百宝箱",
+    "slug": "resources",
+    "description": "独乐乐不如众乐乐",
+    "icon": "mdi:toolbox-outline"
   },
   {
-    "name": "Life",
+    "name": "生活日常",
     "slug": "life",
-    "description": "Daily life and personal reflections",
-    "icon": "mdi:coffee"
+    "description": "记录日常琐碎。",
+    "icon": "mdi:coffee-outline"
   },
   {
-    "name": "Uncategorized",
+    "name": "折腾之路",
+    "slug": "experiments",
+    "description": "记录尝试折腾各种技术、工具的心得和想法。",
+    "icon": "mdi:test-tube"
+  },
+  {
+    "name": "学习笔记",
+    "slug": "learning",
+    "icon": "mdi:book-open-page-variant-outline"
+  },
+  {
+    "name": "未分类",
     "slug": "uncategorized",
-    "icon": "mdi:folder"
+    "icon": "mdi:folder-question-outline"
   }
 ]

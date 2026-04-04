@@ -38,11 +38,13 @@ const projects = defineCollection({
     title: z.string(),
     description: z.string(),
     tech: z.array(z.string()),
-    links: z.object({
-      homepage: z.string().url().optional(),
-      github: z.string().url().optional(),
-      demo: z.string().url().optional(),
-    }).optional(),
+    links: z
+      .object({
+        homepage: z.string().url().optional(),
+        github: z.string().url().optional(),
+        demo: z.string().url().optional(),
+      })
+      .optional(),
     status: z
       .enum(["planning", "in-progress", "completed", "archived"])
       .default("completed"),
@@ -90,6 +92,31 @@ const friends = defineCollection({
   }),
 });
 
+const tools = defineCollection({
+  loader: file("./src/content/miscs/tools.json"),
+  schema: z.object({
+    name: z.string().max(32),
+    slug: slug(),
+    order: z.number().int().nonnegative(),
+    items: z.array(
+      z.object({
+        name: z.string().max(64),
+        link: z.string().url().optional(),
+        icon: z.string().optional(),
+        logo: z
+          .union([
+            z.string(),
+            z.object({
+              light: z.string().optional(),
+              dark: z.string().optional(),
+            }),
+          ])
+          .optional(),
+      }),
+    ),
+  }),
+});
+
 const pages = defineCollection({
   loader: glob({
     pattern: "**/*.{md,mdx}",
@@ -107,5 +134,6 @@ export const collections = {
   categories,
   tags,
   friends,
+  tools,
   pages,
 };

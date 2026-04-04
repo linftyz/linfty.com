@@ -1,39 +1,63 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import site from "@/config/site";
-import { Icon } from "astro-icon/components";
+import ToolLogo from "@/components/blocks/ToolLogo.astro";
+
+const tools = (await getCollection("tools")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
 <Layout title={site.labels.toolsTitle} description={site.labels.toolsTitle}>
-  <div class="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl p-8 duration-700 md:p-16">
-    <h2 class="mb-12 text-3xl font-bold">{site.labels.toolsTitle}</h2>
+  <div
+    class="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl p-8 duration-700 md:p-16"
+  >
+    <header class="mb-16">
+      <h2 class="mb-4 text-3xl font-bold">{site.labels.toolsTitle}</h2>
+      <p class="text-sm font-light text-muted-foreground italic">
+        记录我日常比较常用的一些工具与工作环境。
+      </p>
+    </header>
 
-    <div class="space-y-8">
+    <div class="space-y-10">
       {
-        site.tools.map((category) => (
+        tools.map((category) => (
           <section>
-            <h3 class="mb-4 text-xs font-bold tracking-widest text-primary uppercase">
-              {category.name}
+            <h3 class="mb-4 text-[10px] font-bold tracking-[0.3em] text-primary uppercase">
+              {category.data.name}
             </h3>
             <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
-              {category.items.map((item) => (
-                item.link ? (
+              {category.data.items.map((item) => {
+                const content = (
+                  <>
+                    <ToolLogo
+                      name={item.name}
+                      logo={item.logo}
+                      icon={item.icon}
+                      class="h-4 w-4 shrink-0 text-muted-foreground/60"
+                    />
+                    <span class="min-w-0 truncate font-medium transition-colors duration-300 group-hover:text-primary">
+                      {item.name}
+                    </span>
+                  </>
+                );
+
+                return item.link ? (
                   <a
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="group flex items-center gap-2.5 rounded-xl border border-border/50 bg-muted/20 px-4 py-3 text-sm text-foreground/80 transition-all duration-300 hover:border-primary/40 hover:bg-muted/30 hover:text-primary hover:-translate-y-0.5"
+                    class="group flex items-center gap-2.5 rounded-2xl border border-border/40 bg-muted/20 px-4 py-3 text-sm text-foreground/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:bg-card"
                   >
-                    <Icon name={item.icon || "mdi:application"} class="h-4 w-4 shrink-0 text-primary/60 transition-transform duration-300 group-hover:scale-110" />
-                    <span>{item.name}</span>
+                    {content}
                   </a>
                 ) : (
-                  <div class="flex items-center gap-2.5 rounded-xl border border-border/50 bg-muted/20 px-4 py-3 text-sm text-foreground/80">
-                    <Icon name={item.icon || "mdi:application"} class="h-4 w-4 shrink-0 text-primary/60" />
-                    <span>{item.name}</span>
+                  <div class="group flex items-center gap-2.5 rounded-2xl border border-border/40 bg-muted/20 px-4 py-3 text-sm text-foreground/80">
+                    {content}
                   </div>
-                )
-              ))}
+                );
+              })}
             </div>
           </section>
         ))

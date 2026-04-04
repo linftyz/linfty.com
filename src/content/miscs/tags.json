@@ -1,9 +1,75 @@
 [
-  { "name": "Astro", "slug": "astro" },
-  { "name": "Tailwind CSS", "slug": "tailwindcss" },
-  { "name": "JavaScript", "slug": "javascript" },
-  { "name": "TypeScript", "slug": "typescript" },
-  { "name": "CSS", "slug": "css" },
-  { "name": "Markdown", "slug": "markdown" },
-  { "name": "Tutorial", "slug": "tutorial" }
+  {
+    "name": "python",
+    "slug": "python"
+  },
+  {
+    "name": "pip",
+    "slug": "pip"
+  },
+  {
+    "name": "TailwindCSS",
+    "slug": "tailwindcss"
+  },
+  {
+    "name": "CSS",
+    "slug": "css"
+  },
+  {
+    "name": "代码片段",
+    "slug": "code-snippets"
+  },
+  {
+    "name": "前端开发",
+    "slug": "frontend-development"
+  },
+  {
+    "name": "后端开发",
+    "slug": "backend-development"
+  },
+  {
+    "name": "备忘录",
+    "slug": "memo",
+    "description": "记录一些可能常见又容易忘记的内容。"
+  },
+  {
+    "name": "字体",
+    "slug": "font"
+  },
+  {
+    "name": "环境配置",
+    "slug": "env"
+  },
+  {
+    "name": "素材",
+    "slug": "material"
+  },
+  {
+    "name": "编程",
+    "slug": "programming"
+  },
+  {
+    "name": "MacOS",
+    "slug": "macos"
+  },
+  {
+    "name": "应用程序",
+    "slug": "application"
+  },
+  {
+    "name": "Astro",
+    "slug": "astro"
+  },
+  {
+    "name": "Artalk",
+    "slug": "artalk"
+  },
+  {
+    "name": "Docker",
+    "slug": "docker"
+  },
+  {
+    "name": "Docker Compose",
+    "slug": "docker-compose"
+  }
 ]

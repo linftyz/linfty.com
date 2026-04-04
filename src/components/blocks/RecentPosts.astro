@@ -2,6 +2,7 @@
 import PostPreview from "@/components/blocks/PostPreview.astro";
 import { getRecentPosts } from "@/utils/post";
 import { Icon } from "astro-icon/components";
+import site from "@/config/site";
 
 const recentPosts = await getRecentPosts(5);
 ---
@@ -11,12 +12,12 @@ const recentPosts = await getRecentPosts(5);
     <p
       class="text-[11px] font-bold tracking-[0.4em] text-muted-foreground uppercase opacity-60"
     >
-      Latest
+      {site.labels.latestPosts}
     </p>
     <a
       href="/posts"
       class="flex items-center gap-1 border-b border-transparent text-[11px] text-muted-foreground hover:border-primary hover:text-primary"
-      >View all <Icon name="mdi:arrow-right" /></a
+      >{site.labels.viewAllPosts} <Icon name="mdi:arrow-right" /></a
     >
   </div>
 

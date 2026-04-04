@@ -12,13 +12,18 @@ const years = [
 
 <Layout
   title={site.labels.postsTitle}
-  description={`${site.labels.postsDescription} — ${posts.length} posts.`}
+  description={`${site.labels.postsDescription} · 共 ${posts.length} ${site.labels.postsCountSuffix}`}
 >
-  <div class="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl p-8 duration-700 md:p-16">
+  <div
+    class="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl p-8 duration-700 md:p-16"
+  >
     <header class="mb-12">
-      <h2 class="mb-4 text-3xl font-bold tracking-tight">{site.labels.postsTitle}</h2>
+      <h2 class="mb-4 text-3xl font-bold tracking-tight">
+        {site.labels.postsTitle}
+      </h2>
       <p class="text-sm font-light text-muted-foreground italic">
-        {site.labels.postsDescription} — {posts.length} posts.
+        {site.labels.postsDescription} · 共 {posts.length}
+        {site.labels.postsCountSuffix}
       </p>
     </header>
 

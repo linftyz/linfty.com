@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { getPosts } from "@/utils/post";
 import { Icon } from "astro-icon/components";
+import site from "@/config/site";
 
 export async function getStaticPaths() {
   const allTags = await getCollection("tags");
@@ -26,7 +27,7 @@ const { tag, posts } = Astro.props;
 ---
 
 <Layout
-  title={`Tag: ${tag.data.name}`}
+  title={`${site.labels.tagPrefix}${tag.data.name}`}
   description={`${tag.data.name}`}
 >
   <div class="mx-auto max-w-2xl p-8 md:p-16">
@@ -35,7 +36,8 @@ const { tag, posts } = Astro.props;
         href="/tags"
         class="mb-6 flex items-center gap-1 text-[10px] font-bold tracking-widest text-muted-foreground/60 uppercase transition-colors hover:text-primary"
       >
-        <Icon name="mdi:arrow-left" size={14} /> Back
+        <Icon name="mdi:arrow-left" size={14} />
+        {site.labels.backToTags}
       </a>
       <h2 class="mb-4 text-3xl font-bold tracking-tight">
         <span class="text-primary">{tag.data.name}</span>

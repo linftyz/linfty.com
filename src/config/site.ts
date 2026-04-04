@@ -1,48 +1,59 @@
+import type { SiteConfig } from "@/types";
+
 const site = {
   // --- Site Metadata ---
   meta: {
-    title: "Breeze",
-    description: "A minimal Astro theme for personal websites",
-    author: "Your Name",
+    title: "临风听雨",
+    description: "保持好奇，无限进步",
+    author: "宇风",
     logo: "/logo.svg",
     ogImage: "/og-image.png",
-    // HTML lang attribute, affects page language and date formatting
-    // Options: "zh-CN", "en", "ja", etc.
-    lang: "en",
+    lang: "zh-CN",
   },
 
   // --- Navigation ---
   // subtitle: decorative label shown below the name (uppercase, small text)
   navigation: [
-    { name: "Home", subtitle: "Index", href: "/" },
-    { name: "Writing", subtitle: "Blog", href: "/posts" },
-    { name: "Projects", subtitle: "Works", href: "/projects" },
-    { name: "Friends", subtitle: "Links", href: "/friends" },
-    { name: "About", subtitle: "Me", href: "/about" },
+    { name: "首页", subtitle: "Index", href: "/" },
+    { name: "文章列表", subtitle: "Blog", href: "/posts" },
+    { name: "项目作品", subtitle: "Projects", href: "/projects" },
+    { name: "朋友们", subtitle: "Friends", href: "/friends" },
+    { name: "关于", subtitle: "About", href: "/about" },
   ],
 
   // --- Social Links ---
   social: [
-    { name: "GitHub", href: "https://github.com/your-username", icon: "mdi:github" },
-    { name: "Email", href: "mailto:hello@example.com", icon: "mdi:email" },
+    { name: "GitHub", href: "https://github.com/linftyz", icon: "mdi:github" },
+    { name: "邮箱", href: "mailto:hi@linfty.com", icon: "mdi:email" },
   ],
 
   // --- Homepage Hero ---
   hero: {
-    greeting: "👋 Hello, I'm Breeze",
+    greeting: "👋 你好，我是宇风",
     // Supports HTML. Use <span class="font-medium text-foreground underline decoration-primary/30"> to highlight keywords
-    description:
-      'A minimal personal website theme built with <span class="font-medium text-foreground underline decoration-primary/30">Astro</span> and <span class="font-medium text-foreground underline decoration-primary/30">Tailwind CSS</span>.',
+    description: `
+      <p class="text-lg leading-relaxed font-light text-muted-foreground">
+      一名热爱探索新技术的业余全栈开发者。我会在这里分享关于 <span
+        class="font-medium text-foreground underline decoration-primary/30"
+        >开发经验</span
+      >、<span class="font-medium text-foreground underline decoration-primary/30"
+        >折腾笔记</span
+      > 以及 <span
+        class="font-medium text-foreground underline decoration-primary/30"
+        >数字生活</span
+      > 的思考。
+    </p>
+    `,
     cards: [
-      { icon: "mdi:explore", label: "Status", value: "Building something cool" },
-      { icon: "mdi:location", label: "Location", value: "Earth" },
+      { icon: "mdi:explore", label: "状态", value: "做一些有趣的东西" },
+      { icon: "mdi:location", label: "坐标", value: "中国 · 西安" },
     ],
   },
 
   // --- Footer ---
   footer: {
-    copyright: "© 2025 Breeze",
-    builtWith: "Built with Astro",
+    copyright: "© 2025 临风听雨",
+    builtWith: "基于 Astro 构建",
   },
 
   // --- Comments ---
@@ -62,63 +73,66 @@ const site = {
     newPostDays: 7,
   },
 
-  // --- Tools Page Data ---
-  tools: [
-    {
-      name: "development",
-      items: [
-        { name: "VS Code", link: "https://code.visualstudio.com", icon: "mdi:microsoft-visual-studio-code" },
-        { name: "WebStorm", link: "https://www.jetbrains.com/webstorm", icon: "mdi:code-braces" },
-        { name: "Terminal", icon: "mdi:terminal" },
-        { name: "Git", link: "https://git-scm.com", icon: "mdi:git" },
-        { name: "Docker", link: "https://www.docker.com", icon: "mdi:docker" },
-        { name: "Postman", link: "https://www.postman.com", icon: "mdi:api" },
-      ]
-    },
-    {
-      name: "design",
-      items: [
-        { name: "Figma", link: "https://www.figma.com", icon: "mdi:vector-polygon" },
-        { name: "Sketch", link: "https://www.sketch.com", icon: "mdi:vector-square" },
-        { name: "Adobe XD", link: "https://www.adobe.com/products/xd.html", icon: "mdi:pencil-ruler" },
-        { name: "Photoshop", link: "https://www.adobe.com/products/photoshop.html", icon: "mdi:image-edit" },
-      ]
-    },
-    {
-      name: "productivity",
-      items: [
-        { name: "Notion", link: "https://www.notion.so", icon: "mdi:notebook" },
-        { name: "Obsidian", link: "https://obsidian.md", icon: "mdi:diamond-stone" },
-        { name: "Raycast", link: "https://www.raycast.com", icon: "mdi:lightning-bolt" },
-        { name: "Arc Browser", link: "https://arc.net", icon: "mdi:web" },
-      ]
-    },
-  ],
-
   // --- UI Labels ---
   // Customize these values to change the text displayed on pages
   labels: {
-    postsTitle: "Writing",
-    postsDescription: "Notes, thoughts, and technical musings",
-    projectsTitle: "Projects",
-    projectsDescription: "Small tools built for fun or to solve real problems.",
-    friendsTitle: "Friends",
-    friendsDescription: "Like-minded folks around the web.",
-    toolsTitle: "Stack",
-    aboutTitle: "About",
-    aboutDescription: "About this site and its author",
-    backToPosts: "Back to posts",
-    goHome: "Go Home",
-    notFoundTitle: "Page not found",
-    notFoundDescription: "The page you're looking for may have been removed or the link is broken.",
-    endOfPost: "End of Post",
-    tableOfContents: "Table of Contents",
-    searchPlaceholder: "Search posts, tags, or commands...",
-    searchNavigate: "Navigate",
-    commentSuccess: "Comment submitted",
+    postsTitle: "文章",
+    postsDescription: "记录笔记、思考，以及一些技术探索",
+    projectsTitle: "项目",
+    projectsDescription: "一些为兴趣而做，也为解决实际问题而生的小作品。",
+    friendsTitle: "朋友们",
+    friendsDescription: "散落在网络各处的有趣灵魂。",
+    toolsTitle: "工具箱",
+    aboutTitle: "关于",
+    aboutDescription: "关于这个网站，以及写下这些内容的我",
+    categoriesTitle: "分类",
+    categoriesDescription: "浏览所有分类",
+    tagsTitle: "标签",
+    tagsDescription: "浏览所有标签",
+    backToPosts: "返回文章列表",
+    backToCategories: "返回分类页",
+    backToTags: "返回标签页",
+    goHome: "回到首页",
+    notFoundTitle: "页面未找到",
+    notFoundDescription: "你访问的页面可能已被移除，或者链接已经失效。",
+    endOfPost: "正文结束",
+    tableOfContents: "目录",
+    searchPlaceholder: "搜索文章、标签或命令...",
+    searchTrigger: "搜索",
+    searchNavigate: "快速访问",
+    contactTitle: "联系我",
+    latestPosts: "最新文章",
+    viewAllPosts: "查看全部",
+    noDescription: "暂无描述",
+    noFriends: "还没有友链。",
+    noProjects: "还没有项目。",
+    postsCountSuffix: "篇文章",
+    categoriesCountSuffix: "个分类",
+    tagsCountSuffix: "个标签",
+    categoryPrefix: "分类：",
+    tagPrefix: "标签：",
+    detailLabel: "正文",
+    updatedPrefix: "更新于 ",
+    notUpdated: "尚未更新",
+    editedSuffix: "（已编辑）",
+    wordCount: "字数",
+    viewCount: "阅读",
+    commentCount: "评论",
+    newBadge: "新",
+    draftBadge: "草稿",
+    websiteLabel: "网站",
+    sourceLabel: "源码",
+    demoLabel: "演示",
+    commentSuccess: "评论提交成功",
+    projectStatus: {
+      planning: "规划中",
+      "in-progress": "进行中",
+      completed: "已完成",
+      archived: "已归档",
+    },
   },
 
   ogImage: "/og-image.png",
-} as const;
+} as const satisfies SiteConfig;
 
 export default site;

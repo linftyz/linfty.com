@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import { getPosts } from "@/utils/post";
 import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
+import site from "@/config/site";
 
 const allCategories = await getCollection("categories");
 const allPosts = await getPosts();
@@ -14,12 +15,18 @@ const categoryCounts = allPosts.reduce((acc: Record<string, number>, post) => {
 }, {});
 ---
 
-<Layout title="Categories" description="Browse all categories.">
-  <div class="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl p-8 duration-700 md:p-16">
+<Layout
+  title={site.labels.categoriesTitle}
+  description={site.labels.categoriesDescription}
+>
+  <div
+    class="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl p-8 duration-700 md:p-16"
+  >
     <header class="mb-16">
-      <h2 class="mb-4 text-3xl font-bold">Categories</h2>
+      <h2 class="mb-4 text-3xl font-bold">{site.labels.categoriesTitle}</h2>
       <p class="mb-12 text-sm font-light text-muted-foreground italic">
-        {allCategories.length} categories in total.
+        共 {allCategories.length}
+        {site.labels.categoriesCountSuffix}
       </p>
     </header>
 
@@ -28,22 +35,23 @@ const categoryCounts = allPosts.reduce((acc: Record<string, number>, post) => {
         allCategories.map((cat) => (
           <a
             href={`/categories/${cat.data.slug}`}
-            class="group flex items-center gap-4 rounded-2xl border border-border/50 bg-muted/20 p-5 transition-all duration-300 hover:border-primary/30 hover:bg-card hover:-translate-y-1"
+            class="group rounded-2xl border border-border/50 bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-card"
           >
-            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/25">
-              <Icon name={cat.data.icon} class="h-6 w-6" />
-            </div>
-            <div class="min-w-0 flex-1">
-              <div class="mb-1 flex items-center gap-2">
-                <h3 class="truncate text-base font-bold group-hover:text-primary">
+            <div class="min-w-0">
+              <div class="mb-2 flex items-center gap-2">
+                <Icon
+                  name={cat.data.icon}
+                  class="h-4 w-4 shrink-0 text-muted-foreground/60 transition-colors duration-300 group-hover:text-primary/80"
+                />
+                <h3 class="truncate text-base font-bold text-foreground/85 group-hover:text-primary">
                   {cat.data.name}
                 </h3>
-                <span class="shrink-0 rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] text-primary/70">
+                <span class="shrink-0 font-mono text-[10px] text-muted-foreground/45 transition-colors duration-300 group-hover:text-primary/60">
                   {categoryCounts[cat.id] || 0}
                 </span>
               </div>
-              <p class="line-clamp-2 text-xs text-muted-foreground">
-                {cat.data.description || "No description"}
+              <p class="line-clamp-2 text-xs leading-relaxed text-muted-foreground">
+                {cat.data.description || site.labels.noDescription}
               </p>
             </div>
           </a>

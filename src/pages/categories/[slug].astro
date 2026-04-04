@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { getPosts } from "@/utils/post";
 import { Icon } from "astro-icon/components";
+import site from "@/config/site";
 
 export async function getStaticPaths() {
   const allCategories = await getCollection("categories");
@@ -24,7 +25,7 @@ const { category, posts } = Astro.props;
 ---
 
 <Layout
-  title={`Category: ${category.data.name}`}
+  title={`${site.labels.categoryPrefix}${category.data.name}`}
   description={`${category.data.name}`}
 >
   <div class="mx-auto max-w-2xl p-8 md:p-16">
@@ -33,15 +34,27 @@ const { category, posts } = Astro.props;
         href="/categories"
         class="mb-6 flex items-center gap-1 text-[10px] font-bold tracking-widest text-muted-foreground/60 uppercase transition-colors hover:text-primary"
       >
-        <Icon name="mdi:arrow-left" size={14} /> Back
+        <Icon name="mdi:arrow-left" size={14} />
+        {site.labels.backToCategories}
       </a>
-      <h2 class="mb-4 text-3xl font-bold tracking-tight">
-        <span class="text-primary">{category.data.name}</span>
-      </h2>
+
+      <div class="mb-4 flex flex-wrap items-center gap-3">
+        <Icon
+          name={category.data.icon}
+          class="h-6 w-6 shrink-0 text-muted-foreground/60"
+        />
+        <h2 class="text-3xl font-bold tracking-tight">
+          <span class="text-primary">{category.data.name}</span>
+        </h2>
+        <span class="text-xs font-light text-muted-foreground/80">
+          {posts.length} 篇文章
+        </span>
+      </div>
+
       <p
-        class="border-l-2 border-primary/20 py-1 pl-4 text-sm font-light text-muted-foreground italic"
+        class="max-w-xl text-sm leading-relaxed font-light text-muted-foreground italic"
       >
-        {category.data.description}
+        {category.data.description || site.labels.noDescription}
       </p>
     </header>
 

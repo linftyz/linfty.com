@@ -1,13 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <path id="leaf" d="
+      M256 118
+      C206 118 168 154 168 204
+      C168 260 214 300 238 318
+      Q256 331 274 318
+      C298 300 344 260 344 204
+      C344 154 306 118 256 118
+      Z" />
+  </defs>
+
   <style>
-    .stroke-light { stroke: #3F9C87; }
+    .logo { fill: #3F9C87; }
     @media (prefers-color-scheme: dark) {
-      .stroke-light { stroke: #5DBFA6; }
+      .logo { fill: #5DBFA6; }
     }
   </style>
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round" class="stroke-light">
-    <path d="M18 38 Q42 18 68 38 Q88 54 105 30" stroke-width="8" stroke-opacity="0.5"/>
-    <path d="M10 62 Q40 36 72 62 Q96 82 112 52" stroke-width="10"/>
-    <path d="M22 86 Q48 66 74 86 Q94 100 108 78" stroke-width="8" stroke-opacity="0.5"/>
+
+  <g transform="translate(256 256) scale(0.96) translate(-256 -256)" class="logo">
+    <use href="#leaf" transform="rotate(45 256 256) translate(0,-95)" opacity="0.4"/>
+    <use href="#leaf" transform="rotate(135 256 256) translate(0,-95)"/>
+    <use href="#leaf" transform="rotate(225 256 256) translate(0,-95)"/>
+    <use href="#leaf" transform="rotate(315 256 256) translate(0,-95)"/>
   </g>
 </svg>

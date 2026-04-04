@@ -1,26 +1,28 @@
 ---
-title: About
-description: About this site and its author
+title: 关于
+description: 关于这个网站，以及写下这些内容的我
 ---
 
-## About Me
+## 关于我
 
-Hello! I'm a developer who loves building things for the web.
+你好，我是 **宇风**。一名爱折腾的业余全栈开发者。
 
-I created this site using [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com), and I'm sharing it as a theme called **Breeze** so others can use it too.
+开始写博客好像已经好几年，搭建博客的各种平台和工具都折腾过。无论是 Wordpress、Typecho、Halo 和 Ghost 这类动态网站平台，还是 Hexo、Hugo 之类的静态博客生成器，甚至还尝试过自己用 Python 写博客，最后都是无疾而终，没留下什么像样的内容。
 
-## Tech Stack
+这次使用 Astro 开发了本站，一个极简风格的个人网站，希望能够更加专注于内容本身，留下一些真正有价值的记录。
 
-- Astro + Tailwind CSS
-- TypeScript
-- Markdown / MDX
+在这里，主要会记录我的开发笔记、折腾记录、数字生活，以及一些优质网站和工具的分享。
 
-## What I Write About
+---
 
-- Web development tips and tutorials
-- Tools and workflows I find useful
-- Thoughts on technology and design
+### 技术栈 / Stack
 
-## Contact
+- 主要使用 Python 和 C++
+- 正在学习 Astro 和 Tailwind
+- 熟练安装各种 Linux 发行版 😄
 
-Feel free to reach out through the social links below.
+### 近况 / Now
+
+- 📍 定居在西安，某公司搬砖中
+- 📚 啃不动了
+- 🎮 最喜欢《泰拉瑞亚》

@@ -1,0 +1,67 @@
+---
+import { Icon } from "astro-icon/components";
+import type { MdiIconName, ToolLogoSource } from "@/types";
+
+interface Props {
+  name: string;
+  icon?: MdiIconName;
+  logo?: ToolLogoSource;
+  class?: string;
+}
+
+const { name, icon, logo, class: className = "h-4 w-4 shrink-0" } = Astro.props;
+
+const logoModules = import.meta.glob("../../assets/tools/*.svg", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>;
+
+const getLogoUrl = (file?: string) =>
+  file ? logoModules[`../../assets/tools/${file}`] : undefined;
+
+const resolvedLogo =
+  typeof logo === "string"
+    ? { light: getLogoUrl(logo), dark: getLogoUrl(logo) }
+    : {
+        light: getLogoUrl(logo?.light) ?? getLogoUrl(logo?.dark),
+        dark: getLogoUrl(logo?.dark) ?? getLogoUrl(logo?.light),
+      };
+
+const hasLogo = Boolean(resolvedLogo.light || resolvedLogo.dark);
+---
+
+{
+  hasLogo ? (
+    <span class={`relative flex items-center justify-center ${className}`}>
+      {resolvedLogo.light === resolvedLogo.dark ? (
+        <img
+          src={resolvedLogo.light}
+          alt={`${name} 图标`}
+          loading="lazy"
+          class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+        />
+      ) : (
+        <>
+          <img
+            src={resolvedLogo.light}
+            alt={`${name} 图标`}
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-contain transition-[opacity,transform] duration-200 group-hover:scale-105 dark:opacity-0"
+          />
+          <img
+            src={resolvedLogo.dark}
+            alt={`${name} 图标`}
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-contain opacity-0 transition-[opacity,transform] duration-200 group-hover:scale-105 dark:opacity-100"
+          />
+        </>
+      )}
+    </span>
+  ) : (
+    <Icon
+      name={icon || "mdi:application"}
+      class={`${className} transition-transform duration-300 group-hover:scale-105`}
+    />
+  )
+}

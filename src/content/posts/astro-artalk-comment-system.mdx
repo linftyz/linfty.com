@@ -1,0 +1,159 @@
+---
+title: "Astro 网站接入 Artalk 评论系统"
+createdAt: 2026-01-01
+category: "experiments"
+tags: ["astro", "artalk", "docker", "docker-compose"]
+---
+
+尝试给网站添加评论功能，查了一些资料，看了一些文章，最终选定下来使用 Artalk，主要是看了下部署比较简单，并且 UI 相对好看，并且容易自定义。
+
+## 首先是部署 Artalk
+
+这里我是直接使用官网文档中的 [Docker Compose](https://artalk.js.org/zh/guide/deploy.html#docker-compose) 的方式来进行部署，代码如下:
+
+```yaml title="docker-compose.yml"
+version: "3.8"
+services:
+  artalk:
+    container_name: artalk
+    image: artalk/artalk-go
+    restart: unless-stopped
+    ports:
+      - 8080:23366
+    volumes:
+      - ./data:/data
+    environment:
+      - TZ=Asia/Shanghai
+      - ATK_LOCALE=zh-CN
+      - ATK_SITE_DEFAULT=Artalk 的博客
+      - ATK_SITE_URL=https://example.com
+```
+
+这里 `ATK_SITE_URL` 需要填写自己网站的 URL, 而不是 Artalk 服务端的 URL, 然后运行 Artalk 服务器:
+
+```
+docker-compose up -d
+```
+
+我是直接在 Dokploy 中部署的 Artalk，原理是一致的，然后将 Artalk 服务绑定自己的域名方便使用（在不同情况下是配置方式是不一样的，可以自行搜索相关内容），例如 `atk.example.com`。
+
+## 然后在网站中集成 Artalk 客户端
+
+由于当前网站是直接基于 Astro 进行开发的，因此直接安装 node.js 依赖库，根据自己使用的包管理器选择性安装:
+
+```shell
+npm install artalk
+#yarn add artalk
+#pnpm add artalk
+#bun add artalk
+```
+
+创建 `Comments.astro` 组件
+
+```html title="Comments.astro"
+<div class="animate-in fade-in duration-1000">
+  <div id="atk-comments"></div>
+</div>
+
+<script>
+  import "artalk/dist/Artalk.css";
+  import Artalk from "artalk";
+  import site from "@/config/site";
+
+  document.addEventListener("astro:page-load", () => {
+    const atkElement = document.querySelector("#atk-comments");
+    if (!atkElement) {
+      return;
+    }
+
+    const artalk = Artalk.init({
+      el: "#atk-comments",
+      server: "你自己部署的 Artalk 服务器地址, 例如: https://atk.example.com",
+      site: site.meta.title,
+      pageTitle: document.title,
+      pageKey: document.location.pathname,
+    });
+  });
+</script>
+```
+
+然后就可以再需要添加评论的位置，插入 `Comments `组件了，例如文章内容页，留言板之类的页面中。
+
+另外 Artalk 还支持事件监听，例如说当用户提交评论后提示用户是否评论成功，又或者再评论加载完成之后完成一些额外的功能等到，例如:
+
+```js
+artalk.on("list-loaded", () => {
+  console.log("Artalk: 评论加载完成");
+});
+
+artalk.on("comment-inserted", function () {
+  console.log("Artalk: 评论已添加");
+});
+```
+
+## 自定义评论样式
+
+实际上 Artalk 支持通过 `darkMode: auto` 和 setDarkMode 的方式来配合网站主题切换暗黑模式的，但是我自己使用的时候未生效，可能是没搞清楚用法。
+
+![artalk自定义效果](https://images.linfty.com/2026/01/atk-comments.webp)
+
+因此我是用了更直接一点的方法，直接覆盖 Artalk 样式文件 `artalk/dist/Artalk.css` 中的部分样式来达到自定义主题的效果，也能达到很好的效果，例如我是用的代码如下:
+
+```html title="Comments.astro"
+<style is:global>
+  .artalk,
+  .atk-layer-wrap {
+    --at-color-main: var(--primary) !important;
+    --at-color-primary: var(--primary) !important;
+
+    --at-color-font: var(--foreground) !important;
+    --at-color-deep: var(--foreground) !important;
+    --at-color-sub: var(--muted-foreground) !important;
+    --at-color-grey: var(--muted-foreground) !important;
+    --at-color-meta: var(--muted-foreground) !important;
+
+    --at-color-border: var(--border) !important;
+    --at-color-bg: var(--card) !important;
+    --at-color-bg-transl: oklch(from var(--card) l c h / 0.95) !important;
+    --at-color-bg-grey: oklch(from var(--muted) l c h / 0.1) !important;
+    --at-color-bg-grey-transl: oklch(from var(--muted) l c h / 0.05) !important;
+    --at-color-bg-light: oklch(from var(--primary) l c h / 0.05) !important;
+
+    --at-color-gradient: linear-gradient(
+      180deg,
+      transparent,
+      var(--card)
+    ) !important;
+  }
+
+  .dark .artalk,
+  .dark .atk-layer-wrap {
+    --at-color-bg: var(--card) !important;
+    --at-color-bg-transl: oklch(from var(--card) l c h / 0.95) !important;
+    --at-color-bg-grey: oklch(from var(--muted) l c h / 0.3) !important;
+
+    --at-color-gradient: linear-gradient(
+      180deg,
+      transparent,
+      var(--background)
+    ) !important;
+  }
+
+  .atk-send-btn {
+    border-radius: 2rem !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 12px oklch(from var(--primary) l c h / 0.2) !important;
+  }
+
+  .atk-main-editor {
+    border-radius: 1.5rem !important;
+    overflow: hidden;
+  }
+
+  .atk-main-editor:focus-within {
+    box-shadow: 0 0 0 2px oklch(from var(--primary) l c h / 0.15) !important;
+  }
+</style>
+```
+
+直接把这段代码，放到 `Comments.astro` 组件最后就可以了。

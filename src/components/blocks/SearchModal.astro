@@ -26,12 +26,16 @@ import site from "@/config/site";
       </p>
       <div class="flex flex-wrap gap-2">
         {
-          ["categories", "tags", "tools"].map((item) => (
+          [
+            { href: "/categories", label: site.labels.categoriesTitle },
+            { href: "/tags", label: site.labels.tagsTitle },
+            { href: "/tools", label: site.labels.toolsTitle },
+          ].map((item) => (
             <a
-              href={`/${item}`}
+              href={item.href}
               class="rounded-xl border border-border bg-muted/30 px-3 py-1.5 text-xs text-muted-foreground capitalize transition-all hover:text-primary"
             >
-              {item}
+              {item.label}
             </a>
           ))
         }
