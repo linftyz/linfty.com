@@ -71,6 +71,26 @@ button:focus-visible {
   border-radius: 10px;
 }
 
+@keyframes animate-in-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-in {
+  animation: animate-in-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+html[data-astro-transition] *,
+html[data-astro-transition-fallback] * {
+  transition: none !important;
+}
+
 html.theme-switching *,
 html.theme-switching *::before,
 html.theme-switching *::after {
