@@ -77,7 +77,19 @@ summary: 文章简介。
 
 ### 项目作品
 
-在 `src/content/projects/` 目录下添加，frontmatter 包含：`title`、`description`、`tech`、`link`、`status`。
+在 `src/content/projects/` 目录下添加，frontmatter 包含：`title`、`description`、`tech`、`status`、`image`、`links`。
+
+```yaml
+---
+title: 我的项目
+description: 一个简单的项目介绍
+tech: [Astro, TailwindCSS]
+status: in-progress
+links:
+  homepage: https://example.com
+  github: https://github.com/you/project
+---
+```
 
 ### 分类与标签
 
@@ -127,6 +139,31 @@ pnpm build
 ```
 
 构建产物在 `dist/` 目录。
+
+### Cloudflare Pages
+
+推荐设置：
+
+- Build command: `pnpm build`
+- Build output directory: `dist`
+- Node.js version: `22`
+
+部署前请先检查：
+
+1. 将 `astro.config.mjs` 里的 `site` 改成你的正式域名
+2. 在 Cloudflare Pages 中配置需要的环境变量
+3. 如果使用 Artalk，请确认 Artalk 后端已将你的正式域名加入允许来源
+
+常见环境变量示例：
+
+```bash
+PUBLIC_ARTALK_SERVER=https://comments.example.com
+PUBLIC_ARTALK_ENABLED=true
+UMAMI_URL=https://umami.example.com/script.js
+UMAMI_WEBSITE_ID=your-website-id
+```
+
+如果你不填写 `PUBLIC_ARTALK_ENABLED`，当 `PUBLIC_ARTALK_SERVER` 存在时会自动启用评论。
 
 ## 许可证
 

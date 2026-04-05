@@ -16,7 +16,7 @@ import site from "@/config/site";
     <div class="mb-16 grid grid-cols-1 gap-4 md:grid-cols-2">
       {site.hero.cards.map((card, i) => (
         <div
-          class="flex gap-4 rounded-2xl border border-border/50 bg-muted/30 p-5 transition-all duration-300 hover:border-primary/30 hover:bg-muted/40 hover:-translate-y-1"
+          class="flex gap-4 rounded-2xl border border-border/50 bg-muted/30 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:bg-muted/40"
           style={`animation-delay: ${i * 100}ms`}
         >
           <div class="text-lg text-primary transition-transform duration-300 group-hover:scale-110">

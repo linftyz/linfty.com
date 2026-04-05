@@ -77,7 +77,19 @@ Edit `src/content/pages/about.md` — pure Markdown, no component knowledge need
 
 ### Projects
 
-Add to `src/content/projects/` with frontmatter: `title`, `description`, `tech`, `link`, `status`.
+Add entries to `src/content/projects/` with frontmatter such as `title`, `description`, `tech`, `status`, `image`, and `links`.
+
+```yaml
+---
+title: My Project
+description: A short project summary
+tech: [Astro, TailwindCSS]
+status: in-progress
+links:
+  homepage: https://example.com
+  github: https://github.com/you/project
+---
+```
 
 ### Categories & Tags
 
@@ -127,6 +139,31 @@ pnpm build
 ```
 
 The output is in `dist/`.
+
+### Cloudflare Pages
+
+Recommended settings:
+
+- Build command: `pnpm build`
+- Build output directory: `dist`
+- Node.js version: `22`
+
+Before deploying, make sure you:
+
+1. Update `site` in `astro.config.mjs` to your production domain
+2. Add the required environment variables in Cloudflare Pages
+3. If you use Artalk, allow your production domain in the Artalk server config
+
+Example environment variables:
+
+```bash
+PUBLIC_ARTALK_SERVER=https://comments.example.com
+PUBLIC_ARTALK_ENABLED=true
+UMAMI_URL=https://umami.example.com/script.js
+UMAMI_WEBSITE_ID=your-website-id
+```
+
+If `PUBLIC_ARTALK_ENABLED` is omitted, comments will auto-enable when `PUBLIC_ARTALK_SERVER` is set.
 
 ## License
 
