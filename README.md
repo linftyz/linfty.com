@@ -41,17 +41,17 @@ pnpm build
 
 All site configuration is in `src/config/site.ts`. This is the only file you need to edit to personalize the theme.
 
-| Section | Description |
-|---------|-------------|
-| `meta` | Site title, description, author, logo, language |
-| `navigation` | Navigation menu items with subtitle labels |
-| `social` | Social links (GitHub, Email, etc.) |
-| `hero` | Homepage greeting, description, info cards |
-| `footer` | Copyright and credit text |
-| `comments` | Artalk comments configuration |
-| `features` | Toggle search, RSS |
-| `tools` | Tools/Stack page data |
-| `labels` | All UI text labels (for i18n) |
+| Section      | Description                                     |
+| ------------ | ----------------------------------------------- |
+| `meta`       | Site title, description, author, logo, language |
+| `navigation` | Navigation menu items with subtitle labels      |
+| `social`     | Social links (GitHub, Email, etc.)              |
+| `hero`       | Homepage greeting, description, info cards      |
+| `footer`     | Copyright and credit text                       |
+| `comments`   | Artalk comments configuration                   |
+| `features`   | Toggle search, RSS                              |
+| `tools`      | Tools/Stack page data                           |
+| `labels`     | All UI text labels (for i18n)                   |
 
 Also update `astro.config.mjs` to set your `site` URL.
 
@@ -102,13 +102,21 @@ To change the color palette, find-and-replace the hue number:
 ## Comments (Artalk)
 
 1. Set up an [Artalk](https://artalk.js.org) server
-2. In `src/config/site.ts`, set `comments.enabled: true` and `comments.artalk.server` to your server URL
-3. To disable comments, set `comments.enabled: false`
+2. Copy `.env.example` to `.env`
+3. Set `PUBLIC_ARTALK_SERVER=https://your-artalk-server`
+4. Optionally set `PUBLIC_ARTALK_ENABLED=true` or `false` to force enable/disable
+
+These variables are declared in `astro.config.mjs` via `env.schema`, so Astro provides typed access automatically.
+On Cloudflare Pages, just add `PUBLIC_ARTALK_SERVER` in your project environment variables. No code change is required in `src/config/site.ts`.
 
 ## Analytics (Umami)
 
 1. Copy `.env.example` to `.env`
-2. Set `UMAMI_URL` and `UMAMI_WEBSITE_ID`
+2. Set `UMAMI_URL=https://your-umami-script-url`
+3. Set `UMAMI_WEBSITE_ID=your-website-id`
+
+These variables are also declared in `astro.config.mjs` via `env.schema`, so Astro provides typed access automatically.
+On Cloudflare Pages, just add `UMAMI_URL` and `UMAMI_WEBSITE_ID` in your project environment variables.
 
 ## Deploy
 

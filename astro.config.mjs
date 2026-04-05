@@ -38,6 +38,16 @@ export default defineConfig({
         access: "public",
         optional: true,
       }),
+      PUBLIC_ARTALK_SERVER: envField.string({
+        context: "server",
+        access: "public",
+        optional: true,
+      }),
+      PUBLIC_ARTALK_ENABLED: envField.boolean({
+        context: "server",
+        access: "public",
+        optional: true,
+      }),
     },
   },
 

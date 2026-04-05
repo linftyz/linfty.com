@@ -41,17 +41,17 @@ pnpm build
 
 所有站点配置集中在 `src/config/site.ts`，这是你个性化主题唯一需要编辑的文件。
 
-| 配置项 | 说明 |
-|--------|------|
-| `meta` | 站点标题、描述、作者、Logo、语言 |
-| `navigation` | 导航菜单项及副标题 |
-| `social` | 社交链接（GitHub、邮箱等） |
-| `hero` | 首页问候语、描述、信息卡片 |
-| `footer` | 版权和底部文案 |
-| `comments` | Artalk 评论系统配置 |
-| `features` | 功能开关（搜索、RSS） |
-| `tools` | 工具箱 / 技术栈页面数据 |
-| `labels` | 所有 UI 文案（方便国际化） |
+| 配置项       | 说明                             |
+| ------------ | -------------------------------- |
+| `meta`       | 站点标题、描述、作者、Logo、语言 |
+| `navigation` | 导航菜单项及副标题               |
+| `social`     | 社交链接（GitHub、邮箱等）       |
+| `hero`       | 首页问候语、描述、信息卡片       |
+| `footer`     | 版权和底部文案                   |
+| `comments`   | Artalk 评论系统配置              |
+| `features`   | 功能开关（搜索、RSS）            |
+| `tools`      | 工具箱 / 技术栈页面数据          |
+| `labels`     | 所有 UI 文案（方便国际化）       |
 
 同时修改 `astro.config.mjs` 中的 `site` 为你的域名。
 
@@ -102,13 +102,21 @@ summary: 文章简介。
 ## 评论系统（Artalk）
 
 1. 部署 [Artalk](https://artalk.js.org) 服务端
-2. 在 `src/config/site.ts` 中设置 `comments.enabled: true`，并填写 `comments.artalk.server`
-3. 如需关闭评论，设置 `comments.enabled: false`
+2. 复制 `.env.example` 为 `.env`
+3. 填写 `PUBLIC_ARTALK_SERVER=https://你的-artalk-地址`
+4. 如需显式控制开关，可额外设置 `PUBLIC_ARTALK_ENABLED=true` 或 `false`
+
+这些变量通过 `astro.config.mjs` 中的 `env.schema` 统一声明，并由 Astro 自动提供类型。
+在 Cloudflare Pages 中，直接把 `PUBLIC_ARTALK_SERVER` 添加到项目环境变量即可，无需再修改 `src/config/site.ts`。
 
 ## 数据分析（Umami）
 
 1. 复制 `.env.example` 为 `.env`
-2. 填写 `UMAMI_URL` 和 `UMAMI_WEBSITE_ID`
+2. 填写 `UMAMI_URL=https://你的-umami-脚本地址`
+3. 填写 `UMAMI_WEBSITE_ID=你的站点 ID`
+
+这些变量同样通过 `astro.config.mjs` 中的 `env.schema` 统一声明，并由 Astro 自动提供类型。
+在 Cloudflare Pages 中，直接把 `UMAMI_URL` 和 `UMAMI_WEBSITE_ID` 添加到项目环境变量即可。
 
 ## 部署
 
