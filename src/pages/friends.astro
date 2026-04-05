@@ -2,9 +2,28 @@
 import Layout from "@/layouts/Layout.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
+import Comments from "@/components/blocks/Comments.astro";
+import Toast from "@/components/blocks/Toast.astro";
 import site from "@/config/site";
 
-const friends = await getCollection("friends");
+const friends = (await getCollection("friends")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const emailContact = site.social.find((item) =>
+  item.href.startsWith("mailto:"),
+);
+
+const myInfo = {
+  name: site.friendCard.name,
+  description: site.friendCard.description,
+  link: site.friendCard.link || Astro.site,
+  avatar: site.friendCard.avatar || site.meta.logo,
+};
+
+const avatarUrl =
+  myInfo.avatar.startsWith("http://") || myInfo.avatar.startsWith("https://")
+    ? myInfo.avatar
+    : new URL(myInfo.avatar, Astro.site).toString();
 ---
 
 <Layout
@@ -57,6 +76,87 @@ const friends = await getCollection("friends");
             ))
           )
         }
+      </div>
+
+      <div class="mt-12 border-t border-border/40 pt-8">
+        <p
+          class="mb-6 text-sm leading-relaxed font-light text-muted-foreground"
+        >
+          下面是我的网站信息。如果你也在写博客，欢迎留言聊聊。
+          {
+            emailContact ? (
+              <>
+                也可以
+                <a
+                  href={emailContact.href}
+                  class="mx-1 border-b border-border pb-0.5 text-foreground/80 transition-colors hover:border-primary hover:text-primary"
+                >
+                  给我发邮件
+                </a>
+                联系我。
+              </>
+            ) : null
+          }
+          回复可能不会那么及时，不过我看到了一般都会回。
+        </p>
+
+        <div class="rounded-2xl border border-border/40 p-5">
+          <div class="mb-5 flex items-center gap-4">
+            <Image
+              src={myInfo.avatar}
+              width={52}
+              height={52}
+              alt={myInfo.name}
+              loading={"lazy"}
+              class="rounded-xl bg-muted"
+            />
+            <div class="min-w-0">
+              <h3 class="text-base font-bold text-foreground/85">
+                {myInfo.name}
+              </h3>
+              <p class="text-sm text-muted-foreground">{myInfo.description}</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-sm">
+            <p class="flex flex-col gap-1 sm:flex-row sm:gap-3">
+              <span class="w-12 shrink-0 text-muted-foreground">名称</span>
+              <span>{myInfo.name}</span>
+            </p>
+            <p class="flex flex-col gap-1 sm:flex-row sm:gap-3">
+              <span class="w-12 shrink-0 text-muted-foreground">地址</span>
+              <a
+                href={myInfo.link}
+                class="break-all text-foreground/80 transition-colors hover:text-primary"
+              >
+                {myInfo.link}
+              </a>
+            </p>
+            <p class="flex flex-col gap-1 sm:flex-row sm:gap-3">
+              <span class="w-12 shrink-0 text-muted-foreground">描述</span>
+              <span>{myInfo.description}</span>
+            </p>
+            <p class="flex flex-col gap-1 sm:flex-row sm:gap-3">
+              <span class="w-12 shrink-0 text-muted-foreground">头像</span>
+              <a
+                href={avatarUrl}
+                class="break-all text-foreground/80 transition-colors hover:text-primary"
+              >
+                {avatarUrl}
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 border-t border-border/40 pt-8">
+        <h3 class="mb-3 text-base font-bold text-foreground/85">留言</h3>
+        <p class="mb-6 text-sm font-light text-muted-foreground">
+          如果你也在写博客，或者想聊聊，都可以直接在下面留言。
+        </p>
+
+        <Toast />
+        <Comments />
       </div>
     </section>
   </div>

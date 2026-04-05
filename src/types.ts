@@ -103,6 +103,12 @@ export interface SiteConfig {
     href: string;
     icon: string;
   }[];
+  friendCard: {
+    name: string;
+    description: string;
+    link: string;
+    avatar: string;
+  };
   hero: {
     greeting: string;
     description: string;

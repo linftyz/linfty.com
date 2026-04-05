@@ -1,5 +1,6 @@
 import { file, glob } from "astro/loaders";
-import { reference, z } from "astro:content";
+import { z } from "astro/zod";
+import { reference } from "astro:content";
 import { defineCollection } from "astro:content";
 
 function slug() {
@@ -40,9 +41,9 @@ const projects = defineCollection({
     tech: z.array(z.string()),
     links: z
       .object({
-        homepage: z.string().url().optional(),
-        github: z.string().url().optional(),
-        demo: z.string().url().optional(),
+        homepage: z.url().optional(),
+        github: z.url().optional(),
+        demo: z.url().optional(),
       })
       .optional(),
     status: z
@@ -85,9 +86,10 @@ const tags = defineCollection({
 const friends = defineCollection({
   loader: file("./src/content/miscs/friends.json"),
   schema: z.object({
+    order: z.number().int().nonnegative().optional().default(0),
     name: z.string().max(64),
     description: z.string().optional().describe("One line string"),
-    link: z.string().url(),
+    link: z.url(),
     avatar: z.string(),
   }),
 });

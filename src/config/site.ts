@@ -34,6 +34,13 @@ const site = {
     { name: "邮箱", href: "mailto:hi@linfty.com", icon: "mdi:email" },
   ],
 
+  friendCard: {
+    name: "临风听雨",
+    description: "保持好奇，无限进步",
+    link: "https://linfty.com",
+    avatar: "https://linfty.com/logo.svg",
+  },
+
   // --- Homepage Hero ---
   hero: {
     greeting: "👋 你好，我是宇风",
