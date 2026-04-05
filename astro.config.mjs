@@ -6,11 +6,20 @@ import mdx from "@astrojs/mdx";
 import icon from "astro-icon";
 import expressiveCode from "astro-expressive-code";
 import sitemap from "@astrojs/sitemap";
+import remarkDirective from "remark-directive";
+
+import { remarkContainerDirectives } from "./src/utils/remark-container-directives.mjs";
+
+const contentRemarkPlugins = [remarkDirective, remarkContainerDirectives];
 
 // https://astro.build/config
 export default defineConfig({
   // IMPORTANT: Change this to your deployed site URL
   site: "https://your-domain.com",
+
+  markdown: {
+    remarkPlugins: contentRemarkPlugins,
+  },
 
   vite: {
     plugins: [tailwindcss()],
@@ -19,7 +28,7 @@ export default defineConfig({
   integrations: [
     expressiveCode({
       themeCssSelector: (theme) => `.${theme.type}`,
-      themes: ["material-theme-darker", "material-theme-lighter"],
+      themes: ["github-dark", "github-light"],
     }),
     mdx(),
     icon(),
