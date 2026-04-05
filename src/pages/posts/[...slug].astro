@@ -11,6 +11,7 @@ import { Icon } from "astro-icon/components";
 import Toast from "@/components/blocks/Toast.astro";
 import Comments from "@/components/blocks/Comments.astro";
 import TableOfContents from "@/components/blocks/TableOfContents.astro";
+import { mdComponents } from "@/components/md";
 import site from "@/config/site";
 
 export async function getStaticPaths() {
@@ -119,7 +120,7 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
       ]}
       data-pagefind-body
     >
-      <Content components={{ a: Link, img: Img }} />
+      <Content components={mdComponents} />
     </div>
 
     <div

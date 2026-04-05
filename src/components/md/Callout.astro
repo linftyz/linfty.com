@@ -1,0 +1,136 @@
+---
+interface Props {
+  type?: "note" | "tip" | "important" | "warning" | "caution";
+  title?: string;
+}
+
+const { type = "note", title } = Astro.props;
+
+const config = {
+  note: {
+    label: "NOTE",
+  },
+  tip: {
+    label: "TIP",
+  },
+  important: {
+    label: "IMPORTANT",
+  },
+  warning: {
+    label: "WARNING",
+  },
+  caution: {
+    label: "CAUTION",
+  },
+};
+
+const current = config[type] || config.note;
+const label = title || current.label;
+const customTitle = Boolean(title);
+---
+
+<aside
+  class="md-callout not-prose"
+  data-callout={type}
+  data-callout-custom-title={customTitle ? "true" : "false"}
+>
+  <div
+    class="md-callout-title"
+    data-callout-custom-title={customTitle ? "true" : "false"}
+  >
+    <span class="md-callout-icon" aria-hidden="true"></span>
+    <span>{label}</span>
+  </div>
+  <div class="md-callout-content">
+    <slot />
+  </div>
+</aside>
+
+<style is:global>
+  .md-callout {
+    position: relative;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1.15rem 1.25rem;
+    border-radius: 0.75rem;
+    background-color: oklch(from var(--callout-note) l c h / 0.1);
+    color: var(--muted-foreground);
+    --callout-accent: var(--callout-note);
+    --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 10v6'/%3E%3Cpath d='M12 7h.01'/%3E%3C/svg%3E");
+  }
+
+  .md-callout[data-callout="note"] {
+    background-color: oklch(from var(--callout-note) l c h / 0.1);
+    --callout-accent: var(--callout-note);
+    --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 10v6'/%3E%3Cpath d='M12 7h.01'/%3E%3C/svg%3E");
+  }
+
+  .md-callout[data-callout="tip"] {
+    background-color: oklch(from var(--callout-tip) l c h / 0.1);
+    --callout-accent: var(--callout-tip);
+    --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6'/%3E%3Cpath d='M10 22h4'/%3E%3Cpath d='M12 2a7 7 0 0 0-4 12.75c.57.39 1 1.15 1 1.92V17h6v-.33c0-.77.43-1.53 1-1.92A7 7 0 0 0 12 2Z'/%3E%3C/svg%3E");
+  }
+
+  .md-callout[data-callout="important"] {
+    background-color: oklch(from var(--callout-important) l c h / 0.1);
+    --callout-accent: var(--callout-important);
+    --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/%3E%3Cpath d='M12 7v4'/%3E%3Cpath d='M12 15h.01'/%3E%3C/svg%3E");
+  }
+
+  .md-callout[data-callout="warning"] {
+    background-color: oklch(from var(--callout-warning) l c h / 0.1);
+    --callout-accent: var(--callout-warning);
+    --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10.29 3.86 1.82 18A2 2 0 0 0 3.53 21h16.94a2 2 0 0 0 1.71-3l-8.47-14.14a2 2 0 0 0-3.42 0Z'/%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
+  }
+
+  .md-callout[data-callout="caution"] {
+    background-color: oklch(from var(--callout-caution) l c h / 0.1);
+    --callout-accent: var(--callout-caution);
+    --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86z'/%3E%3Cpath d='M12 8v5'/%3E%3Cpath d='M12 16h.01'/%3E%3C/svg%3E");
+  }
+
+  .md-callout-title {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--callout-accent);
+    font-size: 0.875rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .md-callout-title[data-callout-custom-title="true"] {
+    letter-spacing: 0.01em;
+    text-transform: none;
+  }
+
+  .md-callout-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    opacity: 0.95;
+    background-color: var(--callout-accent);
+    mask-image: var(--callout-icon);
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-image: var(--callout-icon);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+  }
+
+  .md-callout-content {
+    margin-top: 0.35rem;
+    color: var(--muted-foreground);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .md-callout-content > :last-child {
+    margin-bottom: 0;
+  }
+</style>

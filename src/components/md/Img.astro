@@ -2,26 +2,39 @@
 import { Image } from "astro:assets";
 
 interface Props {
-  src: ImageMetadata;
-  alt: string;
+  src: ImageMetadata | string;
+  alt?: string;
+  title?: string;
 }
 
-const { src, alt } = Astro.props;
+const { src, alt = "", title } = Astro.props;
+const caption = title || alt;
+const isLocalImage = typeof src !== "string";
 ---
 
 <figure class="switch-animation relative rounded-md text-center">
-  <Image
-    src={src}
-    alt={alt}
-    width={672}
-    height={"10"}
-    loading={"lazy"}
-    class={"rounded-md border border-border"}
-  />
   {
-    alt && (
+    isLocalImage ? (
+      <Image
+        src={src}
+        alt={alt}
+        width={672}
+        loading="lazy"
+        class="rounded-md border border-border"
+      />
+    ) : (
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        class="w-full rounded-md border border-border"
+      />
+    )
+  }
+  {
+    caption && (
       <figcaption class="mt-0 block rounded-tr-md px-2 py-2 text-center text-xs font-bold">
-        {alt}
+        {caption}
       </figcaption>
     )
   }

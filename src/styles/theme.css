@@ -35,10 +35,14 @@
   --border: oklch(0.92 0.01 165);
   --shadow-main: 0 10px 40px -10px oklch(0.3 0.05 165 / 0.05);
 
-  --callout-info: oklch(0.65 0.12 250);
+  --callout-note: oklch(0.65 0.12 250);
+  --callout-info: var(--callout-note);
+  --callout-tip: oklch(0.6 0.14 160);
+  --callout-success: var(--callout-tip);
+  --callout-important: oklch(0.68 0.18 310);
   --callout-warning: oklch(0.7 0.15 85);
-  --callout-danger: oklch(0.62 0.18 28);
-  --callout-success: oklch(0.6 0.14 160);
+  --callout-caution: oklch(0.62 0.18 28);
+  --callout-danger: var(--callout-caution);
 }
 
 .dark {
@@ -58,10 +62,14 @@
   --border: oklch(0.26 0.02 165);
   --shadow-main: 0 30px 60px -15px oklch(0 0 0 / 0.5);
 
-  --callout-info: oklch(0.75 0.12 250);
+  --callout-note: oklch(0.75 0.12 250);
+  --callout-info: var(--callout-note);
+  --callout-tip: oklch(0.72 0.14 160);
+  --callout-success: var(--callout-tip);
+  --callout-important: oklch(0.76 0.18 310);
   --callout-warning: oklch(0.8 0.15 85);
-  --callout-danger: oklch(0.75 0.18 28);
-  --callout-success: oklch(0.72 0.14 160);
+  --callout-caution: oklch(0.75 0.18 28);
+  --callout-danger: var(--callout-caution);
 }
 
 @theme inline {

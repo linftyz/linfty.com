@@ -1,0 +1,80 @@
+---
+title: "给 MDX 添加了一些扩展能力"
+createdAt: 2026-04-05
+category: "experiments"
+tags: ["astro", "code-snippets", "frontend-development"]
+summary: "简单展示一下博客目前新增的几项 MDX 内容能力。"
+---
+
+最近顺手给博客补了几项常用的 MDX 能力。
+
+这篇不聊实现，主要就是简单看看现在已经加了什么，以及实际显示效果怎么样。
+
+## 1. Callout
+
+现在可以直接这样写：
+
+```mdx
+<Callout type="warning" title="注意">
+  这里是一段提醒内容。
+</Callout>
+```
+
+支持的 `type` 目前有这几个：
+
+- `note`
+- `tip`
+- `important`
+- `warning`
+- `caution`
+
+下面这些是实际渲染效果：
+
+<Callout type="note">
+  适合放补充说明，语气会比较轻一点，不会打断正文节奏。
+</Callout>
+
+<Callout type="tip" title="小技巧">
+  用来放一些顺手的经验或者捷径，我自己写折腾记录的时候会很常用。
+</Callout>
+
+<Callout type="important">
+  有些内容不一定危险，但确实值得单独拎出来强调，这种类型就比较合适。
+</Callout>
+
+<Callout type="warning">
+  需要读者停一下、多看一眼的地方，就比较适合这种样式。
+</Callout>
+
+<Callout type="caution" title="别手滑">
+  适合拿来标记风险操作，比如删库、覆盖配置、不可逆修改之类的内容。
+</Callout>
+
+## 2. Link
+
+链接会统一处理，外链会自动带一个小图标。
+
+下面是实际效果：
+
+这是一个站内链接：[关于页](/about)
+
+这是一个外部链接：[Astro 官网](https://astro.build/)
+
+放在列表里也是同样的样式：
+
+- 外部链接示例：[Astro 官网](https://astro.build/)
+- 站内链接示例：[关于页](/about)
+
+## 3. Img
+
+图片现在也会走统一样式，本地图片和远程图片都可以用，标题会显示成说明文字。
+
+```md
+![这是 alt 文本](/cover-demo.avif "这里会显示成图片说明")
+```
+
+下面是实际效果：
+
+![这是 alt 文本](/cover-demo.avif "这里会显示成图片说明")
+
+目前先加了这三个，后面有别的再慢慢补。

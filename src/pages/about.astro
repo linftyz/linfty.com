@@ -2,6 +2,7 @@
 import site from "@/config/site";
 import Layout from "@/layouts/Layout.astro";
 import { getEntry, render } from "astro:content";
+import { mdComponents } from "@/components/md";
 
 const about = await getEntry("pages", "about");
 const { Content } = await render(about!);
@@ -13,7 +14,7 @@ const { Content } = await render(about!);
 >
   <div class="animate-in fade-in mx-auto max-w-2xl p-8 duration-700 md:p-16">
     <div class="prose dark:prose-invert">
-      <Content />
+      <Content components={mdComponents} />
     </div>
 
     <footer class="mt-14 space-y-6">
