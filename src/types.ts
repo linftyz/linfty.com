@@ -10,20 +10,17 @@ export type ProjectStatusKey =
   | "completed"
   | "archived";
 
-export type MdiIconName = `mdi:${string}`;
-export type LocalSvgAsset = `${string}.svg`;
-
 export interface ToolLogoVariant {
-  light?: LocalSvgAsset;
-  dark?: LocalSvgAsset;
+  light?: string;
+  dark?: string;
 }
 
-export type ToolLogoSource = LocalSvgAsset | ToolLogoVariant;
+export type ToolLogoSource = string | ToolLogoVariant;
 
 export interface ToolItem {
   name: string;
   link?: string;
-  icon?: MdiIconName;
+  icon?: string;
   logo?: ToolLogoSource;
 }
 
