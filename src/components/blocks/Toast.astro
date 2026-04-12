@@ -1,4 +1,22 @@
-<!-- src/components/Toast.astro -->
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div id="toast-icons" class="hidden" aria-hidden="true">
+  <template data-toast-icon="success">
+    <Icon name="mdi:check" class="h-4 w-4" />
+  </template>
+  <template data-toast-icon="error">
+    <Icon name="mdi:close" class="h-4 w-4" />
+  </template>
+  <template data-toast-icon="warning">
+    <Icon name="mdi:alert-outline" class="h-4 w-4" />
+  </template>
+  <template data-toast-icon="info">
+    <Icon name="mdi:information-outline" class="h-4 w-4" />
+  </template>
+</div>
+
 <div
   id="toast-container"
   class="pointer-events-none fixed bottom-12 left-1/2 z-999 flex -translate-x-1/2 flex-col items-center gap-3"
@@ -9,22 +27,22 @@
   class SageToast {
     private static config = {
       success: {
-        icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>',
+        icon: "success",
         color: "var(--callout-tip)",
         label: "成功",
       },
       error: {
-        icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>',
+        icon: "error",
         color: "var(--callout-caution)",
         label: "错误",
       },
       warning: {
-        icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>',
+        icon: "warning",
         color: "var(--callout-warning)",
         label: "警告",
       },
       info: {
-        icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
+        icon: "info",
         color: "var(--callout-note)",
         label: "提示",
       },
@@ -38,6 +56,9 @@
       if (!container) return;
 
       const settings = this.config[type] || this.config.success;
+      const iconTemplate = document.querySelector(
+        `#toast-icons template[data-toast-icon="${settings.icon}"]`,
+      );
       const toast = document.createElement("div");
 
       // Rounded corners, background uses 10% opacity of the corresponding color
@@ -52,7 +73,7 @@
 
       toast.innerHTML = `
         <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background: oklch(from ${settings.color} l c h / 0.15); color: ${settings.color}">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">${settings.icon}</svg>
+          ${iconTemplate?.innerHTML || ""}
         </div>
         <div class="flex flex-col">
           <span class="text-xs font-bold uppercase tracking-tighter opacity-40" style="color: ${settings.color}">${settings.label}</span>

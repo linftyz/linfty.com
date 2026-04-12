@@ -1,4 +1,9 @@
-// src/env.d.ts
+/// <reference types="astro/client" />
+
+declare module "*.astro" {
+  const AstroComponent: (props: Record<string, unknown>) => any;
+  export default AstroComponent;
+}
 
 interface Window {
   showToast: (

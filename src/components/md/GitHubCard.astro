@@ -1,0 +1,221 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  repo: string;
+  description?: string;
+  href?: string;
+  owner?: string;
+  stars?: string;
+  forks?: string;
+  license?: string;
+}
+
+const { repo, description, href, owner, stars, forks, license } = Astro.props;
+
+const [repoOwner, repoName] = repo.split("/");
+const finalOwner = owner || repoOwner || "GitHub";
+const finalName = repoName || repo;
+const finalHref = href || `https://github.com/${repo}`;
+const avatar = `https://github.com/${finalOwner}.png?size=96`;
+---
+
+<div class="github-card-wrapper not-prose">
+  <a
+    href={finalHref}
+    class="github-card"
+    target="_blank"
+    rel="noopener noreferrer"
+    title={repo}
+    data-repo={repo}
+    data-fallback-description={description || ""}
+    data-fallback-stars={stars || ""}
+    data-fallback-forks={forks || ""}
+    data-fallback-license={license || ""}
+  >
+    <div class="github-card-title-bar">
+      <div class="github-card-avatar" aria-hidden="true">
+        <img src={avatar} alt="" loading="lazy" decoding="async" />
+      </div>
+      <span class="github-card-repo-title">
+        <span
+          >{finalOwner}<span class="github-card-slash">/</span><strong
+            >{finalName}</strong
+          ></span
+        >
+      </span>
+      <Icon
+        name="mdi:github"
+        class="github-card-icon"
+        size={24}
+        aria-hidden="true"
+      />
+    </div>
+
+    <p class="github-card-description">
+      {description || "正在获取仓库信息..."}
+    </p>
+
+    <div class="github-card-info-bar">
+      <Icon
+        name="mdi:star-outline"
+        class="github-card-info-icon"
+        size={16}
+        aria-hidden="true"
+      />
+      <span class="github-card-stars">{stars || "--"}</span>
+      <Icon
+        name="mdi:source-fork"
+        class="github-card-info-icon"
+        size={16}
+        aria-hidden="true"
+      />
+      <span class="github-card-forks">{forks || "--"}</span>
+      <Icon
+        name="mdi:scale-balance"
+        class="github-card-info-icon"
+        size={16}
+        aria-hidden="true"
+      />
+      <span class="github-card-license">{license || "--"}</span>
+    </div>
+  </a>
+</div>
+
+<style>
+  .github-card-wrapper {
+    margin: 2rem 0;
+  }
+
+  .github-card {
+    display: block;
+    border: 1px solid oklch(from var(--border) l c h / 0.9);
+    border-radius: 1.2rem;
+    background: linear-gradient(
+      180deg,
+      oklch(from var(--card) l c h / 0.98),
+      oklch(from var(--muted) l c h / 0.16)
+    );
+    padding: 1rem 1.05rem;
+    text-decoration: none;
+    box-shadow:
+      0 1px 0 oklch(from var(--background) l c h / 0.65) inset,
+      0 18px 36px -28px oklch(from var(--foreground) l c h / 0.18);
+    transition:
+      border-color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .github-card:hover {
+    border-color: oklch(from var(--primary) l c h / 0.28);
+    transform: translateY(-1px);
+    box-shadow:
+      0 1px 0 oklch(from var(--background) l c h / 0.75) inset,
+      0 24px 44px -30px oklch(from var(--primary) l c h / 0.28);
+  }
+
+  .github-card-title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.95rem;
+  }
+
+  .github-card-avatar {
+    width: 1.6rem;
+    height: 1.6rem;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 999px;
+    border: 1px solid oklch(from var(--border) l c h / 0.9);
+    background: oklch(from var(--muted) l c h / 0.2);
+  }
+
+  .github-card-avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .github-card-repo-title {
+    min-width: 0;
+    flex: 1;
+    color: var(--foreground);
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .github-card-slash {
+    color: oklch(from var(--foreground) l c h / 0.36);
+    margin: 0 0.2rem;
+  }
+
+  .github-card-icon {
+    flex-shrink: 0;
+    color: oklch(from var(--foreground) l c h / 0.4);
+    transition: color 180ms ease;
+  }
+
+  .github-card:hover .github-card-icon {
+    color: var(--primary);
+  }
+
+  .github-card-heading {
+    color: var(--foreground);
+    font-size: 1.04rem;
+    font-weight: 800;
+    line-height: 1.45;
+    text-align: left;
+    text-wrap: pretty;
+    word-break: normal;
+  }
+
+  .github-card-description {
+    margin: 0.55rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.93rem;
+    line-height: 1.68;
+    text-align: left;
+    text-wrap: pretty;
+    word-break: normal;
+  }
+
+  .github-card-info-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.9rem;
+    color: oklch(from var(--foreground) l c h / 0.46);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .github-card-info-icon {
+    flex-shrink: 0;
+    color: oklch(from var(--foreground) l c h / 0.36);
+  }
+
+  .github-card-info-bar > span + .github-card-info-icon {
+    margin-left: 0.2rem;
+  }
+</style>
+
+<script>
+  import { initGitHubCards } from "./github-card";
+
+  document.addEventListener("astro:page-load", initGitHubCards);
+
+  if (document.readyState !== "loading") {
+    initGitHubCards();
+  } else {
+    document.addEventListener("DOMContentLoaded", initGitHubCards, {
+      once: true,
+    });
+  }
+</script>

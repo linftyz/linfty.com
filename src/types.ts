@@ -4,6 +4,14 @@ export interface HeadProps {
   image?: string;
 }
 
+export interface GitHubRepoSnapshot {
+  avatar: string;
+  description: string;
+  stars: number | null;
+  forks: number | null;
+  license: string;
+}
+
 export type ProjectStatusKey =
   | "planning"
   | "in-progress"

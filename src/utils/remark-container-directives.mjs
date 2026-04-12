@@ -51,6 +51,23 @@ function createStepTitle(title) {
   return `<h4 class="md-step-title">${escapeHtml(title)}</h4>`;
 }
 
+function createMdxAttribute(name, value) {
+  return {
+    type: "mdxJsxAttribute",
+    name,
+    value,
+  };
+}
+
+function createMdxComponentNode(name, attributes = []) {
+  return {
+    type: "mdxJsxFlowElement",
+    name,
+    attributes,
+    children: [],
+  };
+}
+
 function transformAdmonition(node, type, title, customTitle = false) {
   node.data ??= {};
   node.data.hName = "aside";
@@ -88,6 +105,57 @@ function transformStep(node, title) {
   }
 }
 
+function transformLinkCard(node) {
+  const { url, title, description, image } = node.attributes || {};
+
+  if (!url || typeof url !== "string") {
+    return;
+  }
+
+  const attributes = [createMdxAttribute("url", url)];
+
+  if (typeof title === "string") {
+    attributes.push(createMdxAttribute("title", title));
+  }
+
+  if (typeof description === "string") {
+    attributes.push(createMdxAttribute("description", description));
+  }
+
+  if (typeof image === "string") {
+    attributes.push(createMdxAttribute("image", image));
+  }
+
+  Object.assign(node, createMdxComponentNode("LinkCard", attributes));
+}
+
+function transformGitHubCard(node) {
+  const { repo, title, description, href, owner, stars, forks, license } =
+    node.attributes || {};
+
+  if (!repo || typeof repo !== "string") {
+    return;
+  }
+
+  const attributes = [createMdxAttribute("repo", repo)];
+
+  for (const [name, value] of [
+    ["title", title],
+    ["description", description],
+    ["href", href],
+    ["owner", owner],
+    ["stars", stars],
+    ["forks", forks],
+    ["license", license],
+  ]) {
+    if (typeof value === "string") {
+      attributes.push(createMdxAttribute(name, value));
+    }
+  }
+
+  Object.assign(node, createMdxComponentNode("GitHubCard", attributes));
+}
+
 export function remarkContainerDirectives() {
   const githubAdmonitionRegex = new RegExp(
     `^\\s*\\[!(${Object.values(admonitionTypes).join("|")})\\]\\s*`,
@@ -116,6 +184,17 @@ export function remarkContainerDirectives() {
 
       if (type === "step") {
         transformStep(node, getDirectiveLabel(node));
+      }
+    });
+
+    visit(tree, "leafDirective", (node) => {
+      if (node.name === "link") {
+        transformLinkCard(node);
+        return;
+      }
+
+      if (node.name === "github" || node.name === "repo") {
+        transformGitHubCard(node);
       }
     });
 

@@ -1,0 +1,60 @@
+---
+title: "给文章添加了两种卡片"
+createdAt: 2026-04-10
+category: "experiments"
+tags: ["astro", "frontend-development", "code-snippets"]
+summary: "最近给文章添加了 Link Card 和 GitHub Card，感觉效果很不错。"
+---
+
+最近给文章添加了两种卡片，让内容展示更丰富。
+
+- `Link Card`
+- `GitHub Card`
+
+## 1. Link Card
+
+最简单就是直接给一个链接：
+
+```md
+::link{url="https://astro.build"}
+```
+
+它会自己去拿页面里的标题、描述和图片。
+
+实际效果：
+
+::link{url="https://astro.build"}
+
+如果想手动覆盖，也可以继续传：
+
+```md
+::link{url="https://astro.build" title="Astro" description="一个很适合拿来搭博客和内容站点的框架。" image="/cover-demo.avif"}
+```
+
+实际效果：
+
+::link{url="https://astro.build" title="Astro" description="一个很适合拿来搭博客和内容站点的框架。" image="/cover-demo.avif"}
+
+## 2. GitHub Card
+
+GitHub 卡片也一样，主要是拿来放项目。
+
+```md
+::github{repo="linftyz/astro-theme-breeze"}
+```
+
+实际效果：
+
+::github{repo="linftyz/astro-theme-breeze"}
+
+仓库的描述、Star、Fork 和 License 会直接从 GitHub API 拉。
+
+如果想自己补一段说明，也可以直接传：
+
+```md
+::github{repo="linftyz/astro-theme-breeze" description="如果接口请求失败，这段文字也还能当作说明兜底。"}
+```
+
+实际效果：
+
+::github{repo="linftyz/astro-theme-breeze" description="如果接口请求失败，这段文字也还能当作说明兜底。"}
