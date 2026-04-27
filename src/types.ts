@@ -45,6 +45,7 @@ export interface SiteLabels {
   friendsTitle: string;
   friendsDescription: string;
   toolsTitle: string;
+  toolsDescription: string;
   aboutTitle: string;
   aboutDescription: string;
   categoriesTitle: string;
@@ -66,6 +67,8 @@ export interface SiteLabels {
   searchPlaceholder: string;
   searchTrigger: string;
   searchNavigate: string;
+  rssTitle: string;
+  rssDescription: string;
   contactTitle: string;
   latestPosts: string;
   viewAllPosts: string;
