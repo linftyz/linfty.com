@@ -6,15 +6,18 @@ import site from "@/config/site";
   id="search-modal"
   data-placeholder={site.labels.searchPlaceholder}
   class="group pointer-events-none fixed inset-0 z-100 flex items-start justify-center px-4 pt-[12vh]"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
 >
   <div
     id="modal-overlay"
-    class="backdrop-blur-1 absolute inset-0 bg-background/0 transition-all duration-500 ease-out group-[.is-active]:pointer-events-auto group-[.is-active]:bg-background/60 group-[.is-active]:backdrop-blur-lg"
+    class="backdrop-blur-1 absolute inset-0 bg-background/0 transition-[background-color,backdrop-filter] duration-500 ease-out group-[.is-active]:pointer-events-auto group-[.is-active]:bg-background/60 group-[.is-active]:backdrop-blur-lg"
   >
   </div>
   <div
     id="modal-content"
-    class="relative w-full max-w-xl translate-y-8 scale-95 overflow-hidden rounded-2xl border border-border bg-card opacity-0 shadow-main transition-all duration-500 ease-out group-[.is-active]:pointer-events-auto group-[.is-active]:translate-y-0 group-[.is-active]:scale-100 group-[.is-active]:opacity-100"
+    class="relative w-full max-w-xl translate-y-8 scale-95 overflow-hidden rounded-2xl border border-border bg-card opacity-0 shadow-main transition-[opacity,transform] duration-500 ease-out group-[.is-active]:pointer-events-auto group-[.is-active]:translate-y-0 group-[.is-active]:scale-100 group-[.is-active]:opacity-100"
   >
     <div id="pagefind-search-ui" class="p-6"></div>
 
@@ -33,7 +36,7 @@ import site from "@/config/site";
           ].map((item) => (
             <a
               href={item.href}
-              class="rounded-xl border border-border bg-muted/30 px-3 py-1.5 text-xs text-muted-foreground capitalize transition-all hover:text-primary"
+              class="rounded-xl border border-border bg-muted/30 px-3 py-1.5 text-xs text-muted-foreground capitalize transition-colors hover:text-primary"
             >
               {item.label}
             </a>
@@ -45,57 +48,125 @@ import site from "@/config/site";
 </div>
 
 <script>
+  declare global {
+    interface Window {
+      __linftySearchCleanup?: () => void;
+    }
+  }
+
+  const loadPagefind = (() => {
+    let promise: Promise<void> | undefined;
+
+    return () => {
+      if (
+        // @ts-ignore
+        typeof PagefindUI !== "undefined" ||
+        document.querySelector(".pagefind-ui")
+      ) {
+        return Promise.resolve();
+      }
+
+      if (promise) return promise;
+
+      const stylesheetId = "pagefind-ui-css";
+      if (!document.getElementById(stylesheetId)) {
+        const stylesheet = document.createElement("link");
+        stylesheet.id = stylesheetId;
+        stylesheet.rel = "stylesheet";
+        stylesheet.href = "/pagefind/pagefind-ui.css";
+        document.head.appendChild(stylesheet);
+      }
+
+      promise = new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "/pagefind/pagefind-ui.js";
+        script.async = true;
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error("Failed to load Pagefind UI"));
+        document.head.appendChild(script);
+      });
+
+      return promise;
+    };
+  })();
+
   function setupSearch() {
+    window.__linftySearchCleanup?.();
+
     const trigger = document.getElementById("search-trigger");
     const modal = document.getElementById("search-modal");
     const overlay = document.getElementById("modal-overlay");
+    const controller = new AbortController();
+    const { signal } = controller;
 
     const placeholder =
       document.getElementById("search-modal")?.dataset.placeholder || "";
-    if (
-      // @ts-ignore
-      typeof PagefindUI !== "undefined" &&
-      !document.querySelector(".pagefind-ui")
-    ) {
-      // @ts-ignore
-      new PagefindUI({
-        element: "#pagefind-search-ui",
-        showSubResults: true,
-        resetStyles: false,
-        translations: { placeholder },
-      });
-    }
 
-    const toggle = (show: boolean) => {
-      if (show) {
-        modal?.classList.add("is-active");
-        setTimeout(() => modal?.querySelector("input")?.focus(), 100);
-      } else {
-        modal?.classList.remove("is-active");
+    const initializeSearch = async () => {
+      if (document.querySelector(".pagefind-ui")) return;
+
+      try {
+        await loadPagefind();
+
+        if (
+          // @ts-ignore
+          typeof PagefindUI !== "undefined" &&
+          !document.querySelector(".pagefind-ui")
+        ) {
+          // @ts-ignore
+          new PagefindUI({
+            element: "#pagefind-search-ui",
+            showSubResults: true,
+            resetStyles: false,
+            translations: { placeholder },
+          });
+        }
+      } catch {
+        document.getElementById("pagefind-search-ui")?.replaceChildren();
       }
     };
 
-    trigger?.addEventListener("click", (e) => {
-      e.preventDefault();
-      toggle(true);
-    });
-    overlay?.addEventListener("click", () => toggle(false));
+    const toggle = async (show: boolean) => {
+      if (show) {
+        modal?.classList.add("is-active");
+        modal?.setAttribute("aria-hidden", "false");
+        trigger?.setAttribute("aria-expanded", "true");
+        await initializeSearch();
+        modal?.querySelector("input")?.focus();
+      } else {
+        modal?.classList.remove("is-active");
+        modal?.setAttribute("aria-hidden", "true");
+        trigger?.setAttribute("aria-expanded", "false");
+      }
+    };
+
+    trigger?.addEventListener(
+      "click",
+      (e) => {
+        e.preventDefault();
+        void toggle(true);
+      },
+      { signal },
+    );
+    overlay?.addEventListener("click", () => void toggle(false), { signal });
 
     const onKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        toggle(true);
+        void toggle(true);
       }
-      if (e.key === "Escape") toggle(false);
+      if (e.key === "Escape") void toggle(false);
     };
-    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keydown", onKeyDown, { signal });
+
+    window.__linftySearchCleanup = () => controller.abort();
   }
 
   document.addEventListener("astro:page-load", setupSearch);
 </script>
 
 <style is:global>
-  :root {
+  :root:root {
     --pagefind-ui-primary: var(--primary);
     --pagefind-ui-text: var(--foreground);
     --pagefind-ui-font: inherit;

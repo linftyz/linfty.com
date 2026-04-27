@@ -14,6 +14,34 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script is:inline>
+    (() => {
+      const getPreferredTheme = () => {
+        try {
+          const storedTheme = window.localStorage.getItem("theme");
+          if (storedTheme === "dark" || storedTheme === "light") {
+            return storedTheme;
+          }
+        } catch {
+          // Ignore storage access failures and fall back to the system setting.
+        }
+
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      };
+
+      const applyTheme = () => {
+        document.documentElement.classList.toggle(
+          "dark",
+          getPreferredTheme() === "dark",
+        );
+      };
+
+      applyTheme();
+      document.addEventListener("astro:after-swap", applyTheme);
+    })();
+  </script>
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -69,10 +97,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
   <!-- Sitemap -->
   <link rel="sitemap" href="/sitemap-index.xml" />
-
-  <!-- pagefind -->
-  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
-  <script src="/pagefind/pagefind-ui.js" is:inline></script>
 
   <!-- font  -->
   <Font cssVariable="--font-display" preload />

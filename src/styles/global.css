@@ -347,7 +347,8 @@ button:focus-visible {
 }
 
 .animate-in {
-  animation: animate-in-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  animation: animate-in-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 html[data-astro-transition] *,

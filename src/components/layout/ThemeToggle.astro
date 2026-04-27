@@ -4,8 +4,10 @@
 
 <button
   id="theme-toggle"
+  type="button"
   class="relative flex h-6 w-10 items-center rounded-full bg-muted p-1 transition-colors duration-200"
   title="切换主题"
+  aria-label="切换主题"
 >
   <div
     class="h-4 w-4 translate-x-0 rounded-full bg-background shadow-sm transition-transform duration-200 dark:translate-x-4"
@@ -16,24 +18,31 @@
 <script>
   document.addEventListener("astro:page-load", () => {
     const getPreferredTheme = () => {
-      const localStorageTheme = localStorage?.getItem("theme") ?? "";
-      if (["dark", "light"].includes(localStorageTheme)) {
-        return localStorageTheme;
+      try {
+        const localStorageTheme = localStorage.getItem("theme") ?? "";
+        if (["dark", "light"].includes(localStorageTheme)) {
+          return localStorageTheme;
+        }
+      } catch {
+        // Storage can be unavailable in private browsing or embedded contexts.
       }
+
       if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
         return "dark";
       }
       return "light";
     };
 
-    const setTheme = (theme: "dark" | "light") => {
-      if (theme === "light") {
-        document.documentElement.classList.remove("dark");
-      } else {
-        document.documentElement.classList.add("dark");
-      }
+    const setTheme = (theme: "dark" | "light", persist = false) => {
+      document.documentElement.classList.toggle("dark", theme === "dark");
 
-      window.localStorage.setItem("theme", theme);
+      if (persist) {
+        try {
+          window.localStorage.setItem("theme", theme);
+        } catch {
+          // Keep the visible theme change even if storage is unavailable.
+        }
+      }
     };
 
     const theme = getPreferredTheme();
@@ -57,7 +66,7 @@
         !document.startViewTransition ||
         window.matchMedia("(prefers-reduced-motion: reduce)").matches
       ) {
-        applyThemeTransition(() => setTheme(nextTheme), 360);
+        applyThemeTransition(() => setTheme(nextTheme, true), 360);
         return;
       }
 
@@ -75,7 +84,7 @@
       const duration = 820;
 
       const transition = document.startViewTransition(() => {
-        setTheme(nextTheme);
+        setTheme(nextTheme, true);
       });
 
       await transition.ready;
@@ -121,15 +130,4 @@
     const themeToggle = document.getElementById("theme-toggle");
     themeToggle?.addEventListener("click", handleToggleClick);
   });
-</script>
-
-<script is:inline>
-  function applyTheme() {
-    localStorage.theme === "dark"
-      ? document.documentElement.classList.add("dark")
-      : document.documentElement.classList.remove("dark");
-  }
-
-  document.addEventListener("astro:after-swap", applyTheme);
-  applyTheme();
 </script>

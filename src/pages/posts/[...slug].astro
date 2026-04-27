@@ -130,7 +130,7 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
         tags.map((tag) => (
           <a
             href={`/tags/${tag.data.slug}`}
-            class="group flex items-center gap-1.5 rounded-xl border border-border/50 bg-muted/30 px-3 py-1.5 transition-all hover:border-primary/40 hover:bg-card"
+            class="group flex items-center gap-1.5 rounded-xl border border-border/50 bg-muted/30 px-3 py-1.5 transition-colors hover:border-primary/40 hover:bg-card"
           >
             <span class="font-mono text-xs text-primary/40 italic group-hover:text-primary">
               #

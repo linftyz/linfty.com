@@ -13,7 +13,7 @@ const toc = headings.filter((h) => h.depth > 1 && h.depth < 4);
 {
   toc.length > 0 && (
     <div class="not-prose animate-in fade-in my-12 duration-700">
-      <details class="group rounded-3xl border border-border/50 bg-muted/20 transition-all duration-500 open:bg-muted/30">
+      <details class="group rounded-3xl border border-border/50 bg-muted/20 transition-colors duration-500 open:bg-muted/30">
         <summary class="flex cursor-pointer list-none items-center justify-between px-7 py-4 select-none">
           <div class="flex items-center gap-5">
             <div class="flex w-4 flex-col gap-1 opacity-40 transition-opacity group-open:opacity-100">
@@ -45,7 +45,7 @@ const toc = headings.filter((h) => h.depth > 1 && h.depth < 4);
             {toc.map((heading) => (
               <a
                 href={`#${heading.slug}`}
-                class={`relative rounded-xl px-4 py-2.5 transition-all duration-300 hover:bg-primary/5 hover:text-primary ${
+                class={`relative rounded-xl px-4 py-2.5 transition-colors duration-300 hover:bg-primary/5 hover:text-primary ${
                   heading.depth === 2
                     ? "text-[14px] font-bold text-foreground/80"
                     : "ml-6 text-[13px] font-medium text-muted-foreground/50"
