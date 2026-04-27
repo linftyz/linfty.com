@@ -52,6 +52,10 @@ export interface SiteLabels {
   tagsTitle: string;
   tagsDescription: string;
   backToPosts: string;
+  postNavigation: string;
+  newerPost: string;
+  olderPost: string;
+  relatedPosts: string;
   backToCategories: string;
   backToTags: string;
   goHome: string;

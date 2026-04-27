@@ -1,7 +1,6 @@
 ---
 import { render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import { getCollection } from "astro:content";
 import { formatDate } from "@/utils/date";
 import { getEntry } from "astro:content";
 import { getEntries } from "astro:content";
@@ -11,11 +10,13 @@ import { Icon } from "astro-icon/components";
 import Toast from "@/components/blocks/Toast.astro";
 import Comments from "@/components/blocks/Comments.astro";
 import TableOfContents from "@/components/blocks/TableOfContents.astro";
+import PostRecommendations from "@/components/blocks/PostRecommendations.astro";
 import { mdComponents } from "@/components/md";
 import site from "@/config/site";
+import { getPostNeighbors, getPosts, getRelatedPosts } from "@/utils/post";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("posts");
+  const posts = await getPosts();
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
@@ -23,9 +24,12 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const posts = await getPosts();
 const { Content, headings } = await render(post);
 const category = await getEntry(post.data.category);
 const tags = (await getEntries(post.data.tags)).filter((value) => value);
+const { newerPost, olderPost } = await getPostNeighbors(post, posts);
+const relatedPosts = await getRelatedPosts(post, 3, posts);
 ---
 
 <Layout title={post.data.title} description={post.data.summary}>
@@ -145,6 +149,12 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
   </article>
 
   <footer class="mt-16 space-y-12 px-8 md:px-16">
+    <PostRecommendations
+      newerPost={newerPost}
+      olderPost={olderPost}
+      relatedPosts={relatedPosts}
+    />
+
     <div
       class="flex items-center justify-between border-t border-b border-border/50 py-5"
     >

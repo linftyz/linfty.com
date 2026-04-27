@@ -1,0 +1,112 @@
+---
+import { formatDate } from "@/utils/date";
+import type { PostEntry } from "@/utils/post";
+import { Icon } from "astro-icon/components";
+import { getEntry } from "astro:content";
+import site from "@/config/site";
+
+interface Props {
+  newerPost?: PostEntry;
+  olderPost?: PostEntry;
+  relatedPosts: PostEntry[];
+}
+
+const { newerPost, olderPost, relatedPosts } = Astro.props;
+
+const relatedEntries = await Promise.all(
+  relatedPosts.map(async (post) => ({
+    post,
+    category: await getEntry(
+      post.data.category.collection,
+      post.data.category.id,
+    ),
+  })),
+);
+---
+
+{
+  (newerPost || olderPost || relatedEntries.length > 0) && (
+    <section class="space-y-10">
+      {(newerPost || olderPost) && (
+        <nav
+          class="grid gap-3 md:grid-cols-2"
+          aria-label={site.labels.postNavigation}
+        >
+          {newerPost ? (
+            <a
+              href={`/posts/${newerPost.id}`}
+              class="group flex min-h-28 flex-col justify-between rounded-2xl border border-border/50 bg-muted/20 p-4 transition-[background-color,border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-card"
+            >
+              <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-[0.28em] text-muted-foreground/60 uppercase transition-colors group-hover:text-primary/70">
+                <Icon
+                  name="mdi:arrow-left"
+                  class="transition-transform group-hover:-translate-x-0.5"
+                  size={14}
+                />
+                {site.labels.newerPost}
+              </span>
+              <span class="mt-5 line-clamp-2 text-sm leading-relaxed font-semibold text-foreground/80 transition-colors group-hover:text-primary">
+                {newerPost.data.title}
+              </span>
+            </a>
+          ) : (
+            <div class="hidden md:block" />
+          )}
+
+          {olderPost && (
+            <a
+              href={`/posts/${olderPost.id}`}
+              class="group flex min-h-28 flex-col justify-between rounded-2xl border border-border/50 bg-muted/20 p-4 text-right transition-[background-color,border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-card"
+            >
+              <span class="flex items-center justify-end gap-1.5 text-[10px] font-bold tracking-[0.28em] text-muted-foreground/60 uppercase transition-colors group-hover:text-primary/70">
+                {site.labels.olderPost}
+                <Icon
+                  name="mdi:arrow-right"
+                  class="transition-transform group-hover:translate-x-0.5"
+                  size={14}
+                />
+              </span>
+              <span class="mt-5 line-clamp-2 text-sm leading-relaxed font-semibold text-foreground/80 transition-colors group-hover:text-primary">
+                {olderPost.data.title}
+              </span>
+            </a>
+          )}
+        </nav>
+      )}
+
+      {relatedEntries.length > 0 && (
+        <section>
+          <div class="mb-5 flex items-center justify-between gap-4">
+            <h2 class="text-[11px] font-bold tracking-[0.35em] text-muted-foreground/60 uppercase">
+              {site.labels.relatedPosts}
+            </h2>
+            <span class="h-px flex-1 bg-border/50" />
+          </div>
+
+          <div class="space-y-1">
+            {relatedEntries.map(({ post, category }) => (
+              <a
+                href={`/posts/${post.id}`}
+                class="group flex items-center justify-between gap-4 border-b border-border/40 py-4 last:border-0"
+              >
+                <span class="min-w-0">
+                  <span class="line-clamp-2 text-sm font-semibold text-foreground/80 transition-colors group-hover:text-primary">
+                    {post.data.title}
+                  </span>
+                  <span class="mt-1 block font-mono text-[11px] text-muted-foreground/55 italic">
+                    {formatDate(post.data.createdAt)}
+                    {category ? ` — ${category.data.name}` : ""}
+                  </span>
+                </span>
+                <Icon
+                  name="mdi:arrow-right"
+                  class="shrink-0 text-border transition-[color,transform] duration-300 group-hover:translate-x-1 group-hover:text-primary"
+                />
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </section>
+  )
+}
