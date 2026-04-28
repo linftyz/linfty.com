@@ -130,7 +130,7 @@ const site = {
     viewAllPosts: "查看全部",
     viewAllMemos: "查看全部",
     noMemos: "还没有随记。",
-    memoPermalink: "复制链接",
+    memoPermalink: "直达链接",
     memoExternalLink: "相关链接",
     noDescription: "暂无描述",
     noFriends: "还没有友链。",

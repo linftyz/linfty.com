@@ -18,15 +18,15 @@ const memoDateFormat =
   memo.data.createdAt.getHours() === 0 && memo.data.createdAt.getMinutes() === 0
     ? "YYYY.MM.DD"
     : "YYYY.MM.DD HH:mm";
-const externalHost = memo.data.link
-  ? new URL(memo.data.link).hostname.replace(/^www\./, "")
+const sourceHost = memo.data.sourceUrl
+  ? new URL(memo.data.sourceUrl).hostname.replace(/^www\./, "")
   : "";
 ---
 
 <article
   id={memo.id}
   class:list={[
-    "group scroll-mt-8 border-b border-border/40 py-7 last:border-0",
+    "memo-item group scroll-mt-8 border-b border-border/40 py-7 last:border-0",
     compact && "py-5",
   ]}
 >
@@ -41,16 +41,16 @@ const externalHost = memo.data.link
 
     <div class="flex items-center gap-2">
       {
-        memo.data.link && (
+        memo.data.sourceUrl && (
           <a
-            href={memo.data.link}
+            href={memo.data.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground/70 transition-colors hover:text-primary"
             aria-label={site.labels.memoExternalLink}
           >
             <Icon name="mdi:link-variant" class="h-3.5 w-3.5" />
-            <span class="max-w-28 truncate">{externalHost}</span>
+            <span class="max-w-28 truncate">{sourceHost}</span>
           </a>
         )
       }
@@ -94,5 +94,12 @@ const externalHost = memo.data.link
     max-height: 10rem;
     overflow: hidden;
     mask-image: linear-gradient(to bottom, black 72%, transparent);
+  }
+
+  .memo-item:target {
+    border-radius: 1rem;
+    background: oklch(from var(--primary) l c h / 0.05);
+    box-shadow: 0 0 0 1px oklch(from var(--primary) l c h / 0.16) inset;
+    padding-inline: 1rem;
   }
 </style>

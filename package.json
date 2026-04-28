@@ -7,6 +7,8 @@
     "build": "astro build && npx pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro",
+    "new:memo": "node scripts/new-content.mjs memo",
+    "new:post": "node scripts/new-content.mjs post",
     "format": "prettier --write --ignore-unknown .",
     "format:check": "prettier --check --ignore-unknown .",
     "prepare": "husky"

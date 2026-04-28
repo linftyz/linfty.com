@@ -1,0 +1,144 @@
+---
+title: "给网站加了随记和快速创建脚本"
+createdAt: 2026-04-28
+category: "experiments"
+tags: ["astro", "memo", "code-snippets"]
+summary: "记录一下网站新增的随记页面，以及用来快速创建 memo 和文章的 new 脚本。"
+---
+
+最近给网站补了一个新的内容形态：**随记**。
+
+它不是正式文章，也不准备承担太多结构。更像是一个可以随手丢想法、链接、代码片段和折腾记录的地方。
+
+文章当然还是会继续写，只是文章的启动成本确实比较高。很多时候只是发现了一个小工具、踩了一个小坑、读到了一段有意思的话，如果为了这些内容单独开一篇文章，反而容易把自己卡住。
+
+所以这次加了两个东西：
+
+- 一个 `/memos` 页面，用来放短内容。
+- 两个 `new` 脚本，用来快速创建 memo 和文章。
+
+## 1. Memos
+
+随记现在放在 `src/content/memos` 里，每一条都是一个 MDX 文件。
+
+目前的 frontmatter 很简单：
+
+```md
+---
+createdAt: 2026-04-28 23:10
+tags:
+  - site
+  - memo
+sourceUrl: "https://example.com"
+---
+
+这里写内容。
+```
+
+`createdAt` 是必须的，`tags` 和 `sourceUrl` 都是可选的。
+
+之所以继续用 MDX，而不是 JSON，是因为我不想让这个功能一开始就被格式限制住。以后如果某条随记里需要放代码块、图片、链接卡片，直接写就行。
+
+它比较适合放这些内容：
+
+- 一句临时想法
+- 一个小链接
+- 一个命令或代码片段
+- 某次折腾过程里的结论
+- 不够成文但值得留下的记录
+
+每条随记也都有自己的锚点链接，比如：
+
+```txt
+/memos#2026-04-28-memos-start
+```
+
+这样以后想单独分享某一条，也不用再做详情页。
+
+打开这个链接时，页面会直接滚动到对应的随记，并给它一个轻微的高亮。
+
+## 2. 快速创建 memo
+
+为了真的让随记变得顺手，我加了一个创建脚本：
+
+```bash
+pnpm new:memo "今天发现了一个很好用的工具" --tags tool,mac --source https://example.com
+```
+
+它会自动生成类似这样的文件：
+
+```txt
+src/content/memos/2026-04-28-今天发现了一个很好用的工具.mdx
+```
+
+内容大概是：
+
+```md
+---
+createdAt: 2026-04-28 23:10
+tags:
+  - tool
+  - mac
+sourceUrl: "https://example.com"
+---
+
+今天发现了一个很好用的工具
+```
+
+如果没有传 `--source`，就不会生成 `sourceUrl` 字段。
+
+如果只是想先记一条草稿，也可以加：
+
+```bash
+pnpm new:memo "还没想清楚的一句话" --draft
+```
+
+生产构建时草稿会被过滤掉。
+
+## 3. 快速创建文章
+
+文章也顺手加了一个类似的命令：
+
+```bash
+pnpm new:post "文章标题" --slug article-title --category experiments --tags astro,mdx --summary "文章摘要"
+```
+
+它会生成：
+
+```txt
+src/content/posts/article-title.mdx
+```
+
+默认会带上 `draft: true`，因为正式文章通常还需要慢慢补结构。
+
+如果想直接创建一篇可发布的文章，可以加 `--publish`：
+
+```bash
+pnpm new:post "文章标题" --slug article-title --category experiments --tags astro --summary "文章摘要" --publish
+```
+
+生成出来大概是这样：
+
+```md
+---
+title: "文章标题"
+createdAt: 2026-04-28
+category: "experiments"
+tags: ["astro"]
+summary: "文章摘要"
+---
+
+开头写在这里。
+```
+
+文章文件名会沿用站点之前的习惯，只使用 slug，不额外加日期前缀。中文标题也可以配一个更适合 URL 的英文 slug。
+
+## 4. 为什么先做这个
+
+这次功能其实不复杂，但我觉得它对个人站很有用。
+
+因为个人网站不一定总是需要“完整文章”。更多时候，它需要一个低摩擦的入口，让一些还没长成文章的东西先被留下。
+
+等随记多起来，它们也可能反过来变成正式文章的素材。
+
+这大概就是这个功能最想解决的问题：不要让“必须写完整”变成“不写”的理由。
