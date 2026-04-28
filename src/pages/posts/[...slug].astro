@@ -7,7 +7,6 @@ import { getEntries } from "astro:content";
 import Link from "@/components/md/Link.astro";
 import Img from "@/components/md/Img.astro";
 import { Icon } from "astro-icon/components";
-import Toast from "@/components/blocks/Toast.astro";
 import Comments from "@/components/blocks/Comments.astro";
 import TableOfContents from "@/components/blocks/TableOfContents.astro";
 import PostRecommendations from "@/components/blocks/PostRecommendations.astro";
@@ -174,7 +173,6 @@ const relatedPosts = await getRelatedPosts(post, 3, posts);
       </div>
     </div>
 
-    <Toast />
     <Comments />
   </footer>
 </Layout>

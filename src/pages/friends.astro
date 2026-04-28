@@ -3,7 +3,6 @@ import Layout from "@/layouts/Layout.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import Comments from "@/components/blocks/Comments.astro";
-import Toast from "@/components/blocks/Toast.astro";
 import site from "@/config/site";
 
 const friends = (await getCollection("friends")).sort(
@@ -156,7 +155,6 @@ const avatarUrl =
           如果你也在写博客，或者想聊聊，都可以直接在下面留言。
         </p>
 
-        <Toast />
         <Comments />
       </div>
     </section>

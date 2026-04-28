@@ -131,6 +131,7 @@ const site = {
     viewAllMemos: "查看全部",
     noMemos: "还没有随记。",
     memoPermalink: "直达链接",
+    memoLinkCopied: "随记链接已复制",
     noDescription: "暂无描述",
     noFriends: "还没有友链。",
     noProjects: "还没有项目。",
