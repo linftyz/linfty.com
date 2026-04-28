@@ -1,0 +1,33 @@
+---
+import MemoItem from "@/components/blocks/MemoItem.astro";
+import { getRecentMemos } from "@/utils/memo";
+import { Icon } from "astro-icon/components";
+import site from "@/config/site";
+
+const recentMemos = await getRecentMemos(3);
+---
+
+{
+  recentMemos.length > 0 && (
+    <section class="mt-16">
+      <div class="mb-5 flex items-center justify-between">
+        <p class="text-[11px] font-bold tracking-[0.4em] text-muted-foreground uppercase opacity-60">
+          {site.labels.latestMemos}
+        </p>
+        <a
+          href="/memos"
+          class="flex items-center gap-1 border-b border-transparent text-[11px] text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+        >
+          {site.labels.viewAllMemos}
+          <Icon name="mdi:arrow-right" />
+        </a>
+      </div>
+
+      <div>
+        {recentMemos.map((memo) => (
+          <MemoItem memo={memo} compact />
+        ))}
+      </div>
+    </section>
+  )
+}

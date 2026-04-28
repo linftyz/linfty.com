@@ -1,0 +1,43 @@
+---
+import MemoItem from "@/components/blocks/MemoItem.astro";
+import site from "@/config/site";
+import Layout from "@/layouts/Layout.astro";
+import { getMemos } from "@/utils/memo";
+
+const memos = await getMemos();
+---
+
+<Layout
+  title={site.labels.memosTitle}
+  description={site.labels.memosDescription}
+>
+  <div
+    class="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl p-8 duration-700 md:p-16"
+    data-pagefind-body
+  >
+    <header class="mb-12">
+      <h2 class="mb-4 text-3xl font-bold tracking-tight">
+        {site.labels.memosTitle}
+      </h2>
+      <p
+        class="text-sm leading-relaxed font-light text-muted-foreground italic"
+      >
+        {site.labels.memosDescription}
+      </p>
+    </header>
+
+    {
+      memos.length > 0 ? (
+        <div>
+          {memos.map((memo) => (
+            <MemoItem memo={memo} />
+          ))}
+        </div>
+      ) : (
+        <div class="border-y border-border/40 py-12 text-center">
+          <p class="text-sm text-muted-foreground">{site.labels.noMemos}</p>
+        </div>
+      )
+    }
+  </div>
+</Layout>

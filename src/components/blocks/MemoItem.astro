@@ -1,0 +1,98 @@
+---
+import { render } from "astro:content";
+import { formatDate } from "@/utils/date";
+import type { MemoEntry } from "@/utils/memo";
+import { mdComponents } from "@/components/md";
+import { Icon } from "astro-icon/components";
+import site from "@/config/site";
+
+interface Props {
+  memo: MemoEntry;
+  compact?: boolean;
+}
+
+const { memo, compact = false } = Astro.props;
+const { Content } = await render(memo);
+const memoUrl = `/memos#${memo.id}`;
+const memoDateFormat =
+  memo.data.createdAt.getHours() === 0 && memo.data.createdAt.getMinutes() === 0
+    ? "YYYY.MM.DD"
+    : "YYYY.MM.DD HH:mm";
+const externalHost = memo.data.link
+  ? new URL(memo.data.link).hostname.replace(/^www\./, "")
+  : "";
+---
+
+<article
+  id={memo.id}
+  class:list={[
+    "group scroll-mt-8 border-b border-border/40 py-7 last:border-0",
+    compact && "py-5",
+  ]}
+>
+  <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+    <a
+      href={memoUrl}
+      class="font-mono text-[11px] tracking-tight text-muted-foreground/65 transition-colors hover:text-primary"
+      aria-label={`${site.labels.memoPermalink} ${formatDate(memo.data.createdAt)}`}
+    >
+      {formatDate(memo.data.createdAt, memoDateFormat)}
+    </a>
+
+    <div class="flex items-center gap-2">
+      {
+        memo.data.link && (
+          <a
+            href={memo.data.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground/70 transition-colors hover:text-primary"
+            aria-label={site.labels.memoExternalLink}
+          >
+            <Icon name="mdi:link-variant" class="h-3.5 w-3.5" />
+            <span class="max-w-28 truncate">{externalHost}</span>
+          </a>
+        )
+      }
+      <a
+        href={memoUrl}
+        class="text-muted-foreground/30 transition-colors hover:text-primary"
+        title={site.labels.memoPermalink}
+      >
+        <Icon name="mdi:link" class="h-3.5 w-3.5" />
+      </a>
+    </div>
+  </div>
+
+  <div
+    class:list={[
+      "prose max-w-none dark:prose-invert",
+      "prose-p:my-3 prose-p:leading-loose prose-p:text-muted-foreground",
+      "prose-a:text-foreground prose-a:decoration-primary/30 prose-a:underline-offset-4 hover:prose-a:text-primary",
+      "prose-code:rounded-sm prose-code:bg-primary/15 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary prose-code:before:content-none prose-code:after:content-none",
+      compact && "memo-compact",
+    ]}
+  >
+    <Content components={mdComponents} />
+  </div>
+
+  {
+    memo.data.tags.length > 0 && (
+      <div class="mt-4 flex flex-wrap gap-2">
+        {memo.data.tags.map((tag) => (
+          <span class="rounded-full border border-border/50 bg-muted/20 px-2.5 py-1 font-mono text-[10px] text-muted-foreground/60">
+            #{tag}
+          </span>
+        ))}
+      </div>
+    )
+  }
+</article>
+
+<style>
+  .memo-compact {
+    max-height: 10rem;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, black 72%, transparent);
+  }
+</style>
