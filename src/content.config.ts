@@ -39,7 +39,6 @@ const memos = defineCollection({
     createdAt: z.coerce.date(),
     updatedAt: z.coerce.date().optional(),
     tags: z.array(z.string()).optional().default([]),
-    sourceUrl: z.string().url().optional(),
     draft: z.boolean().default(false),
   }),
 });

@@ -29,13 +29,12 @@ createdAt: 2026-04-28 23:10
 tags:
   - site
   - memo
-sourceUrl: "https://example.com"
 ---
 
-这里写内容。
+这里写内容。需要引用链接的话，直接写在正文里就好。
 ```
 
-`createdAt` 是必须的，`tags` 和 `sourceUrl` 都是可选的。
+`createdAt` 是必须的，`tags` 是可选的。
 
 之所以继续用 MDX，而不是 JSON，是因为我不想让这个功能一开始就被格式限制住。以后如果某条随记里需要放代码块、图片、链接卡片，直接写就行。
 
@@ -62,7 +61,7 @@ sourceUrl: "https://example.com"
 为了真的让随记变得顺手，我加了一个创建脚本：
 
 ```bash
-pnpm new:memo "今天发现了一个很好用的工具" --tags tool,mac --source https://example.com
+pnpm new:memo "今天发现了一个很好用的工具：https://example.com" --tags tool,mac
 ```
 
 它会自动生成类似这样的文件：
@@ -79,13 +78,18 @@ createdAt: 2026-04-28 23:10
 tags:
   - tool
   - mac
-sourceUrl: "https://example.com"
 ---
 
-今天发现了一个很好用的工具
+今天发现了一个很好用的工具：https://example.com
 ```
 
-如果没有传 `--source`，就不会生成 `sourceUrl` 字段。
+如果需要放链接，直接写进正文即可。随记本身就是 MDX，后续想换成普通链接、链接卡片或更完整的说明，都不会被 frontmatter 限制。
+
+例如：
+
+```md
+今天发现了一个很好用的工具：[Example](https://example.com)。
+```
 
 如果只是想先记一条草稿，也可以加：
 

@@ -18,9 +18,6 @@ const memoDateFormat =
   memo.data.createdAt.getHours() === 0 && memo.data.createdAt.getMinutes() === 0
     ? "YYYY.MM.DD"
     : "YYYY.MM.DD HH:mm";
-const sourceHost = memo.data.sourceUrl
-  ? new URL(memo.data.sourceUrl).hostname.replace(/^www\./, "")
-  : "";
 ---
 
 <article
@@ -39,29 +36,13 @@ const sourceHost = memo.data.sourceUrl
       {formatDate(memo.data.createdAt, memoDateFormat)}
     </a>
 
-    <div class="flex items-center gap-2">
-      {
-        memo.data.sourceUrl && (
-          <a
-            href={memo.data.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground/70 transition-colors hover:text-primary"
-            aria-label={site.labels.memoExternalLink}
-          >
-            <Icon name="mdi:link-variant" class="h-3.5 w-3.5" />
-            <span class="max-w-28 truncate">{sourceHost}</span>
-          </a>
-        )
-      }
-      <a
-        href={memoUrl}
-        class="text-muted-foreground/30 transition-colors hover:text-primary"
-        title={site.labels.memoPermalink}
-      >
-        <Icon name="mdi:link" class="h-3.5 w-3.5" />
-      </a>
-    </div>
+    <a
+      href={memoUrl}
+      class="text-muted-foreground/30 transition-colors hover:text-primary"
+      title={site.labels.memoPermalink}
+    >
+      <Icon name="mdi:link" class="h-3.5 w-3.5" />
+    </a>
   </div>
 
   <div

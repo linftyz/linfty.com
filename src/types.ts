@@ -78,7 +78,6 @@ export interface SiteLabels {
   viewAllMemos: string;
   noMemos: string;
   memoPermalink: string;
-  memoExternalLink: string;
   noDescription: string;
   noFriends: string;
   noProjects: string;

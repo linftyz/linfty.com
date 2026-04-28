@@ -95,9 +95,6 @@ function createMemo(values) {
     ...(tags.length > 0
       ? ["tags:", ...tags.map((tag) => `  - ${tag}`)]
       : ["tags: []"]),
-    ...(options.sourceUrl || options.source
-      ? [`sourceUrl: ${yamlString(options.sourceUrl || options.source)}`]
-      : []),
     ...(isTruthy(options.draft) ? ["draft: true"] : []),
     "---",
     "",
@@ -142,7 +139,7 @@ if (!creators[type]) {
   console.error(
     [
       "Usage:",
-      '  pnpm new:memo "内容" --tags site,memo --source https://example.com',
+      '  pnpm new:memo "内容" --tags site,memo',
       '  pnpm new:post "文章标题" --slug article-title --category experiments --tags astro,mdx --summary "摘要"',
       '  pnpm new:post "文章标题" --slug my-post --publish',
     ].join("\n"),
