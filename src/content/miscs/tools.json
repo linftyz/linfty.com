@@ -1,0 +1,110 @@
+[
+  {
+    "name": "编辑器",
+    "slug": "editors",
+    "order": 1,
+    "items": [
+      {
+        "name": "VS Code",
+        "link": "https://code.visualstudio.com",
+        "logo": "/tools/vscode.svg",
+        "icon": "mdi:microsoft-visual-studio-code"
+      },
+      {
+        "name": "Zed",
+        "link": "https://zed.dev",
+        "logo": {
+          "light": "/tools/zed-light.svg",
+          "dark": "/tools/zed-dark.svg"
+        },
+        "icon": "mdi:flash-outline"
+      },
+      {
+        "name": "Ghostty",
+        "link": "https://ghostty.org",
+        "logo": "/tools/ghostty.svg",
+        "icon": "mdi:terminal"
+      },
+      {
+        "name": "Obsidian",
+        "link": "https://obsidian.md",
+        "logo": "/tools/obsidian.svg",
+        "icon": "mdi:diamond-stone"
+      },
+      {
+        "name": "Typora",
+        "link": "https://typora.io",
+        "logo": "/tools/typora.avif",
+        "icon": "mdi:language-markdown-outline"
+      }
+    ]
+  },
+  {
+    "name": "效率",
+    "slug": "productivity",
+    "order": 2,
+    "items": [
+      {
+        "name": "Raycast",
+        "link": "https://www.raycast.com",
+        "logo": "/tools/raycast.svg",
+        "icon": "mdi:lightning-bolt"
+      },
+      {
+        "name": "Snipaste",
+        "link": "https://www.snipaste.com",
+        "logo": "/tools/snipaste.svg",
+        "icon": "mdi:content-cut"
+      }
+    ]
+  },
+  {
+    "name": "环境",
+    "slug": "environment",
+    "order": 3,
+    "items": [
+      {
+        "name": "Mac Mini",
+        "logo": {
+          "light": "/tools/apple-light.svg",
+          "dark": "/tools/apple-dark.svg"
+        },
+        "icon": "mdi:desktop-mac"
+      },
+      {
+        "name": "Arch Linux",
+        "icon": "mdi:linux"
+      }
+    ]
+  },
+  {
+    "name": "AI",
+    "slug": "ai-tools",
+    "order": 4,
+    "items": [
+      {
+        "name": "YouMind",
+        "link": "https://youmind.ai",
+        "icon": "mdi:brain"
+      },
+      {
+        "name": "Monica",
+        "link": "https://monica.im",
+        "icon": "mdi:robot-outline"
+      },
+      {
+        "name": "Claude Code",
+        "logo": "/tools/claude.svg",
+        "icon": "mdi:console-line"
+      },
+      {
+        "name": "Codex",
+        "logo": {
+          "light": "/tools/codex-light.svg",
+          "dark": "/tools/codex-dark.svg"
+        },
+        "icon": "mdi:code-braces-box"
+      }
+    ]
+  }
+]

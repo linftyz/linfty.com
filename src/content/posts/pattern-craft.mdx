@@ -1,0 +1,66 @@
+---
+title: "一键获取专业级的网页背景图案和渐变风格：patterncraft.fun"
+createdAt: 2025-12-17
+category: "resources"
+tags: ["css", "tailwindcss", "memo", "material"]
+---
+
+之前使用 Next.js 开发网站的时候，经常遇到一个尴尬的情况：页面布局写好了，但背景如果是纯白或纯黑，显得太单调；找张大图放上去吧，又怕体积太大拖慢加载速度。
+
+最近发现了一个很好用的小工具 [**Pattern Craft**](https://patterncraft.fun/)，完美的解决了这一痛点。
+
+![patterncraft.fun](https://images.linfty.com/2025/12/patterncraft.webp)
+
+## 它是干什么的？
+
+简单来说，它是一个提供很多专业级网页背景图案和渐变样式的工具网站。
+
+它收集了大量现代风格的纹理（网格、波点、几何线条）和渐变色（大概两百多种模式）。最重要的是，之前使用的其他网站通常提供的图片的格式，体积大还会拖慢速度，但是 Pattern Craft 提供的**可以直接复制的 HTML + CSS/TailwinCSS 代码**。
+
+并且是本身是开源在 [https://github.com/megh-bari/pattern-craft](https://github.com/megh-bari/pattern-craft) 上的，因此是 100% 免费使用的，甚至可以自己部署一个。
+
+## 核心亮点
+
+1. **原生支持 Tailwind CSS**： 也就是说使用TailwindCSS的项目，直接选好模式，点击拷贝，直接粘贴到项目里就可以使用了，非常的方便。完全不需要自己写复杂的 CSS，复制粘贴就能用。
+
+2. **极度轻量**： 因为本质是代码生成的图案和渐变，对页面体积的影响几乎可以忽略不计，加载速度极快，而且无限放大也不会失真。
+
+3. **实时预览**：直接在网站上选中就可以查看实际应用的效果，简单又直白
+
+## 怎么用？
+
+使用流程非常简单，分三步：
+
+1. **挑选样式**：在网站上浏览，找到你喜欢的图案（Gradients 适合做氛围，Geometric 适合做底纹）。
+
+2. **预览效果**：选好样式之后，可以点击 Preview 按钮就可以在 Pattern Craft 中实时查看效果
+
+3. **一键复制**：点击 Copy 按钮既可以复制对应的代码，示例如下：
+
+```tsx
+<div className="relative min-h-screen w-full">
+  {/* Radial Gradient Background from Bottom */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      background:
+        "radial-gradient(125% 125% at 50% 90%, #fff 40%, #6366f1 100%)",
+    }}
+  />
+  {/* Your Content/Components */}
+</div>
+```
+
+![copy pattern code](https://images.linfty.com/2025/12/copy-pattern-code.webp)
+
+## 总结
+
+那么适合在哪些场景下使用呢：
+
+- **Landing Page**：特别是 Hero Section，加上一层淡淡的网格或极光渐变，科技感马上就有了，比啥也没有的页面看起来更加高级。
+
+- **个人博客/文档站**：添加一些不影响阅读的纹理或者渐变，能让阅读更加有趣。
+
+- 等等很多都可以
+
+如果你恰巧使用了TailwindCSS来开发网站，又想快速给网站添加一点不一样的装饰，可以试试看。

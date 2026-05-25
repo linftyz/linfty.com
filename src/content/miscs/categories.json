@@ -1,0 +1,30 @@
+[
+  {
+    "name": "编程开发",
+    "slug": "programming",
+    "description": "涵盖所有编程开发类博客"
+  },
+  {
+    "name": "百宝箱",
+    "slug": "resources",
+    "description": "独乐乐不如众乐乐"
+  },
+  {
+    "name": "生活日常",
+    "slug": "life",
+    "description": "记录日常琐碎。"
+  },
+  {
+    "name": "折腾之路",
+    "slug": "experiments",
+    "description": "记录尝试折腾各种技术、工具的心得和想法。"
+  },
+  {
+    "name": "学习笔记",
+    "slug": "learning"
+  },
+  {
+    "name": "未分类",
+    "slug": "uncategorized"
+  }
+]

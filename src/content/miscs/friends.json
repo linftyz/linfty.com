@@ -1,0 +1,50 @@
+[
+  {
+    "id": "liushen",
+    "order": 1,
+    "name": "清羽飞扬",
+    "description": "柳影曳曳，清酒孤灯，扬笔撒墨，心境如霜",
+    "link": "https://blog.liushen.fun/",
+    "avatar": "https://blog.liushen.fun/info/avatar.ico"
+  },
+  {
+    "id": "zhheo",
+    "order": 2,
+    "name": "张洪Heo",
+    "description": "分享设计与科技生活",
+    "link": "https://blog.zhheo.com/",
+    "avatar": "https://img.zhheo.com/i/67d8fa75943e4.webp"
+  },
+  {
+    "id": "thyuu",
+    "order": 3,
+    "name": "风记星辰",
+    "description": "热爱你来过的每度温暖",
+    "link": "https://www.thyuu.com",
+    "avatar": "https://std.thyuu.com/logo.svg"
+  },
+  {
+    "id": "anheyu",
+    "order": 4,
+    "name": "安知鱼",
+    "description": "生活明朗，万物可爱",
+    "link": "https://blog.anheyu.com/",
+    "avatar": "https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"
+  },
+  {
+    "id": "mabbs",
+    "order": 5,
+    "name": "Mayx的博客",
+    "description": "Mayx’s Home Page",
+    "link": "https://mabbs.github.io",
+    "avatar": "https://avatars0.githubusercontent.com/u/17966333"
+  },
+  {
+    "id": "xsot",
+    "order": 6,
+    "name": "星辰日记",
+    "description": "我已很久不再成为我自己",
+    "link": "https://blog.xsot.cn",
+    "avatar": "https://img.iirose.cn/blog/logo.webp"
+  }
+]
