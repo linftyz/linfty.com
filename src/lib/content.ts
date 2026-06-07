@@ -8,7 +8,10 @@ function byCreatedAtDesc(
 }
 
 function byOrderThenName<
-  T extends CollectionEntry<"friends"> | CollectionEntry<"tools">,
+  T extends
+    | CollectionEntry<"categories">
+    | CollectionEntry<"friends">
+    | CollectionEntry<"tools">,
 >(a: T, b: T) {
   return (
     a.data.order - b.data.order ||
@@ -16,9 +19,7 @@ function byOrderThenName<
   );
 }
 
-function byName<
-  T extends CollectionEntry<"categories"> | CollectionEntry<"tags">,
->(a: T, b: T) {
+function byName<T extends CollectionEntry<"tags">>(a: T, b: T) {
   return a.data.name.localeCompare(b.data.name, "zh-CN");
 }
 
@@ -83,7 +84,7 @@ export async function getCategoriesWithCount() {
   const counts = countByReference(posts, "category");
 
   return [...categories]
-    .sort(byName)
+    .sort(byOrderThenName)
     .map((entry) => ({ entry, count: counts.get(entry.id) ?? 0 }));
 }
 

@@ -6,9 +6,34 @@ import { defineCollection } from "astro:content";
 function slug() {
   return z
     .string()
-    .min(3)
+    .min(1)
     .max(200)
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/i, "Invalid slug");
+    .regex(
+      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+      "Slug must use lowercase letters, numbers, and hyphen-separated words",
+    );
+}
+
+function tagReferences() {
+  return z
+    .array(reference("tags"))
+    .optional()
+    .default([])
+    .superRefine((references, ctx) => {
+      const seen = new Set<string>();
+
+      references.forEach((entry, index) => {
+        if (seen.has(entry.id)) {
+          ctx.addIssue({
+            code: "custom",
+            message: `Duplicate tag reference: ${entry.id}`,
+            path: [index],
+          });
+        }
+
+        seen.add(entry.id);
+      });
+    });
 }
 
 const posts = defineCollection({
@@ -22,7 +47,7 @@ const posts = defineCollection({
       createdAt: z.coerce.date(),
       updatedAt: z.coerce.date().optional(),
       category: reference("categories"),
-      tags: z.array(reference("tags")).optional().default([]),
+      tags: tagReferences(),
       summary: z.string().optional().default(""),
       cover: image().optional(),
       draft: z.boolean().default(false),
@@ -58,6 +83,7 @@ const categories = defineCollection({
   schema: z.object({
     name: z.string().max(32),
     slug: slug(),
+    order: z.number().int().nonnegative().optional().default(0),
     description: z
       .string()
       .max(512)
