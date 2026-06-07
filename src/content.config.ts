@@ -55,18 +55,17 @@ const projects = defineCollection({
 
 const categories = defineCollection({
   loader: file("./src/content/miscs/categories.json"),
-  schema: ({ image }) =>
-    z.object({
-      name: z.string().max(32),
-      slug: slug(),
-      description: z
-        .string()
-        .max(512)
-        .optional()
-        .default("")
-        .describe("In markdown format"),
-      icon: z.string().optional().default("mdi:folder"),
-    }),
+  schema: z.object({
+    name: z.string().max(32),
+    slug: slug(),
+    description: z
+      .string()
+      .max(512)
+      .optional()
+      .default("")
+      .describe("In markdown format"),
+    icon: z.string().optional().default("mdi:folder"),
+  }),
 });
 
 const tags = defineCollection({
@@ -86,6 +85,7 @@ const tags = defineCollection({
 const friends = defineCollection({
   loader: file("./src/content/miscs/friends.json"),
   schema: z.object({
+    id: slug(),
     order: z.number().int().nonnegative().optional().default(0),
     name: z.string().max(64),
     description: z.string().optional().describe("One line string"),
@@ -103,7 +103,7 @@ const tools = defineCollection({
     items: z.array(
       z.object({
         name: z.string().max(64),
-        link: z.string().url().optional(),
+        link: z.url().optional(),
         icon: z.string().optional(),
         logo: z
           .union([

@@ -1,15 +1,18 @@
 ---
+import "@/styles/global.css";
 
+import BaseHead from "@/components/BaseHead.astro";
+import { siteConfig } from "@/config/site";
+import type { SeoMeta } from "@/types/site";
+
+interface Props extends SeoMeta {}
 ---
 
-<html lang="en">
+<html lang={siteConfig.language}>
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <BaseHead {...Astro.props}>
+      <slot name="head" />
+    </BaseHead>
   </head>
   <body>
     <slot />
