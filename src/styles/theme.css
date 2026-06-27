@@ -33,7 +33,7 @@
   --muted-foreground: oklch(0.35 0.02 165);
 
   --border: oklch(0.92 0.01 165);
-  --shadow-main: 0 10px 40px -10px oklch(0.3 0.05 165 / 0.05);
+  --shadow-main: 0 24px 80px -58px oklch(0.3 0.05 165 / 0.18);
 
   --callout-note: oklch(0.65 0.12 250);
   --callout-info: var(--callout-note);
@@ -57,10 +57,10 @@
   --primary-foreground: oklch(0.1 0.02 165);
 
   --muted: oklch(0.28 0.02 160);
-  --muted-foreground: oklch(0.75 0.015 165);
+  --muted-foreground: oklch(0.82 0.012 165);
 
   --border: oklch(0.26 0.02 165);
-  --shadow-main: 0 30px 60px -15px oklch(0 0 0 / 0.5);
+  --shadow-main: 0 24px 70px -52px oklch(0 0 0 / 0.58);
 
   --callout-note: oklch(0.75 0.12 250);
   --callout-info: var(--callout-note);

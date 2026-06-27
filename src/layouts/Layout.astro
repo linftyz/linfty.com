@@ -10,12 +10,12 @@ const head = Astro.props;
 
 <BaseLayout {...head}>
   <div
-    class="relative flex h-auto w-full max-w-5xl flex-col overflow-hidden rounded-none border border-border bg-card shadow-main md:flex-row md:rounded-[2.5rem]"
+    class="relative flex h-auto w-full max-w-6xl flex-col overflow-hidden rounded-none border border-border/70 bg-card/90 shadow-main md:flex-row md:rounded-[2rem]"
   >
     <Sidebar />
 
     <main
-      class="custom-scrollbar flex-1 overflow-x-hidden overflow-y-auto md:h-200"
+      class="custom-scrollbar flex-1 overflow-x-hidden overflow-y-auto md:h-[min(50rem,calc(100dvh-3rem))]"
     >
       <slot />
     </main>

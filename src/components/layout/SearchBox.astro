@@ -3,11 +3,11 @@ import { Icon } from "astro-icon/components";
 import site from "@/config/site";
 ---
 
-<div class="mb-4">
+<div class="mb-3 md:mb-4">
   <button
     id="search-trigger"
     type="button"
-    class="group flex w-full items-center justify-between rounded-xl border border-border/50 bg-muted/30 px-3 py-3 text-muted-foreground hover:border-primary/30 hover:text-primary"
+    class="group flex w-full items-center justify-between rounded-xl border border-border/50 bg-muted/30 px-3 py-2.5 text-muted-foreground hover:border-primary/30 hover:text-primary md:py-3"
     title={site.labels.searchTrigger}
     aria-controls="search-modal"
     aria-expanded="false"

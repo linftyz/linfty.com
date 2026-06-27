@@ -37,7 +37,7 @@ const relatedEntries = await Promise.all(
               href={`/posts/${newerPost.id}`}
               class="group flex min-h-28 flex-col justify-between rounded-2xl border border-border/50 bg-muted/20 p-4 transition-[background-color,border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-card"
             >
-              <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-[0.28em] text-muted-foreground/60 uppercase transition-colors group-hover:text-primary/70">
+              <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-[0.28em] text-muted-foreground/70 uppercase transition-colors group-hover:text-primary/80">
                 <Icon
                   name="mdi:arrow-left"
                   class="transition-transform group-hover:-translate-x-0.5"
@@ -58,7 +58,7 @@ const relatedEntries = await Promise.all(
               href={`/posts/${olderPost.id}`}
               class="group flex min-h-28 flex-col justify-between rounded-2xl border border-border/50 bg-muted/20 p-4 text-right transition-[background-color,border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-card"
             >
-              <span class="flex items-center justify-end gap-1.5 text-[10px] font-bold tracking-[0.28em] text-muted-foreground/60 uppercase transition-colors group-hover:text-primary/70">
+              <span class="flex items-center justify-end gap-1.5 text-[10px] font-bold tracking-[0.28em] text-muted-foreground/70 uppercase transition-colors group-hover:text-primary/80">
                 {site.labels.olderPost}
                 <Icon
                   name="mdi:arrow-right"
@@ -77,7 +77,7 @@ const relatedEntries = await Promise.all(
       {relatedEntries.length > 0 && (
         <section>
           <div class="mb-5 flex items-center justify-between gap-4">
-            <h2 class="text-[11px] font-bold tracking-[0.35em] text-muted-foreground/60 uppercase">
+            <h2 class="text-[11px] font-bold tracking-[0.35em] text-muted-foreground/70 uppercase">
               {site.labels.relatedPosts}
             </h2>
             <span class="h-px flex-1 bg-border/50" />
@@ -93,9 +93,14 @@ const relatedEntries = await Promise.all(
                   <span class="line-clamp-2 text-sm font-semibold text-foreground/80 transition-colors group-hover:text-primary">
                     {post.data.title}
                   </span>
-                  <span class="mt-1 block font-mono text-[11px] text-muted-foreground/55 italic">
-                    {formatDate(post.data.createdAt)}
-                    {category ? ` — ${category.data.name}` : ""}
+                  <span class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-muted-foreground/65 italic">
+                    <span>{formatDate(post.data.createdAt)}</span>
+                    {category && (
+                      <>
+                        <span class="text-border">/</span>
+                        <span>{category.data.name}</span>
+                      </>
+                    )}
                   </span>
                 </span>
                 <Icon
