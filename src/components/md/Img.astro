@@ -20,14 +20,14 @@ const isLocalImage = typeof src !== "string";
         alt={alt}
         width={672}
         loading="lazy"
-        class="rounded-md border border-border"
+        class="w-full rounded-md shadow-[0_0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"
       />
     ) : (
       <img
         src={src}
         alt={alt}
         loading="lazy"
-        class="w-full rounded-md border border-border"
+        class="w-full rounded-md shadow-[0_0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"
       />
     )
   }

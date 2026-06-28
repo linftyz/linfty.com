@@ -30,7 +30,7 @@ const memoDateFormat =
   <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
     <a
       href={memoUrl}
-      class="font-mono text-[11px] tracking-tight text-muted-foreground/65 transition-colors hover:text-primary"
+      class="font-mono text-[11px] tracking-tight text-muted-foreground/65 tabular-nums transition-colors hover:text-primary"
       aria-label={`${site.labels.memoPermalink} ${formatDate(memo.data.createdAt)}`}
     >
       {formatDate(memo.data.createdAt, memoDateFormat)}
@@ -38,7 +38,7 @@ const memoDateFormat =
 
     <a
       href={memoUrl}
-      class="text-muted-foreground/55 transition-colors hover:text-primary"
+      class="text-muted-foreground/55 transition-[color,transform] hover:text-primary active:scale-[0.96]"
       title={site.labels.memoPermalink}
       aria-label={site.labels.memoPermalink}
       data-memo-permalink

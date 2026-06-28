@@ -53,7 +53,7 @@ const isNew =
     <p
       class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-muted-foreground/70 italic"
     >
-      <span>{formatDate(post.data.createdAt)}</span>
+      <span class="tabular-nums">{formatDate(post.data.createdAt)}</span>
       <span class="text-border">/</span>
       <a href={`/categories/${category?.id}`} class="hover:text-primary">
         {category?.data.name}
