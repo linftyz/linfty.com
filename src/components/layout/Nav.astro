@@ -6,7 +6,7 @@ const currentPath = Astro.url.pathname;
 ---
 
 <nav
-  class="no-scrollbar flex flex-1 flex-wrap gap-3 overflow-x-auto max-md:justify-between md:flex-col md:gap-4 md:overflow-x-visible"
+  class="flex flex-1 flex-wrap gap-3 overflow-x-auto max-md:justify-between md:flex-none md:flex-col md:flex-nowrap md:gap-2 md:overflow-x-visible"
 >
   {
     site.navigation.map((item) => {
@@ -17,10 +17,10 @@ const currentPath = Astro.url.pathname;
         <a
           href={item.href}
           class:list={[
-            "group flex min-w-[5.75rem] items-center justify-center rounded-2xl border border-transparent px-3 py-2.5 transition-[background-color,border-color,transform] active:scale-[0.96] md:min-w-0 md:justify-between md:px-4 md:py-4",
+            "group flex min-w-[5.75rem] items-center justify-center rounded-2xl border border-transparent px-3 py-2.5 transition-[background-color,border-color,color,transform] duration-200 active:bg-muted/60 md:h-10 md:min-w-0 md:justify-between md:rounded-xl md:px-3 md:py-0",
             isActive
-              ? "border-primary/20 bg-primary/10 md:hover:border-primary/20 md:hover:bg-primary/15"
-              : "hover:bg-muted/50",
+              ? "border-primary/20 border-l-primary/60 bg-primary/10 md:hover:bg-primary/12"
+              : "hover:bg-muted/50 md:text-muted-foreground",
           ]}
         >
           <div class="flex flex-col">
@@ -36,7 +36,7 @@ const currentPath = Astro.url.pathname;
             </span>
             <span
               class:list={[
-                "text-[10px] tracking-widest uppercase",
+                "text-[10px] tracking-widest uppercase md:hidden",
                 isActive ? "text-primary/75" : "text-muted-foreground/65",
               ]}
             >
@@ -44,15 +44,16 @@ const currentPath = Astro.url.pathname;
             </span>
           </div>
 
-          {isActive ? (
-            <span class="hidden text-primary md:block">
-              <Icon name="mdi:arrow-right" />
-            </span>
-          ) : (
-            <span class="hidden -translate-x-2 text-primary opacity-0 transition-[opacity,transform] group-hover:translate-x-0 group-hover:opacity-100 md:block">
-              <Icon name="mdi:arrow-right" />
-            </span>
-          )}
+          <span
+            class:list={[
+              "hidden text-primary transition-[opacity,transform] duration-200 md:block",
+              isActive
+                ? "opacity-100"
+                : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-80",
+            ]}
+          >
+            <Icon name="mdi:arrow-right" />
+          </span>
         </a>
       );
     })

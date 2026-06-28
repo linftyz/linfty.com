@@ -9,7 +9,7 @@ import SearchBox from "./SearchBox.astro";
 ---
 
 <aside
-  class="flex w-full flex-col border-b border-border bg-muted/20 p-5 md:w-[34%] md:border-r md:border-b-0 md:p-12"
+  class="flex w-full flex-col border-b border-border bg-muted/20 p-5 md:h-full md:min-h-0 md:w-64 md:flex-none md:border-r md:border-b-0 md:p-8 lg:w-80 lg:p-10 xl:w-[22rem]"
   data-pagefind-ignore="all"
 >
   <Brand />
@@ -18,7 +18,7 @@ import SearchBox from "./SearchBox.astro";
 
   <Nav />
 
-  <div class="mt-5 flex items-center justify-between md:mt-14">
+  <div class="mt-5 flex items-center justify-between md:mt-auto md:pt-6">
     <div class="flex gap-4 text-muted-foreground/70">
       {
         site.social.map((item) => (

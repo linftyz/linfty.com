@@ -3,11 +3,9 @@ import site from "@/config/site";
 import { Image } from "astro:assets";
 ---
 
-<div
-  class="mb-5 flex items-center gap-3 md:mb-10 md:flex-col md:items-start md:gap-0"
->
+<div class="mb-5 flex items-center gap-3 md:mb-6">
   <div
-    class="flex h-9 w-9 items-center justify-center rounded-xl bg-muted text-lg font-bold text-primary-foreground md:h-11 md:w-11"
+    class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-muted text-lg font-bold text-primary-foreground md:h-10 md:w-10"
   >
     <Image
       loading={"eager"}
@@ -17,14 +15,16 @@ import { Image } from "astro:assets";
       height={44}
     />
   </div>
-  <div class="md:mt-8">
+  <div class="min-w-0">
     <h1
       data-pagefind-ignore
-      class="text-base font-bold tracking-tight text-foreground md:text-xl"
+      class="truncate text-base font-bold tracking-tight text-foreground md:text-lg"
     >
       {site.meta.title}
     </h1>
-    <p class="mt-2 hidden text-xs text-muted-foreground/70 md:block">
+    <p
+      class="mt-1 hidden text-[11px] leading-snug text-muted-foreground/70 md:block"
+    >
       {site.meta.description}
     </p>
   </div>

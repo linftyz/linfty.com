@@ -29,7 +29,10 @@ const relatedEntries = await Promise.all(
     <section class="space-y-10">
       {(newerPost || olderPost) && (
         <nav
-          class="grid gap-3 md:grid-cols-2"
+          class:list={[
+            "grid gap-3",
+            newerPost && olderPost && "md:grid-cols-2",
+          ]}
           aria-label={site.labels.postNavigation}
         >
           {newerPost ? (
@@ -49,9 +52,7 @@ const relatedEntries = await Promise.all(
                 {newerPost.data.title}
               </span>
             </a>
-          ) : (
-            <div class="hidden md:block" />
-          )}
+          ) : null}
 
           {olderPost && (
             <a
