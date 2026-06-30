@@ -7,18 +7,18 @@ import icon from "astro-icon";
 import expressiveCode from "astro-expressive-code";
 import sitemap from "@astrojs/sitemap";
 import remarkDirective from "remark-directive";
-
 import { remarkContainerDirectives } from "./src/utils/remark-container-directives.mjs";
-
-const contentRemarkPlugins = [remarkDirective, remarkContainerDirectives];
+import { unified } from "@astrojs/markdown-remark";
 
 // https://astro.build/config
 export default defineConfig({
   // IMPORTANT: Change this to your deployed site URL
-  site: "https://your-domain.com",
+  site: "https://linfty.com",
 
   markdown: {
-    remarkPlugins: contentRemarkPlugins,
+    processor: unified({
+      remarkPlugins: [remarkDirective, remarkContainerDirectives],
+    }),
   },
 
   vite: {
@@ -27,8 +27,8 @@ export default defineConfig({
 
   integrations: [
     expressiveCode({
-      themeCssSelector: (theme) => `.${theme.type}`,
       themes: ["github-dark", "github-light"],
+      themeCssSelector: (theme) => `.${theme.type}`,
     }),
     mdx(),
     icon(),
