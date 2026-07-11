@@ -16,6 +16,7 @@ const site = {
     logo: "/logo.svg",
     ogImage: "/og-image.png",
     lang: "zh-CN",
+    twitterHandle: "",
   },
 
   // --- Navigation ---

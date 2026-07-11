@@ -22,7 +22,7 @@ const tagCounts = allPosts.reduce((acc: Record<string, number>, post) => {
     data-pagefind-body
   >
     <header class="mb-16">
-      <h2 class="mb-4 text-3xl font-bold">{site.labels.tagsTitle}</h2>
+      <h1 class="mb-4 text-3xl font-bold">{site.labels.tagsTitle}</h1>
       <p class="mb-12 text-sm font-light text-muted-foreground italic">
         共 {allTags.length}
         {site.labels.tagsCountSuffix}
@@ -44,7 +44,7 @@ const tagCounts = allPosts.reduce((acc: Record<string, number>, post) => {
                 {tag.data.name}
               </span>
             </div>
-            <span class="font-mono text-[10px] font-bold text-muted-foreground/40 group-hover:text-primary/60">
+            <span class="font-mono text-[10px] font-bold text-muted-foreground/80 group-hover:text-primary">
               {tagCounts[tag.id] || 0} {site.labels.postsCountSuffix}
             </span>
           </a>

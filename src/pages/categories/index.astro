@@ -24,7 +24,7 @@ const categoryCounts = allPosts.reduce((acc: Record<string, number>, post) => {
     data-pagefind-body
   >
     <header class="mb-16">
-      <h2 class="mb-4 text-3xl font-bold">{site.labels.categoriesTitle}</h2>
+      <h1 class="mb-4 text-3xl font-bold">{site.labels.categoriesTitle}</h1>
       <p class="mb-12 text-sm font-light text-muted-foreground italic">
         共 {allCategories.length}
         {site.labels.categoriesCountSuffix}
@@ -44,10 +44,10 @@ const categoryCounts = allPosts.reduce((acc: Record<string, number>, post) => {
                   name={cat.data.icon}
                   class="h-4 w-4 shrink-0 text-muted-foreground/60 transition-colors duration-300 group-hover:text-primary/80"
                 />
-                <h3 class="truncate text-base font-bold text-foreground/85 group-hover:text-primary">
+                <h2 class="truncate text-base font-bold text-foreground/85 group-hover:text-primary">
                   {cat.data.name}
-                </h3>
-                <span class="shrink-0 font-mono text-[10px] text-muted-foreground/45 transition-colors duration-300 group-hover:text-primary/60">
+                </h2>
+                <span class="shrink-0 font-mono text-[10px] text-muted-foreground/80 transition-colors duration-300 group-hover:text-primary">
                   {categoryCounts[cat.id] || 0}
                 </span>
               </div>

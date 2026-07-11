@@ -3,7 +3,11 @@ import site from "@/config/site";
 import { Image } from "astro:assets";
 ---
 
-<div class="mb-5 flex items-center gap-3 md:mb-6">
+<a
+  href="/"
+  aria-label={site.meta.title}
+  class="group mb-5 flex items-center gap-3 md:mb-6"
+>
   <div
     class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-muted text-lg font-bold text-primary-foreground md:h-10 md:w-10"
   >
@@ -16,16 +20,16 @@ import { Image } from "astro:assets";
     />
   </div>
   <div class="min-w-0">
-    <h1
+    <span
       data-pagefind-ignore
-      class="truncate text-base font-bold tracking-tight text-foreground md:text-lg"
+      class="block truncate text-base font-bold tracking-tight text-foreground transition-colors group-hover:text-primary md:text-lg"
     >
       {site.meta.title}
-    </h1>
+    </span>
     <p
-      class="mt-1 hidden text-[11px] leading-snug text-muted-foreground/70 md:block"
+      class="mt-1 hidden text-[11px] leading-snug text-muted-foreground/80 md:block"
     >
       {site.meta.description}
     </p>
   </div>
-</div>
+</a>

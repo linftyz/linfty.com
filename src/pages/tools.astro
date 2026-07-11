@@ -15,7 +15,7 @@ const tools = (await getCollection("tools")).sort(
     data-pagefind-body
   >
     <header class="mb-16">
-      <h2 class="mb-4 text-3xl font-bold">{site.labels.toolsTitle}</h2>
+      <h1 class="mb-4 text-3xl font-bold">{site.labels.toolsTitle}</h1>
       <p class="text-sm font-light text-muted-foreground italic">
         {site.labels.toolsDescription}
       </p>
@@ -25,9 +25,9 @@ const tools = (await getCollection("tools")).sort(
       {
         tools.map((category) => (
           <section>
-            <h3 class="mb-4 text-[10px] font-bold tracking-[0.3em] text-primary uppercase">
+            <h2 class="mb-4 text-[10px] font-bold tracking-[0.3em] text-primary uppercase">
               {category.data.name}
-            </h3>
+            </h2>
             <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
               {category.data.items.map((item) => {
                 const content = (

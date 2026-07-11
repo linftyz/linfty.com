@@ -2,6 +2,11 @@ export interface HeadProps {
   title: string;
   description: string;
   image?: string;
+  type?: "website" | "article";
+  publishedTime?: Date | string;
+  modifiedTime?: Date | string;
+  section?: string;
+  tags?: string[];
 }
 
 export interface GitHubRepoSnapshot {
@@ -111,6 +116,7 @@ export interface SiteConfig {
     logo: string;
     ogImage: string;
     lang: string;
+    twitterHandle?: string;
   };
   navigation: readonly {
     name: string;

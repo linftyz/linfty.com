@@ -31,7 +31,16 @@ const { newerPost, olderPost } = await getPostNeighbors(post, posts);
 const relatedPosts = await getRelatedPosts(post, 3, posts);
 ---
 
-<Layout title={post.data.title} description={post.data.summary}>
+<Layout
+  title={post.data.title}
+  description={post.data.summary}
+  image={post.data.cover?.src}
+  type="article"
+  publishedTime={post.data.createdAt}
+  modifiedTime={post.data.updatedAt}
+  section={category.data.name}
+  tags={tags.map((tag) => tag.data.name)}
+>
   <article
     class="animate-in fade-in mx-auto max-w-2xl overflow-x-hidden p-8 duration-1000 md:p-12"
   >
@@ -158,7 +167,7 @@ const relatedPosts = await getRelatedPosts(post, 3, posts);
         {site.labels.backToPosts}
       </a>
       <div
-        class="font-mono text-[10px] tracking-widest text-muted-foreground/55 uppercase"
+        class="font-mono text-[10px] tracking-widest text-muted-foreground/80 uppercase"
       >
         {site.labels.endOfPost}
       </div>

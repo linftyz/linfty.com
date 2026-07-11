@@ -30,7 +30,7 @@ const memoDateFormat =
   <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
     <a
       href={memoUrl}
-      class="font-mono text-[11px] tracking-tight text-muted-foreground/65 tabular-nums transition-colors hover:text-primary"
+      class="font-mono text-[11px] tracking-tight text-muted-foreground/80 tabular-nums transition-colors hover:text-primary"
       aria-label={`${site.labels.memoPermalink} ${formatDate(memo.data.createdAt)}`}
     >
       {formatDate(memo.data.createdAt, memoDateFormat)}
@@ -64,7 +64,7 @@ const memoDateFormat =
     memo.data.tags.length > 0 && (
       <div class="mt-4 flex flex-wrap gap-2">
         {memo.data.tags.map((tag) => (
-          <span class="rounded-full border border-border/50 bg-muted/20 px-2.5 py-1 font-mono text-[10px] text-muted-foreground/60">
+          <span class="rounded-full border border-border/50 bg-muted/20 px-2.5 py-1 font-mono text-[10px] text-muted-foreground/80">
             #{tag}
           </span>
         ))}

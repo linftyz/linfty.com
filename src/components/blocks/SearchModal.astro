@@ -64,7 +64,9 @@ const commandLinks = [
   class="group pointer-events-none fixed inset-0 z-100 flex items-start justify-center px-4 pt-[12vh]"
   role="dialog"
   aria-modal="true"
+  aria-labelledby="search-dialog-title"
   aria-hidden="true"
+  inert
 >
   <div
     id="modal-overlay"
@@ -73,13 +75,17 @@ const commandLinks = [
   </div>
   <div
     id="modal-content"
+    tabindex="-1"
     class="relative w-full max-w-xl translate-y-8 scale-95 overflow-hidden rounded-2xl border border-border bg-card opacity-0 shadow-main transition-[opacity,transform] duration-500 ease-out group-[.is-active]:pointer-events-auto group-[.is-active]:translate-y-0 group-[.is-active]:scale-100 group-[.is-active]:opacity-100"
   >
+    <h2 id="search-dialog-title" class="sr-only">
+      {site.labels.searchTrigger}
+    </h2>
     <div id="pagefind-search-ui" class="p-6"></div>
 
     <div class="border-t border-border/40 px-6 pt-6 pb-7 md:px-8">
       <p
-        class="mb-4 text-[10px] font-bold tracking-[0.3em] text-muted-foreground uppercase opacity-60"
+        class="mb-4 text-[10px] font-bold tracking-[0.3em] text-muted-foreground/80 uppercase"
       >
         {site.labels.searchNavigate}
       </p>
@@ -97,7 +103,7 @@ const commandLinks = [
                 <span class="block truncate text-sm font-semibold text-foreground/80 transition-colors group-hover:text-primary">
                   {item.label}
                 </span>
-                <span class="block truncate text-[11px] text-muted-foreground/60">
+                <span class="block truncate text-[11px] text-muted-foreground/80">
                   {item.description}
                 </span>
               </span>
@@ -158,8 +164,26 @@ const commandLinks = [
     const trigger = document.getElementById("search-trigger");
     const modal = document.getElementById("search-modal");
     const overlay = document.getElementById("modal-overlay");
+    const modalContent = document.getElementById("modal-content");
     const controller = new AbortController();
     const { signal } = controller;
+    let previouslyFocused: HTMLElement | null = null;
+
+    const focusableSelector = [
+      "a[href]",
+      "button:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      '[tabindex]:not([tabindex="-1"])',
+    ].join(",");
+
+    const getFocusableElements = () =>
+      Array.from(
+        modal?.querySelectorAll<HTMLElement>(focusableSelector) || [],
+      ).filter((element) => element.offsetParent !== null);
+
+    const isOpen = () => modal?.classList.contains("is-active") === true;
 
     const placeholder =
       document.getElementById("search-modal")?.dataset.placeholder || "";
@@ -190,15 +214,32 @@ const commandLinks = [
 
     const toggle = async (show: boolean) => {
       if (show) {
+        if (!isOpen() && document.activeElement instanceof HTMLElement) {
+          previouslyFocused = document.activeElement;
+        }
+
+        if (modal) modal.inert = false;
         modal?.classList.add("is-active");
         modal?.setAttribute("aria-hidden", "false");
         trigger?.setAttribute("aria-expanded", "true");
         await initializeSearch();
-        modal?.querySelector("input")?.focus();
+
+        const initialFocus =
+          modal?.querySelector<HTMLElement>("input") ||
+          getFocusableElements()[0] ||
+          modalContent;
+        initialFocus?.focus();
       } else {
+        const wasOpen = isOpen();
         modal?.classList.remove("is-active");
         modal?.setAttribute("aria-hidden", "true");
+        if (modal) modal.inert = true;
         trigger?.setAttribute("aria-expanded", "false");
+
+        if (wasOpen) {
+          (previouslyFocused || trigger)?.focus();
+          previouslyFocused = null;
+        }
       }
     };
 
@@ -216,8 +257,43 @@ const commandLinks = [
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         void toggle(true);
+        return;
       }
-      if (e.key === "Escape") void toggle(false);
+
+      if (!isOpen()) return;
+
+      if (e.key === "Escape") {
+        e.preventDefault();
+        void toggle(false);
+        return;
+      }
+
+      if (e.key !== "Tab") return;
+
+      const focusableElements = getFocusableElements();
+      if (focusableElements.length === 0) {
+        e.preventDefault();
+        modalContent?.focus();
+        return;
+      }
+
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+
+      if (
+        e.shiftKey &&
+        (activeElement === first || activeElement === modalContent)
+      ) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (!modal?.contains(activeElement)) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKeyDown, { signal });
 
@@ -249,7 +325,7 @@ const commandLinks = [
     font-size: 0.75rem !important;
     font-weight: 600 !important;
     color: var(--muted-foreground) !important;
-    opacity: 0.6 !important;
+    opacity: 0.8 !important;
   }
 
   .pagefind-ui__result {
@@ -324,8 +400,9 @@ const commandLinks = [
     border-radius: 2px !important;
   }
 
-  .pagefind-ui__search-input:focus {
-    outline: none !important;
+  .pagefind-ui__search-input:focus-visible {
+    outline: 2px solid var(--primary) !important;
+    outline-offset: 2px !important;
     border-color: var(--primary) !important;
     box-shadow: 0 0 0 4px oklch(from var(--primary) l c h / 0.1) !important;
   }

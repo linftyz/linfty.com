@@ -17,9 +17,9 @@ const projects = await getCollection("projects");
     data-pagefind-body
   >
     <header class="mb-16">
-      <h2 class="mb-4 text-3xl font-bold tracking-tight">
+      <h1 class="mb-4 text-3xl font-bold tracking-tight">
         {site.labels.projectsTitle}
-      </h2>
+      </h1>
       <p class="text-sm font-light text-muted-foreground italic">
         {site.labels.projectsDescription}
       </p>
@@ -54,9 +54,9 @@ const projects = await getCollection("projects");
                   </div>
 
                   <div class="min-w-0 flex-1">
-                    <h3 class="mb-1 text-[17px] font-semibold tracking-tight text-foreground/85 transition-colors duration-300 group-hover:text-primary">
+                    <h2 class="mb-1 text-[17px] font-semibold tracking-tight text-foreground/85 transition-colors duration-300 group-hover:text-primary">
                       {project.data.title}
-                    </h3>
+                    </h2>
                     <p class="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
                       {project.data.description}
                     </p>

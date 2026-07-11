@@ -11,7 +11,7 @@ const recentMemos = await getRecentMemos(3);
   recentMemos.length > 0 && (
     <section class="mt-16">
       <div class="mb-5 flex items-center justify-between">
-        <p class="text-[11px] font-bold tracking-[0.4em] text-muted-foreground uppercase opacity-60">
+        <p class="text-[11px] font-bold tracking-[0.4em] text-muted-foreground/80 uppercase">
           {site.labels.latestMemos}
         </p>
         <a
