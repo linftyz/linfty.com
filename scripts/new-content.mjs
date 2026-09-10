@@ -83,27 +83,6 @@ function writeUniqueFile(relativePath, content) {
   return filePath;
 }
 
-function createMemo(values) {
-  const { options, positionals } = parseArgs(values);
-  const body = positionals.join(" ").trim();
-  const tags = splitList(options.tags);
-  const slug = slugify(options.slug || body || "memo") || "memo";
-  const filename = `${date}-${slug}.mdx`;
-  const frontmatter = [
-    "---",
-    `createdAt: ${date} ${time}`,
-    ...(tags.length > 0
-      ? ["tags:", ...tags.map((tag) => `  - ${tag}`)]
-      : ["tags: []"]),
-    ...(isTruthy(options.draft) ? ["draft: true"] : []),
-    "---",
-    "",
-  ];
-  const content = `${frontmatter.join("\n")}${body || "写点什么。"}\n`;
-
-  return writeUniqueFile(`src/content/memos/${filename}`, content);
-}
-
 function createPost(values) {
   const { options, positionals } = parseArgs(values);
   const title = positionals.join(" ").trim() || "未命名文章";
@@ -131,7 +110,6 @@ function createPost(values) {
 }
 
 const creators = {
-  memo: createMemo,
   post: createPost,
 };
 
@@ -139,7 +117,6 @@ if (!creators[type]) {
   console.error(
     [
       "Usage:",
-      '  pnpm new:memo "内容" --tags site,memo',
       '  pnpm new:post "文章标题" --slug article-title --category experiments --tags astro,mdx --summary "摘要"',
       '  pnpm new:post "文章标题" --slug my-post --publish',
     ].join("\n"),

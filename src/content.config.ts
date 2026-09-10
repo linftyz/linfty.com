@@ -30,19 +30,6 @@ const posts = defineCollection({
     }),
 });
 
-const memos = defineCollection({
-  loader: glob({
-    pattern: "**/*.{md,mdx}",
-    base: "./src/content/memos",
-  }),
-  schema: z.object({
-    createdAt: z.coerce.date(),
-    updatedAt: z.coerce.date().optional(),
-    tags: z.array(z.string()).optional().default([]),
-    draft: z.boolean().default(false),
-  }),
-});
-
 const projects = defineCollection({
   loader: glob({
     pattern: "**/*.{md,mdx}",
@@ -145,7 +132,6 @@ const pages = defineCollection({
 
 export const collections = {
   posts,
-  memos,
   projects,
   categories,
   tags,

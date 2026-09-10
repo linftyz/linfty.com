@@ -45,8 +45,6 @@ export interface ToolCategory {
 export interface SiteLabels {
   postsTitle: string;
   postsDescription: string;
-  memosTitle: string;
-  memosDescription: string;
   projectsTitle: string;
   projectsDescription: string;
   friendsTitle: string;
@@ -78,12 +76,6 @@ export interface SiteLabels {
   rssDescription: string;
   contactTitle: string;
   latestPosts: string;
-  latestMemos: string;
-  viewAllPosts: string;
-  viewAllMemos: string;
-  noMemos: string;
-  memoPermalink: string;
-  memoLinkCopied: string;
   noDescription: string;
   noFriends: string;
   noProjects: string;
