@@ -34,7 +34,7 @@ const { tag, posts } = Astro.props;
     <header class="mb-16">
       <a
         href="/tags"
-        class="mb-6 flex items-center gap-1 text-[10px] font-bold tracking-widest text-muted-foreground/80 uppercase transition-colors hover:text-primary"
+        class="mb-6 flex items-center gap-1 text-[10px] font-bold tracking-wide text-muted-foreground/80 uppercase transition-colors hover:text-primary"
       >
         <Icon name="mdi:arrow-left" size={14} />
         {site.labels.backToTags}
@@ -43,7 +43,7 @@ const { tag, posts } = Astro.props;
         <span class="text-primary">{tag.data.name}</span>
       </h1>
       <p
-        class="border-l-2 border-primary/20 py-1 pl-4 text-sm font-light text-muted-foreground italic"
+        class="border-l-2 border-primary/20 py-1 pl-4 text-sm font-light text-muted-foreground"
       >
         {tag.data.description}
       </p>

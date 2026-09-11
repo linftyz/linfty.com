@@ -10,4 +10,5 @@ interface Window {
     message: string,
     type?: "success" | "error" | "warning" | "info",
   ) => void;
+  __linftyPageEntered?: boolean;
 }

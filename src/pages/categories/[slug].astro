@@ -32,7 +32,7 @@ const { category, posts } = Astro.props;
     <header class="mb-16">
       <a
         href="/categories"
-        class="mb-6 flex items-center gap-1 text-[10px] font-bold tracking-widest text-muted-foreground/80 uppercase transition-colors hover:text-primary"
+        class="mb-6 flex items-center gap-1 text-[10px] font-bold tracking-wide text-muted-foreground/80 uppercase transition-colors hover:text-primary"
       >
         <Icon name="mdi:arrow-left" size={14} />
         {site.labels.backToCategories}
@@ -52,7 +52,7 @@ const { category, posts } = Astro.props;
       </div>
 
       <p
-        class="max-w-xl text-sm leading-relaxed font-light text-muted-foreground italic"
+        class="max-w-xl text-sm leading-relaxed font-light text-muted-foreground"
       >
         {category.data.description || site.labels.noDescription}
       </p>

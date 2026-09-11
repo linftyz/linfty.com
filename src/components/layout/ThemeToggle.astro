@@ -5,7 +5,7 @@
 <button
   id="theme-toggle"
   type="button"
-  class="relative flex h-6 w-10 items-center rounded-full bg-muted p-1 transition-[background-color,transform] duration-200 after:absolute after:inset-y-[-8px] after:right-0 after:left-0 after:content-[''] active:scale-[0.96]"
+  class="relative flex h-6 w-10 items-center rounded-full bg-muted p-1 transition-colors duration-200 after:absolute after:inset-y-[-8px] after:right-0 after:left-0 after:content-[''] active:scale-[0.96]"
   title="切换主题"
   aria-label="切换主题"
 >
@@ -49,14 +49,21 @@
 
     setTheme(theme);
 
-    const handleToggleClick = async (event: MouseEvent) => {
+    let themeSwitchTimer: number | undefined;
+
+    const handleToggleClick = () => {
       const element = document.documentElement;
       const nextTheme = element.classList.contains("dark") ? "light" : "dark";
 
-      setTheme(nextTheme, true);
+      // Animate the color change, then release the class so it cannot affect
+      // any other transition.
+      element.classList.add("theme-switching");
+      window.clearTimeout(themeSwitchTimer);
+      themeSwitchTimer = window.setTimeout(() => {
+        element.classList.remove("theme-switching");
+      }, 320);
 
-      document.documentElement.classList.add("theme-switching");
-      document.documentElement.classList.remove("theme-switching");
+      setTheme(nextTheme, true);
     };
 
     const themeToggle = document.getElementById("theme-toggle");

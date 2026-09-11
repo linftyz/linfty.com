@@ -10,13 +10,10 @@ const tools = (await getCollection("tools")).sort(
 ---
 
 <Layout title={site.labels.toolsTitle} description={site.labels.toolsTitle}>
-  <div
-    class="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl p-8 duration-700 md:p-12"
-    data-pagefind-body
-  >
+  <div class="mx-auto max-w-2xl p-8 md:p-12" data-pagefind-body>
     <header class="mb-16">
       <h1 class="mb-4 text-3xl font-bold">{site.labels.toolsTitle}</h1>
-      <p class="text-sm font-light text-muted-foreground italic">
+      <p class="text-sm font-light text-muted-foreground">
         {site.labels.toolsDescription}
       </p>
     </header>
@@ -25,7 +22,7 @@ const tools = (await getCollection("tools")).sort(
       {
         tools.map((category) => (
           <section>
-            <h2 class="mb-4 text-[10px] font-bold tracking-[0.3em] text-primary uppercase">
+            <h2 class="mb-4 text-[10px] font-bold tracking-wide text-primary uppercase">
               {category.data.name}
             </h2>
             <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
@@ -38,7 +35,7 @@ const tools = (await getCollection("tools")).sort(
                       icon={item.icon}
                       class="h-4 w-4 shrink-0 text-muted-foreground/60"
                     />
-                    <span class="min-w-0 truncate font-medium transition-colors duration-300 group-hover:text-primary">
+                    <span class="min-w-0 truncate font-medium transition-colors duration-200 group-hover:text-primary">
                       {item.name}
                     </span>
                   </>
@@ -49,7 +46,7 @@ const tools = (await getCollection("tools")).sort(
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="group flex items-center gap-2.5 rounded-2xl border border-border/40 bg-muted/20 px-4 py-3 text-sm text-foreground/80 transition-[background-color,border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:bg-card"
+                    class="group flex items-center gap-2.5 rounded-2xl border border-border/40 bg-muted/20 px-4 py-3 text-sm text-foreground/80 transition-colors duration-200 hover:border-primary/25 hover:bg-card"
                   >
                     {content}
                   </a>

@@ -35,13 +35,13 @@
   --border: oklch(0.92 0.01 165);
   --shadow-main: 0 24px 80px -58px oklch(0.3 0.05 165 / 0.18);
 
-  --callout-note: oklch(0.65 0.12 250);
+  --callout-note: oklch(0.5 0.13 250);
   --callout-info: var(--callout-note);
-  --callout-tip: oklch(0.6 0.14 160);
+  --callout-tip: oklch(0.48 0.13 160);
   --callout-success: var(--callout-tip);
-  --callout-important: oklch(0.68 0.18 310);
-  --callout-warning: oklch(0.7 0.15 85);
-  --callout-caution: oklch(0.62 0.18 28);
+  --callout-important: oklch(0.52 0.18 310);
+  --callout-warning: oklch(0.5 0.13 85);
+  --callout-caution: oklch(0.5 0.18 28);
   --callout-danger: var(--callout-caution);
 }
 

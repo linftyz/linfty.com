@@ -89,6 +89,19 @@ const serializedStructuredData = structuredData
 
       applyTheme();
       document.addEventListener("astro:after-swap", applyTheme);
+
+      // A plain fade only on the first full page load, never on client-side
+      // navigation. The window flag survives navigations (Astro rewrites the
+      // <html> attributes on every swap, so an attribute guard alone is not
+      // reliable).
+      if (!window.__linftyPageEntered) {
+        window.__linftyPageEntered = true;
+        document.documentElement.setAttribute("data-page-enter", "");
+        document.documentElement.classList.add("page-enter");
+        window.setTimeout(() => {
+          document.documentElement.classList.remove("page-enter");
+        }, 400);
+      }
     })();
   </script>
 
@@ -108,8 +121,17 @@ const serializedStructuredData = structuredData
   <link rel="manifest" href="/manifest.json" />
 
   <!-- Theme Color -->
-  <meta name="theme-color" content="#3F9C87" />
-  <meta name="msapplication-TileColor" content="#3F9C87" />
+  <meta
+    name="theme-color"
+    media="(prefers-color-scheme: light)"
+    content="#007852"
+  />
+  <meta
+    name="theme-color"
+    media="(prefers-color-scheme: dark)"
+    content="#3dca8d"
+  />
+  <meta name="msapplication-TileColor" content="#007852" />
 
   <meta name="generator" content={Astro.generator} />
 

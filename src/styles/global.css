@@ -35,7 +35,6 @@
 ):focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
-  border-radius: 4px;
 }
 
 /* Reduced motion support */
@@ -52,13 +51,13 @@
 @layer components {
   .prose {
     & table {
-      @apply my-8 w-full border-collapse border-spacing-0 overflow-hidden rounded-md border border-border/50 shadow-sm;
+      @apply my-8 w-full border-collapse border-spacing-0 overflow-hidden rounded-md border border-border/50;
     }
     & thead {
       @apply border-b border-border bg-muted/50;
     }
     & th {
-      @apply px-6 py-4 text-left text-xs font-bold tracking-widest text-primary/80 uppercase;
+      @apply px-6 py-4 text-left text-xs font-bold tracking-wide text-primary uppercase;
     }
     & td {
       @apply border-b border-border/30 px-6 py-4 text-sm text-muted-foreground;
@@ -183,7 +182,7 @@
 
   .md-callout :not(pre) > code {
     border-radius: 0.35rem;
-    background: oklch(from var(--primary) l c h / 0.12);
+    background: var(--muted);
     color: var(--primary);
     padding: 0.12rem 0.38rem;
     font-size: 0.92em;
@@ -321,7 +320,7 @@
 
   .md-step :not(pre) > code {
     border-radius: 0.35rem;
-    background: oklch(from var(--primary) l c h / 0.12);
+    background: var(--muted);
     color: var(--primary);
     padding: 0.12rem 0.38rem;
     font-size: 0.92em;
@@ -353,6 +352,10 @@
   padding-left: 0;
 }
 
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
 .custom-scrollbar::-webkit-scrollbar {
   width: 3px;
 }
@@ -361,20 +364,19 @@
   border-radius: 10px;
 }
 
-@keyframes animate-in-enter {
+/* First full page load only. Removed after the animation, never replayed on
+   client-side navigation (see the guard in Head.astro). */
+@keyframes page-enter-fade {
   from {
     opacity: 0;
-    transform: translateY(0.75rem) scale(0.985);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
   }
 }
 
-.animate-in {
-  opacity: 0;
-  animation: animate-in-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+.page-enter main {
+  animation: page-enter-fade 200ms ease-out both;
 }
 
 html[data-astro-transition] *,
@@ -382,15 +384,18 @@ html[data-astro-transition-fallback] * {
   transition: none !important;
 }
 
-html.theme-switching *,
-html.theme-switching *::before,
-html.theme-switching *::after {
-  transition-property:
-    color, background-color, border-color, fill, stroke, box-shadow, opacity;
-  transition-duration: 320ms !important;
-  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after {
+    transition-property:
+      color, background-color, border-color, fill, stroke, box-shadow, opacity;
+    transition-duration: 320ms !important;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
 }
 
+/* Keep client-side navigation instant: no cross-fade between pages. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;

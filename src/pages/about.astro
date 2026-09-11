@@ -12,13 +12,13 @@ const { Content } = await render(about!);
   title={site.labels.aboutTitle}
   description={site.labels.aboutDescription}
 >
-  <div class="animate-in fade-in mx-auto max-w-2xl p-8 duration-700 md:p-12">
+  <div class="mx-auto max-w-2xl p-8 md:p-12">
     <div class="prose dark:prose-invert" data-pagefind-body>
       <Content components={mdComponents} />
     </div>
 
     <footer class="mt-14 space-y-6">
-      <h2 class="text-[10px] font-bold tracking-[0.3em] text-primary uppercase">
+      <h2 class="text-[10px] font-bold tracking-wide text-primary uppercase">
         {site.labels.contactTitle}
       </h2>
       <div class="flex flex-wrap gap-4">

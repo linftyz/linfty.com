@@ -27,12 +27,12 @@ const isNew =
 ---
 
 <article
-  class="group flex cursor-pointer items-center justify-between border-b border-border/40 py-6 last:border-0"
+  class="group flex items-center justify-between border-b border-border/40 py-6 last:border-0"
 >
   <div>
     <a
       href={`/posts/${post.id}`}
-      class="inline-flex items-center gap-2 text-lg font-semibold text-foreground/80 transition-colors duration-300 group-hover:text-primary"
+      class="inline-flex items-center gap-2 text-lg font-semibold text-foreground/80 transition-colors duration-200 group-hover:text-primary"
     >
       <span>{post.data.title}</span>
       {
@@ -51,7 +51,7 @@ const isNew =
       }
     </a>
     <p
-      class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-muted-foreground/80 italic"
+      class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-muted-foreground/80"
     >
       <span class="tabular-nums">{formatDate(post.data.createdAt)}</span>
       <span class="text-border">/</span>
@@ -61,7 +61,7 @@ const isNew =
     </p>
   </div>
   <span
-    class="text-border transition-[color,transform] duration-300 group-hover:translate-x-1 group-hover:text-primary"
+    class="text-border transition-colors duration-200 group-hover:text-primary"
   >
     <Icon name="mdi:arrow-right" />
   </span>

@@ -17,13 +17,10 @@ const tagCounts = allPosts.reduce((acc: Record<string, number>, post) => {
 ---
 
 <Layout title={site.labels.tagsTitle} description={site.labels.tagsDescription}>
-  <div
-    class="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl p-8 duration-700 md:p-12"
-    data-pagefind-body
-  >
+  <div class="mx-auto max-w-2xl p-8 md:p-12" data-pagefind-body>
     <header class="mb-16">
       <h1 class="mb-4 text-3xl font-bold">{site.labels.tagsTitle}</h1>
-      <p class="mb-12 text-sm font-light text-muted-foreground italic">
+      <p class="mb-12 text-sm font-light text-muted-foreground">
         共 {allTags.length}
         {site.labels.tagsCountSuffix}
       </p>
@@ -34,12 +31,10 @@ const tagCounts = allPosts.reduce((acc: Record<string, number>, post) => {
         allTags.map((tag) => (
           <a
             href={`/tags/${tag.data.slug}`}
-            class="group flex flex-col gap-2 rounded-2xl border border-border/50 bg-muted/30 px-4 py-3 transition-[background-color,border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-card"
+            class="group flex flex-col gap-2 rounded-2xl border border-border/50 bg-muted/30 px-4 py-3 transition-colors duration-200 hover:border-primary/40 hover:bg-card"
           >
             <div class="flex items-center gap-2">
-              <span class="text-primary/60 italic group-hover:text-primary">
-                #
-              </span>
+              <span class="text-primary group-hover:text-primary">#</span>
               <span class="text-sm font-medium text-foreground/80 group-hover:text-primary">
                 {tag.data.name}
               </span>

@@ -14,15 +14,12 @@ const years = [
   title={site.labels.postsTitle}
   description={`${site.labels.postsDescription} · 共 ${posts.length} ${site.labels.postsCountSuffix}`}
 >
-  <div
-    class="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl p-8 duration-700 md:p-12"
-    data-pagefind-body
-  >
+  <div class="mx-auto max-w-2xl p-8 md:p-12" data-pagefind-body>
     <header class="mb-12">
       <h1 class="mb-4 text-3xl font-bold tracking-tight">
         {site.labels.postsTitle}
       </h1>
-      <p class="text-sm font-light text-muted-foreground italic">
+      <p class="text-sm font-light text-muted-foreground">
         {site.labels.postsDescription} · 共 {posts.length}
         {site.labels.postsCountSuffix}
       </p>
@@ -32,7 +29,7 @@ const years = [
       {
         years.map((year) => (
           <section class="relative">
-            <h2 class="year text-4xl tracking-tighter text-foreground/40 tabular-nums">
+            <h2 class="year text-4xl tracking-tighter text-muted-foreground tabular-nums">
               {year}
             </h2>
             <div class="space-y-8">

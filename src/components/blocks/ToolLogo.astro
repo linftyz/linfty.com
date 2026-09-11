@@ -30,7 +30,7 @@ const hasLogo = Boolean(resolvedLogo.light || resolvedLogo.dark);
           src={resolvedLogo.light}
           alt={`${name} 图标`}
           loading="lazy"
-          class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+          class="h-full w-full object-contain"
         />
       ) : (
         <>
@@ -38,21 +38,18 @@ const hasLogo = Boolean(resolvedLogo.light || resolvedLogo.dark);
             src={resolvedLogo.light}
             alt={`${name} 图标`}
             loading="lazy"
-            class="absolute inset-0 h-full w-full object-contain transition-[opacity,transform] duration-200 group-hover:scale-105 dark:opacity-0"
+            class="absolute inset-0 h-full w-full object-contain transition-opacity duration-200 dark:opacity-0"
           />
           <img
             src={resolvedLogo.dark}
             alt={`${name} 图标`}
             loading="lazy"
-            class="absolute inset-0 h-full w-full object-contain opacity-0 transition-[opacity,transform] duration-200 group-hover:scale-105 dark:opacity-100"
+            class="absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-200 dark:opacity-100"
           />
         </>
       )}
     </span>
   ) : (
-    <Icon
-      name={icon || "mdi:application"}
-      class={`${className} transition-transform duration-300 group-hover:scale-105`}
-    />
+    <Icon name={icon || "mdi:application"} class={className} />
   )
 }

@@ -11,6 +11,7 @@ const friends = (await getCollection("friends")).sort(
 const emailContact = site.social.find((item) =>
   item.href.startsWith("mailto:"),
 );
+const commentsEnabled = site.comments.enabled;
 
 const myInfo = {
   name: site.friendCard.name,
@@ -29,14 +30,11 @@ const avatarUrl =
   title={site.labels.friendsTitle}
   description={site.labels.friendsDescription}
 >
-  <div
-    class="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl p-8 duration-700 md:p-12"
-    data-pagefind-body
-  >
+  <div class="mx-auto max-w-2xl p-8 md:p-12" data-pagefind-body>
     <section class="mb-24">
       <header class="mb-12">
         <h1 class="mb-4 text-3xl font-bold">{site.labels.friendsTitle}</h1>
-        <p class="mb-12 text-sm font-light text-muted-foreground italic">
+        <p class="mb-12 text-sm font-light text-muted-foreground">
           {site.labels.friendsDescription}
         </p>
       </header>
@@ -54,7 +52,7 @@ const avatarUrl =
                 href={friend.data.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group flex items-center gap-5 rounded-2xl border border-border/40 p-4 hover:bg-muted/30"
+                class="group flex items-center gap-5 rounded-2xl border border-border/40 p-4 transition-colors duration-200 hover:bg-muted/30"
               >
                 <Image
                   src={friend.data.avatar}
@@ -62,10 +60,10 @@ const avatarUrl =
                   height={48}
                   alt={friend.data.name}
                   loading={"lazy"}
-                  class="rounded-xl bg-muted transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
+                  class="rounded-xl bg-muted"
                 />
                 <div class="flex flex-col">
-                  <span class="text-sm font-bold text-foreground/80 group-hover:text-primary">
+                  <span class="text-sm font-bold text-foreground/80 transition-colors duration-200 group-hover:text-primary">
                     {friend.data.name}
                   </span>
                   <span class="line-clamp-1 text-[11px] text-muted-foreground">
@@ -149,14 +147,18 @@ const avatarUrl =
         </div>
       </div>
 
-      <div class="mt-12 border-t border-border/40 pt-8">
-        <h2 class="mb-3 text-base font-bold text-foreground/85">留言</h2>
-        <p class="mb-6 text-sm font-light text-muted-foreground">
-          如果你也在写博客，或者想聊聊，都可以直接在下面留言。
-        </p>
+      {
+        commentsEnabled && (
+          <div class="mt-12 border-t border-border/40 pt-8">
+            <h2 class="mb-3 text-base font-bold text-foreground/85">留言</h2>
+            <p class="mb-6 text-sm font-light text-muted-foreground">
+              如果你也在写博客，或者想聊聊，都可以直接在下面留言。
+            </p>
 
-        <Comments />
-      </div>
+            <Comments />
+          </div>
+        )
+      }
     </section>
   </div>
 </Layout>

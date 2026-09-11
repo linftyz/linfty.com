@@ -65,6 +65,7 @@ export default defineConfig({
       provider: fontProviders.fontsource(),
       name: "Space Grotesk",
       cssVariable: "--font-display",
+      weights: ["300 700"],
     },
   ],
 });

@@ -29,6 +29,7 @@ const category = await getEntry(post.data.category);
 const tags = (await getEntries(post.data.tags)).filter((value) => value);
 const { newerPost, olderPost } = await getPostNeighbors(post, posts);
 const relatedPosts = await getRelatedPosts(post, 3, posts);
+const commentsEnabled = site.comments.enabled;
 ---
 
 <Layout
@@ -41,12 +42,10 @@ const relatedPosts = await getRelatedPosts(post, 3, posts);
   section={category.data.name}
   tags={tags.map((tag) => tag.data.name)}
 >
-  <article
-    class="animate-in fade-in mx-auto max-w-2xl overflow-x-hidden p-8 duration-1000 md:p-12"
-  >
+  <article class="mx-auto max-w-2xl overflow-x-hidden p-8 md:p-12">
     <header class="mb-16 border-b border-border/50 pb-12">
       <div
-        class="mb-6 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-primary uppercase"
+        class="mb-6 flex items-center gap-2 text-[10px] font-bold tracking-wide text-primary uppercase"
       >
         <a href="/posts" class="hover:underline">{site.labels.postsTitle}</a>
         <span class="text-muted-foreground/30">/</span>
@@ -60,13 +59,15 @@ const relatedPosts = await getRelatedPosts(post, 3, posts);
       </h1>
 
       <div
-        class="animate-in fade-in flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[12px] tracking-tight text-muted-foreground duration-1000"
+        class="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[12px] tracking-tight text-muted-foreground"
       >
         <span class="inline-flex items-center gap-1.5">
           <Icon name={"mdi:calendar-blank"} />
           <span
             id="post-date"
-            data-updated={`${post.data.updatedAt ? site.labels.updatedPrefix + formatDate(post.data.updatedAt) : site.labels.notUpdated}`}
+            title={post.data.updatedAt
+              ? `${site.labels.updatedPrefix}${formatDate(post.data.updatedAt)}`
+              : undefined}
             >{formatDate(post.data.createdAt)}{
               post.data.updatedAt ? ` ${site.labels.editedSuffix}` : ""
             }</span
@@ -89,24 +90,35 @@ const relatedPosts = await getRelatedPosts(post, 3, posts);
             >
           </span>
 
-          <span class="inline-flex items-center gap-1.5">
-            <span class="artalk-pv-count" data-page-key={Astro.url.pathname}
-              >-</span
-            >
-            <span class="text-[10px] uppercase opacity-90"
-              >{site.labels.viewCount}</span
-            >
-          </span>
+          {
+            commentsEnabled && (
+              <>
+                <span class="inline-flex items-center gap-1.5">
+                  <span
+                    class="artalk-pv-count"
+                    data-page-key={Astro.url.pathname}
+                  >
+                    -
+                  </span>
+                  <span class="text-[10px] uppercase opacity-90">
+                    {site.labels.viewCount}
+                  </span>
+                </span>
 
-          <span class="inline-flex items-center gap-1.5">
-            <span
-              class="artalk-comment-count"
-              data-page-key={Astro.url.pathname}>-</span
-            >
-            <span class="text-[10px] uppercase opacity-90"
-              >{site.labels.commentCount}</span
-            >
-          </span>
+                <span class="inline-flex items-center gap-1.5">
+                  <span
+                    class="artalk-comment-count"
+                    data-page-key={Astro.url.pathname}
+                  >
+                    -
+                  </span>
+                  <span class="text-[10px] uppercase opacity-90">
+                    {site.labels.commentCount}
+                  </span>
+                </span>
+              </>
+            )
+          }
         </span>
       </div>
     </header>
@@ -118,24 +130,21 @@ const relatedPosts = await getRelatedPosts(post, 3, posts);
         "prose max-w-none dark:prose-invert",
         "prose-headings:tracking-tight",
         "prose-p:mb-8 prose-p:leading-loose prose-p:font-normal prose-p:text-muted-foreground",
-        "prose-code:rounded-sm prose-code:bg-primary/15 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary prose-code:before:content-none prose-code:after:content-none",
-        "prose-",
+        "prose-code:rounded-sm prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary prose-code:before:content-none prose-code:after:content-none",
       ]}
       data-pagefind-body
     >
       <Content components={mdComponents} />
     </div>
 
-    <div
-      class="animate-in fade-in mt-12 mb-8 flex flex-wrap gap-2 duration-1000"
-    >
+    <div class="mt-12 mb-8 flex flex-wrap gap-2">
       {
         tags.map((tag) => (
           <a
             href={`/tags/${tag.data.slug}`}
             class="group flex items-center gap-1.5 rounded-xl border border-border/50 bg-muted/30 px-3 py-1.5 transition-colors hover:border-primary/40 hover:bg-card"
           >
-            <span class="font-mono text-xs text-primary/40 italic group-hover:text-primary">
+            <span class="font-mono text-xs text-primary/60 group-hover:text-primary">
               #
             </span>
             <span class="text-xs font-medium text-muted-foreground transition-colors group-hover:text-foreground">
@@ -161,13 +170,13 @@ const relatedPosts = await getRelatedPosts(post, 3, posts);
         href="/posts"
         class="group flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
       >
-        <span class="transition-transform group-hover:-translate-x-1">
+        <span>
           <Icon name="mdi:arrow-left" size={14} />
         </span>
         {site.labels.backToPosts}
       </a>
       <div
-        class="font-mono text-[10px] tracking-widest text-muted-foreground/80 uppercase"
+        class="font-mono text-[10px] tracking-wide text-muted-foreground/80 uppercase"
       >
         {site.labels.endOfPost}
       </div>
@@ -179,8 +188,7 @@ const relatedPosts = await getRelatedPosts(post, 3, posts);
 
 <style is:global>
   .prose p {
-    text-align: justify;
-    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .post-words-count,
@@ -189,24 +197,5 @@ const relatedPosts = await getRelatedPosts(post, 3, posts);
     color: var(--primary);
     font-weight: 400;
     font-variant-numeric: tabular-nums;
-    opacity: 0.8;
-  }
-
-  #post-date {
-    position: relative;
-  }
-
-  #post-date:hover:before {
-    position: absolute;
-    content: attr(data-updated);
-    top: -33px;
-    width: fit-content;
-    border: 1px solid var(--border);
-    border-radius: 2rem;
-    text-align: center;
-    background-color: var(--muted);
-    padding: 2px 4px;
-    flex-wrap: nowrap;
-    color: var(--muted-foreground);
   }
 </style>

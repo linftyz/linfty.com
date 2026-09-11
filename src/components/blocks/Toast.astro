@@ -19,7 +19,7 @@ import { Icon } from "astro-icon/components";
 
 <div
   id="toast-container"
-  class="pointer-events-none fixed bottom-12 left-1/2 z-999 flex -translate-x-1/2 flex-col items-center gap-3"
+  class="pointer-events-none fixed bottom-12 left-1/2 z-[60] flex -translate-x-1/2 flex-col items-center gap-3"
 >
 </div>
 
@@ -67,9 +67,9 @@ import { Icon } from "astro-icon/components";
 
       // Rounded corners, background uses 10% opacity of the corresponding color
       toast.className = `
-        flex items-center gap-3 px-6 py-3 rounded-[2.5rem] 
+        toast-in flex items-center gap-3 px-6 py-3 rounded-[2.5rem] 
         bg-card border-2 shadow-main
-        animate-in pointer-events-auto backdrop-blur-md
+        pointer-events-auto backdrop-blur-md
       `;
 
       // Set border color dynamically
@@ -97,12 +97,25 @@ import { Icon } from "astro-icon/components";
       container.appendChild(toast);
 
       // Auto-dismiss after 3.5s
-      setTimeout(() => {
-        toast.style.opacity = "0";
-        toast.style.transform = "translateY(-1rem) scale(0.9)";
-        toast.style.transition =
-          "opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)";
-        setTimeout(() => toast.remove(), 500);
+      window.setTimeout(() => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          toast.remove();
+          return;
+        }
+
+        const exit = toast.animate(
+          [
+            { opacity: 1, transform: "translateY(0) scale(1)" },
+            { opacity: 0, transform: "translateY(-1rem) scale(0.9)" },
+          ],
+          {
+            duration: 400,
+            easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+            fill: "forwards",
+          },
+        );
+
+        exit.onfinish = () => toast.remove();
       }, 3500);
     }
   }
@@ -113,3 +126,20 @@ import { Icon } from "astro-icon/components";
     type: "success" | "error" | "warning" | "info" = "success",
   ) => SageToast.show(msg, type);
 </script>
+
+<style is:global>
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .toast-in {
+    animation: toast-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+</style>
