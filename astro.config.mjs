@@ -4,11 +4,10 @@ import { defineConfig, envField, fontProviders } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
 import icon from "astro-icon";
-import expressiveCode from "astro-expressive-code";
 import sitemap from "@astrojs/sitemap";
-import remarkDirective from "remark-directive";
-import { remarkContainerDirectives } from "./src/utils/remark-container-directives.mjs";
-import { unified } from "@astrojs/markdown-remark";
+import { satteri } from "@astrojs/markdown-satteri";
+import expressiveCode from "satteri-expressive-code";
+import satteriCallouts from "satteri-callouts";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,8 +15,14 @@ export default defineConfig({
   site: "https://linfty.com",
 
   markdown: {
-    processor: unified({
-      remarkPlugins: [remarkDirective, remarkContainerDirectives],
+    syntaxHighlight: false,
+    processor: satteri({
+      hastPlugins: [
+        expressiveCode({
+          themes: ["github-dark", "github-light"],
+        }),
+        satteriCallouts(),
+      ],
     }),
   },
 
@@ -25,15 +30,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [
-    expressiveCode({
-      themes: ["github-dark", "github-light"],
-      themeCssSelector: (theme) => `.${theme.type}`,
-    }),
-    mdx(),
-    icon(),
-    sitemap(),
-  ],
+  integrations: [mdx(), icon(), sitemap()],
 
   env: {
     schema: {
