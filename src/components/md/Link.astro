@@ -1,18 +1,26 @@
 ---
 import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
 
-interface Props {
+interface Props extends HTMLAttributes<"a"> {
   href: string;
+  className?: string;
 }
 
 const { href } = Astro.props;
 
 const isExternalLink = href.startsWith("http");
+const { class: classValue, className, ...attributes } = Astro.props;
+const isEmbedded = Astro.props["data-embedded-media"] !== undefined;
 ---
 
 <>
   {
-    isExternalLink ? (
+    isEmbedded ? (
+      <a {...attributes} class:list={[classValue, className]}>
+        <slot />
+      </a>
+    ) : isExternalLink ? (
       <a href={href} target="_blank" class="hover:text-primary">
         <slot />
         {/* <svg class="inline-block ml-2px" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">

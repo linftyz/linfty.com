@@ -8,6 +8,10 @@ import sitemap from "@astrojs/sitemap";
 import { satteri } from "@astrojs/markdown-satteri";
 import expressiveCode from "satteri-expressive-code";
 import satteriCallouts from "satteri-callouts";
+import {
+  embeddedDirectives,
+  embeddedMedia,
+} from "./src/plugins/satteri-embedded-media.mjs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,11 +21,14 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: false,
     processor: satteri({
+      features: { directive: true },
+      mdastPlugins: [embeddedDirectives()],
       hastPlugins: [
         expressiveCode({
           themes: ["github-dark", "github-light"],
         }),
         satteriCallouts(),
+        embeddedMedia(),
       ],
     }),
   },

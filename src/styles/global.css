@@ -4,6 +4,7 @@
 
 @import "./theme.css";
 @import "satteri-callouts/theme/obsidian";
+@import "./embedded-media.css";
 
 @layer base {
   html {

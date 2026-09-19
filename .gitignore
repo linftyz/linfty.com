@@ -2,6 +2,7 @@
 dist/
 # generated types
 .astro/
+.cache/embedded-media/
 
 # dependencies
 node_modules/

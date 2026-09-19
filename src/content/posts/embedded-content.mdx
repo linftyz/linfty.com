@@ -1,0 +1,66 @@
+---
+title: "给博客加了链接卡片和视频嵌入"
+createdAt: 2026-09-18
+updatedAt: 2026-09-19
+category: "experiments"
+tags: ["astro", "frontend-development"]
+summary: "给博客加了网页链接和 GitHub 仓库卡片，视频支持 YouTube 和 Bilibili。在这里记一下写法，放几个例子看看效果。"
+---
+
+最近又折腾了一下博客，加了链接卡片和视频嵌入。样式参考了 [Chiri 的这篇文章](https://chiri.the3ash.com/embedded-content/)，先做了网页链接、GitHub 仓库，还有 YouTube 和 Bilibili 的播放器。
+
+这里记一下写法，顺便放几个例子看看效果。`.md` 和 `.mdx` 都能用，直接写在正文里就行。
+
+## 网页链接
+
+先拿 Astro 官网试一下，只填地址：
+
+```md
+::link{url="https://astro.build"}
+```
+
+::link{url="https://astro.build"}
+
+标题、简介和封面是在构建博客时从原网页抓取的。如果想换成自己的介绍，也可以手动填。比如下面这张 MDN 卡片：
+
+```md
+::link{url="https://developer.mozilla.org/zh-CN/docs/Web" title="MDN Web 文档" description="HTML、CSS 和 JavaScript 的参考文档。"}
+```
+
+::link{url="https://developer.mozilla.org/zh-CN/docs/Web" title="MDN Web 文档" description="HTML、CSS 和 JavaScript 的参考文档。"}
+
+封面也能用 `image` 指定。没有图片的话，就只显示文字。
+
+## GitHub 仓库
+
+GitHub 这里也用 Astro 作例子。`repo` 填 `作者/仓库名`，不用完整网址：
+
+```md
+::github{repo="withastro/astro" description="这个博客使用的内容网站框架。"}
+```
+
+::github{repo="withastro/astro" description="这个博客使用的内容网站框架。"}
+
+简介、Stars、Forks 和许可证会从 GitHub 获取，滚动到卡片附近才加载。GitHub 偶尔会限流，所以留了一个 `description`：取不到数据时，就显示自己写的这句介绍，仓库链接照常能点。
+
+## YouTube
+
+YouTube 放视频链接就行。下面用的是普通观看页，`youtu.be` 短链接、embed 和 Shorts 链接也支持。
+
+```md
+::youtube{url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
+```
+
+::youtube{url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
+
+## Bilibili
+
+B 站也是类似的写法，地址里带 BV 号就行。自动播放关掉了，免得一打开文章就出声。
+
+```md
+::bilibili{url="https://www.bilibili.com/video/BV1Vm421W7pX"}
+```
+
+::bilibili{url="https://www.bilibili.com/video/BV1Vm421W7pX"}
+
+视频能不能播还得看网络，加载不出来的话，可以点播放器下面的链接去原页面看。

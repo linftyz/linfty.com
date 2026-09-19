@@ -34,6 +34,9 @@ importers:
       dayjs:
         specifier: ^1.11.19
         version: 1.11.19
+      satteri:
+        specifier: 0.10.5
+        version: 0.10.5
       satteri-callouts:
         specifier: ^1.0.1
         version: 1.0.1(satteri@0.10.5)

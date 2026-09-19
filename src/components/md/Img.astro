@@ -1,8 +1,10 @@
 ---
 import { Image } from "astro:assets";
+import type { HTMLAttributes } from "astro/types";
 
-interface Props {
+interface Props extends Omit<HTMLAttributes<"img">, "src"> {
   src: ImageMetadata | string;
+  className?: string;
   alt?: string;
   title?: string;
 }
@@ -10,32 +12,36 @@ interface Props {
 const { src, alt = "", title } = Astro.props;
 const caption = title || alt;
 const isLocalImage = typeof src !== "string";
+const { class: classValue, className, ...attributes } = Astro.props;
+const isEmbedded = Astro.props["data-embedded-media"] !== undefined;
 ---
 
-<figure class="switch-animation relative rounded-md text-center">
-  {
-    isLocalImage ? (
-      <Image
-        src={src}
-        alt={alt}
-        width={672}
-        loading="lazy"
-        class="w-full rounded-md shadow-[0_0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"
-      />
-    ) : (
-      <img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        class="w-full rounded-md shadow-[0_0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"
-      />
-    )
-  }
-  {
-    caption && (
-      <figcaption class="mt-0 block rounded-tr-md px-2 py-2 text-center text-xs font-bold">
-        {caption}
-      </figcaption>
-    )
-  }
-</figure>
+{
+  isEmbedded && typeof src === "string" ? (
+    <img {...attributes} src={src} class:list={[classValue, className]} />
+  ) : (
+    <figure class="switch-animation relative rounded-md text-center">
+      {isLocalImage ? (
+        <Image
+          src={src}
+          alt={alt}
+          width={672}
+          loading="lazy"
+          class="w-full rounded-md shadow-[0_0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"
+        />
+      ) : (
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          class="w-full rounded-md shadow-[0_0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"
+        />
+      )}
+      {caption && (
+        <figcaption class="mt-0 block rounded-tr-md px-2 py-2 text-center text-xs font-bold">
+          {caption}
+        </figcaption>
+      )}
+    </figure>
+  )
+}

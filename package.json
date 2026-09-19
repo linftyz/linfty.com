@@ -6,6 +6,8 @@
     "dev": "astro dev",
     "build": "astro build && npx pagefind --site dist",
     "preview": "astro preview",
+    "test:embeds": "node --test tests/embedded*.test.mjs",
+    "test:embeds:build": "node tests/verify-embedded-build.mjs",
     "astro": "astro",
     "new:post": "node scripts/new-content.mjs post",
     "format": "prettier --write --ignore-unknown .",
@@ -22,6 +24,7 @@
     "astro": "^7.3.2",
     "astro-icon": "^1.1.5",
     "dayjs": "^1.11.19",
+    "satteri": "0.10.5",
     "satteri-callouts": "^1.0.1",
     "satteri-expressive-code": "^0.1.24",
     "tailwindcss": "^4.1.18"
