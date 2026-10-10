@@ -1,0 +1,16 @@
+# https://editorconfig.org
+# 注意：Prettier CLI 会读取本文件并映射成自己的配置，
+# 所以这里的缩进设置必须和 .prettierrc.json 保持一致。
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+# Markdown 里行尾两个空格表示换行，不能删
+trim_trailing_whitespace = false

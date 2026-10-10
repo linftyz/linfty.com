@@ -1,0 +1,13 @@
+# 构建产物与生成物
+dist/
+.astro/
+
+# 依赖
+node_modules/
+
+# 锁文件与静态资源
+pnpm-lock.yaml
+public/
+
+# 博客正文：手写，不让 Prettier 重排表格、列表和代码块
+src/content/**/*.md
