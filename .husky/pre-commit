@@ -1,0 +1,2 @@
+# 只格式化本次暂存的文件，秒级完成
+pnpm exec lint-staged
