@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.22.0"
   },
   "scripts": {
     "dev": "astro dev",
@@ -19,9 +19,9 @@
     "*.{astro,cjs,css,js,json,jsonc,md,mjs,ts,tsx}": "prettier --write"
   },
   "dependencies": {
-    "@astrojs/mdx": "^8.0.3",
+    "@astrojs/mdx": "^8.1.0",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.3.8",
+    "astro": "^7.4.0",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
