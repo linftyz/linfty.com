@@ -1,0 +1,23 @@
+---
+import { themeConfig } from "@/config";
+import { ClientRouter } from "astro:transitions";
+import BaseHead from "../components/layout/BaseHead.astro";
+import type { BaseHeadProps } from "@/types";
+import ThemeToggle from "@/components/layout/ThemeToggle.astro";
+import "@/styles/global.css";
+
+type Props = BaseHeadProps;
+
+const language = themeConfig.site.lang || "en-US";
+---
+
+<html lang={language}>
+  <head>
+    <BaseHead {...Astro.props} />
+    <ClientRouter />
+  </head>
+  <body>
+    <ThemeToggle />
+    <slot />
+  </body>
+</html>

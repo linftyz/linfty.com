@@ -1,0 +1,75 @@
+---
+import { themeConfig } from "@/config";
+import type { BaseHeadProps } from "@/types";
+
+type Props = BaseHeadProps;
+
+const { site } = themeConfig;
+const {
+  title,
+  description = site.description,
+  ogImage = "/ogimage.png",
+  type = "website",
+  noindex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = new URL(ogImage, Astro.site);
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>
+  {title || themeConfig.site.title}
+</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="author" content={site.author} />
+<meta name="generator" content={Astro.generator} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+<!-- Site Links -->
+<link rel="canonical" href={canonicalURL} />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={themeConfig.site.title}
+  href={new URL("rss.xml", Astro.site)}
+/>
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  title={themeConfig.site.title}
+  href={new URL("atom.xml", Astro.site)}
+/>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content={title} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageUrl} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={imageUrl} />
+
+<script is:inline>
+  function applyTheme() {
+    localStorage.theme === "dark"
+      ? document.documentElement.classList.add("dark")
+      : document.documentElement.classList.remove("dark");
+  }
+
+  document.addEventListener("astro:after-swap", applyTheme);
+  applyTheme();
+</script>
