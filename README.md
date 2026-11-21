@@ -1,43 +1,26 @@
-# Astro Starter Kit: Minimal
+# linfty.com
+
+个人博客，使用 Astro + Tailwind CSS 构建，目前的设计与排版是参考 [Qiwi](https://github.com/lanbinleo/qiwi) 主题 - 这是 [Leo](https://leoreo.me/) 开发的 Typecho 主题。
+
+![站点首页](docs/screenshot.png)
+
+![深色模式](docs/screenshot-dark.png)
+
+## 快速开始
+
+需要 Node 22.23.4 以上。
 
 ```sh
-pnpm create astro@latest -- --template minimal
+pnpm install
+pnpm dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+开发服务器默认在 http://localhost:4321。其他命令：
 
-## 🚀 Project Structure
+- `pnpm build`：生产构建，产物输出到 `dist/`
+- `pnpm preview`：本地预览构建结果
+- `pnpm assets`：修改 `src/assets/brand/` 后重新生成 favicon 和 OG 图
 
-Inside of your Astro project, you'll see the following folders and files:
+## 许可
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+MIT
