@@ -1,5 +1,7 @@
 # build output
 dist/
+# 链接卡片的远程元数据缓存
+.cache/
 # generated types
 .astro/
 
@@ -15,7 +17,8 @@ pnpm-debug.log*
 
 # environment variables
 .env
-.env.production
+.env.*
+!.env.example
 
 # macOS-specific files
 .DS_Store

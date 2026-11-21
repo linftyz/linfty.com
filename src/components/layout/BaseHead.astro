@@ -1,33 +1,40 @@
 ---
+import { UMAMI_SRC, UMAMI_WEBSITE_ID } from "astro:env/client";
 import { themeConfig } from "@/config";
 import type { BaseHeadProps } from "@/types";
 
 type Props = BaseHeadProps;
 
 const { site } = themeConfig;
+const hostname = new URL(site.url).hostname;
 const {
   title,
   description = site.description,
-  ogImage = "/ogimage.png",
+  ogImage = "/og.png",
   type = "website",
   noindex = false,
 } = Astro.props;
 
+const pageTitle = title ? `${title} · ${site.title}` : site.title;
+
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const imageUrl = new URL(ogImage, Astro.site);
+/** og.png 固定 1200×630；文章 cover 是外链，尺寸未知就不声明 */
+const isDefaultOgImage = ogImage === "/og.png";
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>
-  {title || themeConfig.site.title}
-</title>
-<meta name="title" content={title} />
+<title>{pageTitle}</title>
+<meta name="title" content={pageTitle} />
 <meta name="description" content={description} />
 <meta name="author" content={site.author} />
 <meta name="generator" content={Astro.generator} />
 {noindex && <meta name="robots" content="noindex, follow" />}
+
+<meta name="theme-color" content="#f6f5f2" />
+<meta name="color-scheme" content="light dark" />
 
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -50,24 +57,47 @@ const imageUrl = new URL(ogImage, Astro.site);
 />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:title" content={title} />
+<meta property="og:title" content={pageTitle} />
 <meta property="og:type" content={type} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={imageUrl} />
+{isDefaultOgImage && <meta property="og:image:width" content="1200" />}
+{isDefaultOgImage && <meta property="og:image:height" content="630" />}
+<meta property="og:image:alt" content={pageTitle} />
+<meta property="og:site_name" content={site.title} />
+<meta property="og:locale" content="zh_CN" />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={canonicalURL} />
-<meta property="twitter:title" content={title} />
+<meta property="twitter:title" content={pageTitle} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={imageUrl} />
+{site.twitter && <meta name="twitter:site" content={site.twitter} />}
+{site.twitter && <meta name="twitter:creator" content={site.twitter} />}
+
+{import.meta.env.PROD && UMAMI_SRC && UMAMI_WEBSITE_ID && (
+  <script
+    is:inline
+    defer
+    src={UMAMI_SRC}
+    data-website-id={UMAMI_WEBSITE_ID}
+    data-domains={hostname}
+  />
+)}
 
 <script is:inline>
+  // 必须内联：放组件脚本里会延迟加载，首帧闪一下白
   function applyTheme() {
-    localStorage.theme === "dark"
-      ? document.documentElement.classList.add("dark")
-      : document.documentElement.classList.remove("dark");
+    var stored = localStorage.getItem("theme");
+    var isDark =
+      stored === "dark" ||
+      (stored !== "light" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.classList.toggle("dark", isDark);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", isDark ? "#1c1b19" : "#f6f5f2");
   }
 
   document.addEventListener("astro:after-swap", applyTheme);

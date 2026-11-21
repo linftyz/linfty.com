@@ -1,0 +1,61 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader.astro";
+import PostCard from "@/components/post/PostCard.astro";
+import { getPosts, getTaxonomies, readingTime } from "@/lib/posts";
+
+export const getStaticPaths = (async () => {
+  const [posts, { categories }] = await Promise.all([
+    getPosts(),
+    getTaxonomies(),
+  ]);
+
+  // 空分类也要生成，否则列表页的死链
+  return [...categories.values()].map((category) => ({
+    params: { category: category.id },
+    props: {
+      category,
+      posts: posts.filter((post) => post.data.category?.id === category.id),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { category, posts } = Astro.props;
+---
+
+<BaseLayout
+  title={`分类：${category.data.name}`}
+  description={category.data.description || undefined}
+>
+  <PageHeader title={category.data.name} stats={[`${posts.length} 篇文章`]} />
+
+  {category.data.description && (
+    <p class="-mt-3 mb-6 text-[.84rem] text-muted-foreground">
+      {category.data.description}
+    </p>
+  )}
+
+  {posts.length === 0 ? (
+    <p class="text-[.9rem] text-muted-foreground">这个分类还没有文章。</p>
+  ) : (
+    <ul class="m-0 list-none p-0">
+      {posts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          href={`/posts/${post.id}`}
+          date={post.data.date}
+          excerpt={post.data.description}
+          readingTime={readingTime(post.body ?? "")}
+          cover={post.data.cover}
+        />
+      ))}
+    </ul>
+  )}
+
+  <p class="mt-10 text-[.8rem] tracking-[1px]">
+    <a href="/categories" class="text-muted-foreground hover:text-accent">
+      ← 全部分类
+    </a>
+  </p>
+</BaseLayout>

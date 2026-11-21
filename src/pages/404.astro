@@ -1,0 +1,36 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { themeConfig } from "@/config";
+
+const { nav } = themeConfig;
+---
+
+<BaseLayout title="页面不存在" noindex>
+  <div class="py-10 max-[561px]:py-6">
+    <p class="m-0 font-serif text-[3.4rem] leading-none font-semibold tracking-[6px] text-accent-strong">
+      404
+    </p>
+
+    <h1 class="mt-6 mb-3 font-serif text-[1.3rem] font-semibold tracking-[3px] text-heading">
+      这一页不在
+    </h1>
+
+    <p class="m-0 text-[.92rem] leading-[1.95] tracking-[.04em] text-muted-foreground">
+      链接可能过期了，也可能是我把文件挪了地方。下面这几处应该还有你要找的东西。
+    </p>
+
+    <nav
+      class="mt-9 flex flex-wrap gap-x-6 gap-y-3 border-t border-dashed border-border-soft pt-7"
+      aria-label="站内导航"
+    >
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          class="text-[.9rem] tracking-[2px] text-foreground transition-colors hover:text-accent"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</BaseLayout>

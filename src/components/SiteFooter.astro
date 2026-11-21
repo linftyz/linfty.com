@@ -1,0 +1,35 @@
+---
+import { themeConfig } from "@/config";
+
+const { site } = themeConfig;
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-27 flex items-end justify-between gap-6 max-[561px]:flex-col max-[561px]:items-start max-[561px]:gap-4">
+  <div class="text-[.74rem] leading-[2] tracking-[1px] text-muted-foreground">
+    <p class="mb-1.5 font-hand text-[.94rem] tracking-[3px] text-foreground">
+      保持好奇，无限进步
+    </p>
+    <p>
+      © {year}{" "}
+      <a href="/" class="hover:text-accent">
+        {site.title}
+      </a>{" "}
+      · Astro
+    </p>
+  </div>
+
+  <div class="flex gap-4 text-[.74rem] leading-[2] tracking-[1px] text-muted-foreground">
+    <a href="/rss.xml" class="hover:text-accent">
+      RSS
+    </a>
+    <a
+      href={site.github}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hover:text-accent"
+    >
+      GitHub
+    </a>
+  </div>
+</footer>

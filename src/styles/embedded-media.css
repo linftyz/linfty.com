@@ -1,0 +1,178 @@
+/* 插件插入的节点类名不在 Tailwind 扫描范围内，单独写 */
+
+
+.embed-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--foreground);
+  line-height: 1.5;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+
+/* 卡片本身是链接，排掉 .prose a 的下划线；不能删边框，否则卡片少一条边 */
+.prose .embed-card {
+  border-bottom-color: var(--border-soft);
+  color: var(--foreground);
+}
+
+.embed-card:hover {
+  border-color: var(--accent);
+}
+
+.embed-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.embed-source,
+.embed-title,
+.embed-description {
+  display: block;
+}
+
+.embed-source {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.embed-title {
+  margin-top: 0.25rem;
+  color: var(--heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  overflow-wrap: anywhere;
+}
+
+.embed-description {
+  display: -webkit-box;
+  margin-top: 0.35rem;
+  overflow: hidden;
+  color: var(--muted-foreground);
+  font-size: 0.84rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.embed-thumbnail {
+  flex: none;
+  width: 5rem;
+  height: 5rem;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  object-fit: cover;
+}
+
+.embed-github {
+  display: block;
+}
+
+.embed-github-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.embed-repo {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.embed-github svg {
+  flex: none;
+  color: var(--muted-foreground);
+}
+
+.embed-avatar {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--border-soft);
+}
+
+.embed-github .embed-description {
+  margin-top: 0.7rem;
+}
+
+.embed-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-top: 0.85rem;
+}
+
+.embed-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--muted-foreground);
+  font-size: 0.74rem;
+  letter-spacing: 0.5px;
+}
+
+.embed-status {
+  display: block;
+  margin-top: 0.6rem;
+  color: var(--muted-foreground);
+  font-size: 0.74rem;
+}
+
+.embed-status[hidden] {
+  display: none;
+}
+
+.embed-video {
+  margin: 1.5rem 0;
+}
+
+.embed-video iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: var(--code-bg);
+}
+
+.embed-video-source {
+  display: block;
+  width: fit-content;
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.74rem;
+  text-decoration: none;
+}
+
+.embed-video-source:hover {
+  color: var(--accent);
+}
+
+.embed-invalid {
+  color: var(--muted-foreground);
+  font-size: 0.84rem;
+}
+
+@media (width < 481px) {
+  .embed-card {
+    gap: 0.75rem;
+    padding: 0.8rem;
+  }
+
+  .embed-thumbnail {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}

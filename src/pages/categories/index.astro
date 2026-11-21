@@ -1,0 +1,57 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader.astro";
+import { getPosts, getTaxonomies } from "@/lib/posts";
+
+const [posts, { categories }] = await Promise.all([
+  getPosts(),
+  getTaxonomies(),
+]);
+
+const counts = new Map<string, number>();
+for (const post of posts) {
+  const id = post.data.category?.id;
+  if (id) counts.set(id, (counts.get(id) ?? 0) + 1);
+}
+
+const list = [...categories.values()]
+  .map((category) => ({ category, count: counts.get(category.id) ?? 0 }))
+  .sort(
+    (a, b) =>
+      b.count - a.count ||
+      a.category.data.name.localeCompare(b.category.data.name, "zh-CN"),
+  );
+---
+
+<BaseLayout title="分类">
+  <PageHeader
+    title="分类"
+    stats={[`共 ${list.length} 个分类`, `关联 ${posts.length} 篇文章`]}
+  />
+
+  <ul class="m-0 list-none p-0">
+    {list.map(({ category, count }) => (
+      <li class="border-b border-dashed border-border-soft py-[23px] first:pt-0">
+        <div class="flex flex-wrap items-baseline gap-x-[11px]">
+          <h2 class="m-0 font-serif text-[1.08rem] font-semibold leading-[1.6]">
+            <a
+              href={`/categories/${category.id}`}
+              class="border-b border-border tracking-[.08em] text-heading transition-colors hover:border-accent hover:text-accent"
+            >
+              {category.data.name}
+            </a>
+          </h2>
+          <span class="text-[.76rem] tracking-[1px] text-muted-foreground">
+            · {count} 篇
+          </span>
+        </div>
+
+        {category.data.description && (
+          <p class="mt-2 text-[.88rem] leading-[1.85] tracking-[.035em] text-muted-foreground">
+            {category.data.description}
+          </p>
+        )}
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

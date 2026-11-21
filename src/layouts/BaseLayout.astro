@@ -3,8 +3,10 @@ import { themeConfig } from "@/config";
 import { ClientRouter } from "astro:transitions";
 import BaseHead from "../components/layout/BaseHead.astro";
 import type { BaseHeadProps } from "@/types";
-import ThemeToggle from "@/components/layout/ThemeToggle.astro";
 import "@/styles/global.css";
+import SideNav from "@/components/nav/SideNav.astro";
+import MobileBar from "@/components/nav/MobileBar.astro";
+import SiteFooter from "@/components/SiteFooter.astro";
 
 type Props = BaseHeadProps;
 
@@ -16,8 +18,14 @@ const language = themeConfig.site.lang || "en-US";
     <BaseHead {...Astro.props} />
     <ClientRouter />
   </head>
-  <body>
-    <ThemeToggle />
-    <slot />
+  <body class="bg-background font-sans text-[16px] text-foreground">
+    <MobileBar />
+    <div class="mx-auto grid w-full max-w-[1100px] grid-cols-[220px_minmax(0,760px)] justify-center gap-14 px-8 pt-24 pb-12 max-[861px]:block max-[861px]:px-6 max-[861px]:pt-21 max-[861px]:pb-11">
+      <SideNav />
+      <main class="min-w-0 self-start rounded-lg border border-card-border bg-card p-7.5 outline-none max-[561px]:px-4.5 max-[561px]:py-5">
+        <slot />
+        <SiteFooter />
+      </main>
+    </div>
   </body>
 </html>

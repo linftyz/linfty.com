@@ -1,0 +1,36 @@
+---
+import type { MarkdownHeading } from "astro";
+
+export interface TocProps {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{items.length > 1 && (
+  <nav
+    class="my-9 border-l-2 border-border-soft py-1 pl-4.5"
+    aria-label="文章目录"
+  >
+    <p class="mb-2.5 text-[.72rem] tracking-[3px] text-muted-foreground">
+      目录
+    </p>
+    <ul class="grid list-none gap-0.5 p-0">
+      {items.map((h) => (
+        <li>
+          <a
+            href={`#${h.slug}`}
+            class:list={[
+              "block py-1 text-[.8rem] leading-[1.65] tracking-[1px] text-muted-foreground transition-colors hover:text-accent",
+              h.depth === 3 && "pl-4.5",
+            ]}
+          >
+            {h.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}

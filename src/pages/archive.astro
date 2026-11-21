@@ -1,0 +1,53 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader.astro";
+import { shortDate } from "@/lib/format";
+import { getPosts, wordCount } from "@/lib/posts";
+
+const posts = await getPosts();
+
+const byYear = new Map<number, typeof posts>();
+for (const post of posts) {
+  const year = post.data.date.getFullYear();
+  if (!byYear.has(year)) byYear.set(year, []);
+  byYear.get(year)!.push(post);
+}
+
+const years = [...byYear.keys()].sort((a, b) => b - a);
+---
+
+<BaseLayout title="归档">
+  <PageHeader
+    title="归档"
+    stats={[`共 ${posts.length} 篇文章`, `${years.length} 个年份`]}
+  />
+
+  {years.map((year) => (
+    <section class="mt-8.5 first:mt-0">
+      <h2 class="mb-3.5 text-[1.05rem] font-normal tracking-[2px] text-heading">
+        {year}
+      </h2>
+      <ul class="m-0 list-none p-0">
+        {byYear.get(year)!.map((post) => (
+          <li class="grid grid-cols-[54px_minmax(0,1fr)_auto] items-baseline gap-3.5 py-[9px] max-[561px]:grid-cols-[48px_minmax(0,1fr)]">
+            <time
+              class="text-[.76rem] tracking-[1px] text-muted-foreground"
+              datetime={post.data.date.toISOString()}
+            >
+              {shortDate(post.data.date)}
+            </time>
+            <a
+              href={`/posts/${post.id}`}
+              class="text-[.9rem] tracking-[1px] text-foreground transition-colors hover:text-accent"
+            >
+              {post.data.title}
+            </a>
+            <span class="text-[.76rem] text-muted-foreground max-[561px]:hidden">
+              {wordCount(post.body ?? "")} 字
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</BaseLayout>

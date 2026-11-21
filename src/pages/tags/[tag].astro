@@ -1,0 +1,61 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader.astro";
+import PostCard from "@/components/post/PostCard.astro";
+import {
+  categoryName,
+  getPosts,
+  getTaxonomies,
+  readingTime,
+} from "@/lib/posts";
+
+export const getStaticPaths = (async () => {
+  const [posts, { tags }] = await Promise.all([getPosts(), getTaxonomies()]);
+
+  return [...tags.values()].flatMap((tag) => {
+    const matched = posts.filter((post) =>
+      post.data.tags.some((ref) => ref.id === tag.id),
+    );
+    return matched.length === 0
+      ? []
+      : [{ params: { tag: tag.id }, props: { tag, posts: matched } }];
+  });
+}) satisfies GetStaticPaths;
+
+const { tag, posts } = Astro.props;
+const { categories } = await getTaxonomies();
+---
+
+<BaseLayout title={`标签：${tag.data.name}`}>
+  <PageHeader title={`#${tag.data.name}`} stats={[`${posts.length} 篇文章`]} />
+
+  {tag.data.description && (
+    <p class="-mt-3 mb-6 text-[.84rem] text-muted-foreground">
+      {tag.data.description}
+    </p>
+  )}
+
+  <ul class="m-0 list-none p-0">
+    {posts.map((post) => (
+      <PostCard
+        title={post.data.title}
+        href={`/posts/${post.id}`}
+        date={post.data.date}
+        category={categoryName(post, categories)}
+        categoryHref={
+          post.data.category && `/categories/${post.data.category.id}`
+        }
+        excerpt={post.data.description}
+        readingTime={readingTime(post.body ?? "")}
+        cover={post.data.cover}
+      />
+    ))}
+  </ul>
+
+  <p class="mt-10 text-[.8rem] tracking-[1px]">
+    <a href="/tags" class="text-muted-foreground hover:text-accent">
+      ← 全部标签
+    </a>
+  </p>
+</BaseLayout>

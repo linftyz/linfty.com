@@ -12,15 +12,12 @@ export const themeConfig: ThemeConfig = {
   nav: [
     { label: "首页", href: "/", icon: "home" },
     { label: "归档", href: "/archive", icon: "archive" },
+    { label: "分类", href: "/categories", icon: "folder" },
     { label: "标签", href: "/tags", icon: "tag" },
     { label: "关于", href: "/about", icon: "user" },
   ],
   date: {
     format: "YYYY-MM-DD",
     separator: ".",
-  },
-  umami: {
-    src: "https://um.linfty.com/script.js",
-    websiteId: "cf5cbe5a-3e4e-44b2-9786-6c6e30498ffa",
   },
 };

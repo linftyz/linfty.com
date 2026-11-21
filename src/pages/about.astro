@@ -1,0 +1,36 @@
+---
+import { getEntry, render } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { themeConfig } from "@/config";
+import logo from "@/assets/brand/logo.svg?raw";
+
+const { site } = themeConfig;
+const about = await getEntry("pages", "about");
+if (!about) throw new Error("缺少 src/content/pages/about.md");
+
+const { Content } = await render(about);
+---
+
+<BaseLayout title={about.data.title} description={about.data.description}>
+  <header class="mb-9 flex items-center gap-5">
+    <span
+      role="img"
+      aria-label={site.author}
+      class="w-18 shrink-0 text-heading [&>svg]:h-auto [&>svg]:w-full"
+    >
+      <Fragment set:html={logo} />
+    </span>
+    <div>
+      <h1 class="m-0 mb-1.5 font-serif text-[1.22rem] font-semibold tracking-[2px] text-heading">
+        {site.author}
+      </h1>
+      <p class="text-[.86rem] tracking-[1px] text-muted-foreground">
+        {site.description}
+      </p>
+    </div>
+  </header>
+
+  <div class="prose">
+    <Content />
+  </div>
+</BaseLayout>

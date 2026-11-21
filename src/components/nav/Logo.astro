@@ -1,0 +1,25 @@
+---
+import { themeConfig } from "@/config";
+import logo from "@/assets/brand/logo.svg?raw";
+
+const { site } = themeConfig;
+---
+
+<div class="w-full max-w-[190px] pb-7.5 text-right">
+  <a
+    href="/"
+    aria-label={site.title}
+    class="mb-4 block text-heading transition-transform duration-500 ease-[cubic-bezier(.22,.61,.36,1)] hover:-rotate-3 [&>svg]:mr-0 [&>svg]:ml-auto [&>svg]:h-auto [&>svg]:w-[92px]"
+  >
+    <Fragment set:html={logo} />
+  </a>
+  <a
+    href="/"
+    class="-mr-2 block font-serif text-[1.55rem] leading-tight font-semibold tracking-[8px] text-heading"
+  >
+    {site.title}
+  </a>
+  <p class="-mr-1 mt-2.5 text-[0.6rem] leading-[1.8] tracking-[2.5px] text-accent">
+    {site.description}
+  </p>
+</div>

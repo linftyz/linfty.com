@@ -5,9 +5,11 @@ export interface SiteInfo {
   author: string;
   lang: string;
   github: string;
+  /** 形如 "@handle"，留空则不输出 twitter:site */
+  twitter?: string;
 }
 
-export type NavIcon = "home" | "archive" | "tag" | "user";
+export type NavIcon = "home" | "archive" | "folder" | "tag" | "user";
 
 export interface NavItem {
   label: string;
@@ -25,14 +27,8 @@ export interface DateConfig {
   separator: string;
 }
 
-export interface UmamiConfig {
-  src: string;
-  websiteId: string;
-}
-
 export interface ThemeConfig {
   site: SiteInfo;
   nav: NavItem[];
   date: DateConfig;
-  umami?: UmamiConfig;
 }

@@ -1,46 +1,96 @@
 :root {
   color-scheme: light;
 
-  --radius: 8px;
+  --background: #f6f5f2;
+  --card: #fffefc;
+  --card-border: rgba(139, 115, 85, 0.07);
+  --surface: #ffffff;
 
-  --background: oklch(0.988 0.0041 91.45);
-  --foreground: oklch(0.2189 0.0065 78.18);
-  --card: oklch(1 0 89.88);
-  --muted: oklch(0.9528 0.0086 84.57);
-  --muted-foreground: oklch(0.5181 0.01 84.59);
-  --line: oklch(0.9137 0.0116 84.58);
-  --line-strong: oklch(0.8588 0.0147 84.59);
-  --primary: oklch(0.5375 0.1501 34.53);
-  --primary-subtle: oklch(0.9437 0.0167 40.8);
+  --foreground: #3f3f46;
+  --heading: #27272a;
+  --muted-foreground: #71717a;
+
+  /* 原 #8b7355 浅底只有 4.11:1，不够 AA；压深到 4.55:1 */
+  --accent: #846c4e;
+  /* 参考站的橙在白底只有 3.9:1，压深到 4.9:1 */
+  --accent-strong: #a85c26;
+
+  --border: #d4d4d6;
+  --border-soft: #e4e4e7;
+  --code-bg: #f6f6f4;
+
+  --radius: 4px;
+
+  /* satteri-callouts 的 obsidian 主题按这组变量取色 */
+  --callout-note-color-light: #3b6ea5;
+  --callout-tip-color-light: #3f7d54;
+  --callout-important-color-light: #7b5ca8;
+  --callout-warning-color-light: #a06a1e;
+  --callout-caution-color-light: #b04a3a;
+  --callout-danger-color-light: var(--callout-caution-color-light);
+  --callout-info-color-light: var(--callout-note-color-light);
+  --callout-success-color-light: var(--callout-tip-color-light);
+
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-serif: "Noto Serif SC", "Songti SC", STSong, SimSun, serif;
+  --font-hand: "Kaiti SC", STKaiti, KaiTi, "Noto Serif SC", serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
 }
 
 .dark {
   color-scheme: dark;
 
-  --background: oklch(0.1784 0.0026 67.66);
-  --foreground: oklch(0.9228 0.0075 80.72);
-  --card: oklch(0.2142 0.0025 67.69);
-  --muted: oklch(0.2534 0.0048 67.61);
-  --muted-foreground: oklch(0.6741 0.0125 84.59);
-  --line: oklch(0.286 0.0061 78.23);
-  --line-strong: oklch(0.3385 0.0081 75.29);
-  --primary: oklch(0.6867 0.1357 39.06);
-  --primary-subtle: oklch(0.2563 0.0254 39.22);
+  --background: #1c1b19;
+  --card: #232220;
+  --card-border: rgba(139, 115, 85, 0.07);
+  --surface: #1f1f22;
+
+  --foreground: #c8c8cd;
+  --heading: #e4e4e7;
+  --muted-foreground: #90909a;
+
+  --accent: #d4c4b0;
+  --accent-strong: #e0ad7d;
+
+  --border: #3f3f46;
+  --border-soft: rgba(63, 63, 70, 0.55);
+  --code-bg: #17171a;
+
+  --callout-note-color-dark: #7fa9d6;
+  --callout-tip-color-dark: #7cc196;
+  --callout-important-color-dark: #b39bd6;
+  --callout-warning-color-dark: #d3a561;
+  --callout-caution-color-dark: #e08878;
+  --callout-danger-color-dark: var(--callout-caution-color-dark);
+  --callout-info-color-dark: var(--callout-note-color-dark);
+  --callout-success-color-dark: var(--callout-tip-color-dark);
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --color-card: var(--card);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-line: var(--line);
-  --color-line-strong: var(--line-strong);
-  --color-primary: var(--primary);
-  --color-primary-subtle: var(--primary-subtle);
+  --color-card-border: var(--card-border);
+  --color-surface: var(--surface);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --color-foreground: var(--foreground);
+  --color-heading: var(--heading);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-code-bg: var(--code-bg);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-hand: var(--font-hand);
+  --font-mono: var(--font-mono);
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) * 2);
 }

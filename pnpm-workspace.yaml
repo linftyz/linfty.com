@@ -3,3 +3,4 @@ minimumReleaseAgeExclude:
   - '@astrojs/runtime@0.1.1'
   - '@astrojs/vite-plugin-astro@0.1.2'
   - astro@7.4.11
+  - satteri-callouts@1.0.2

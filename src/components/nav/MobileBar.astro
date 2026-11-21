@@ -1,0 +1,70 @@
+---
+import { themeConfig } from "@/config";
+import ThemeToggle from "../layout/ThemeToggle.astro";
+
+const { site, nav } = themeConfig;
+const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/";
+
+const isCurrent = (href: string) => {
+  const target = href.replace(/\/+$/, "") || "/";
+  return target === "/" ? pathname === "/" : pathname.startsWith(target);
+};
+---
+
+<!-- 顶栏与展开的菜单同处一个 fixed 容器，展开时整体向下生长，不用猜顶栏高度 -->
+<div class="fixed inset-x-0 top-0 z-[1000] hidden flex-col max-[861px]:flex">
+  <div class="flex items-center justify-between gap-3 border-b border-border-soft bg-background/84 px-5 py-3.5 backdrop-blur-[10px]">
+    <a
+      href="/"
+      class="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-serif font-semibold tracking-[5px] text-heading"
+    >
+      {site.title}
+    </a>
+    <div class="flex shrink-0 items-center gap-2">
+      <ThemeToggle />
+      <button
+        type="button"
+        class="menu-toggle cursor-pointer border-0 bg-transparent p-2 text-[1.05rem] text-muted-foreground hover:text-accent"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="打开菜单"
+      >
+        ☰
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="mobile-nav"
+    class="hidden flex-col border-b border-border-soft bg-background/95 px-5 pb-2 backdrop-blur-[12px] data-[open=true]:flex"
+    aria-label="移动端导航"
+  >
+    {nav.map((item) => (
+      <a
+        href={item.href}
+        aria-current={isCurrent(item.href) ? "page" : undefined}
+        class:list={[
+          "border-b border-border-soft py-[11px] pr-1 pl-1 text-[0.94rem] tracking-[4px] last:border-0",
+          isCurrent(item.href) ? "text-accent" : "text-foreground",
+        ]}
+      >
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</div>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const button = document.querySelector<HTMLButtonElement>(".menu-toggle");
+    const panel = document.getElementById("mobile-nav");
+    if (!button || !panel) return;
+
+    button.addEventListener("click", () => {
+      const open = panel.dataset.open !== "true";
+      panel.dataset.open = String(open);
+      button.setAttribute("aria-expanded", String(open));
+      button.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
+    });
+  });
+</script>

@@ -1,7 +1,40 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import PostCard from "@/components/post/PostCard.astro";
+import { themeConfig } from "@/config";
+import {
+  categoryName,
+  getPostsPinnedFirst,
+  getTaxonomies,
+  readingTime,
+} from "@/lib/posts";
+
+const posts = await getPostsPinnedFirst();
+const { categories } = await getTaxonomies();
 ---
 
 <BaseLayout>
-  <h1>Astro</h1>
+  <!-- 首页没有可见标题，留一个给屏幕阅读器和文档大纲 -->
+  <h1 class="sr-only">{themeConfig.site.title}</h1>
+
+  {posts.length === 0 ? (
+    <p class="text-[.9rem] text-muted-foreground">还没有文章。</p>
+  ) : (
+    <ul class="m-0 list-none p-0">
+      {posts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          href={`/posts/${post.id}`}
+          date={post.data.date}
+          category={categoryName(post, categories)}
+          categoryHref={
+            post.data.category && `/categories/${post.data.category.id}`
+          }
+          excerpt={post.data.description}
+          readingTime={readingTime(post.body ?? "")}
+          cover={post.data.cover}
+        />
+      ))}
+    </ul>
+  )}
 </BaseLayout>

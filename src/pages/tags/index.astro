@@ -1,0 +1,49 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader.astro";
+import { getPosts, getTaxonomies } from "@/lib/posts";
+
+const posts = await getPosts();
+const { tags: tagMap } = await getTaxonomies();
+
+const entries = [...tagMap.values()]
+  .map((tag) => ({
+    tag,
+    count: posts.filter((post) =>
+      post.data.tags.some((ref) => ref.id === tag.id),
+    ).length,
+  }))
+  .filter(({ count }) => count > 0)
+  .sort(
+    (a, b) =>
+      b.count - a.count ||
+      a.tag.data.name.localeCompare(b.tag.data.name, "zh-CN"),
+  );
+---
+
+<BaseLayout title="标签">
+  <PageHeader
+    title="标签"
+    stats={[`共 ${entries.length} 个标签`, `关联 ${posts.length} 篇文章`]}
+  />
+
+  <div class="grid grid-cols-2 gap-x-12 max-[640px]:grid-cols-1">
+    {entries.map(({ tag, count }) => (
+      <a
+        href={`/tags/${tag.id}`}
+        class="group flex items-baseline gap-3 py-[7px] text-foreground transition-colors hover:text-accent"
+      >
+        <span class="shrink-0 tracking-[2px]">{tag.data.name}</span>
+        <span
+          class="mb-[5px] min-w-4 flex-1 border-b border-dotted border-border-soft transition-colors group-hover:border-accent/50"
+        >
+        </span>
+        <span
+          class="shrink-0 text-[.74rem] tabular-nums tracking-[1px] text-muted-foreground transition-colors group-hover:text-accent"
+        >
+          {count}
+        </span>
+      </a>
+    ))}
+  </div>
+</BaseLayout>
