@@ -15,7 +15,9 @@ pnpm install
 pnpm dev
 ```
 
-开发服务器默认在 http://localhost:4321。其他命令：
+开发服务器默认在 http://localhost:4321。
+
+其他命令：
 
 - `pnpm build`：生产构建，产物输出到 `dist/`
 - `pnpm preview`：本地预览构建结果
