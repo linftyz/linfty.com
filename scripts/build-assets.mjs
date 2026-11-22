@@ -30,7 +30,8 @@ const OG = {
 
 // 字体靠系统提供（loadSystemFonts），这里只给跨平台的兜底列表：
 // 找不到宋体就退到思源宋体，再退到任意衬线，Linux/CI 上也不会崩
-const SERIF_STACK = "Songti SC, STSong, Noto Serif CJK SC, Source Han Serif SC, serif";
+const SERIF_STACK =
+  "Songti SC, STSong, Noto Serif CJK SC, Source Han Serif SC, serif";
 const MONO_STACK = "Menlo, SF Mono, DejaVu Sans Mono, Consolas, monospace";
 
 const read = (file) => readFile(path.join(root, file), "utf8");
@@ -56,7 +57,8 @@ function render(svg, width) {
 
 /** 图标：mark 铺圆角底板 */
 function iconSvg(mark, size) {
-  const [w] = viewBox(mark);
+  // viewBox 是 "minX minY width height"，前两个是原点，第三个才是边长
+  const [, , w] = viewBox(mark);
   const r = (w * RADIUS).toFixed(0);
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${w}" width="${size}" height="${size}">
