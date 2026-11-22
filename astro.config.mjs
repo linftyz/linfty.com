@@ -35,6 +35,13 @@ export default defineConfig({
         access: "public",
         optional: true,
       }),
+      // Artalk 评论服务端地址。填了才在文章页渲染评论区
+      ARTALK_SERVER: envField.string({
+        context: "client",
+        access: "public",
+        url: true,
+        optional: true,
+      }),
     },
   },
 

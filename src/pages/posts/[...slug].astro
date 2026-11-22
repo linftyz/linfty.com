@@ -3,6 +3,7 @@ import type { GetStaticPaths } from "astro";
 import { render } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import TableOfContents from "@/components/post/TableOfContents.astro";
+import Comments from "@/components/Comments.astro";
 import { fullDate } from "@/lib/format";
 import {
   categoryName,
@@ -127,6 +128,8 @@ const category = categoryName(post, categories);
       )}
     </div>
   </nav>
+
+  <Comments />
 </BaseLayout>
 
 <script>

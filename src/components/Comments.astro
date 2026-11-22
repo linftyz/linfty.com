@@ -1,0 +1,125 @@
+---
+import { ARTALK_SERVER } from "astro:env/client";
+---
+
+{ARTALK_SERVER && (
+  <>
+    <div id="atk-comments" data-server={ARTALK_SERVER} class="mt-12"></div>
+
+    <script>
+      import Artalk from "artalk";
+      import { themeConfig } from "@/config";
+
+      let instance = null;
+
+      async function mount() {
+        const el = document.querySelector("#atk-comments");
+
+        // 离开了带评论的页面：销毁实例，停掉它的轮询和监听
+        if (!el) {
+          if (instance) {
+            instance.destroy();
+            instance = null;
+          }
+          return;
+        }
+
+        // 在不同文章间切换：更新 pageKey / pageTitle 后重载列表即可
+        if (instance) {
+          instance.update({
+            pageKey: location.pathname,
+            pageTitle: document.title,
+          });
+          instance.reload();
+          instance.setDarkMode(
+            document.documentElement.classList.contains("dark"),
+          );
+          return;
+        }
+
+        // CSS 动态加载：env 未配置时页面零引用，不加载任何 artalk 资源
+        await import("artalk/dist/Artalk.css");
+
+        // 服务地址从容器属性读：客户端脚本里 astro:env / import.meta.env
+        // 在构建后都不会内联（实测是未定义引用），走 DOM 最可靠
+        instance = Artalk.init({
+          el: "#atk-comments",
+          server: el.dataset.server,
+          site: themeConfig.site.title,
+          pageTitle: document.title,
+          pageKey: location.pathname,
+        });
+
+        // 站内主题切换时同步 Artalk 的暗色状态
+        instance.setDarkMode(
+          document.documentElement.classList.contains("dark"),
+        );
+      }
+
+      document.addEventListener("astro:page-load", mount);
+    </script>
+
+    <style is:global>
+      /* Artalk 的配色全部映射到站内变量，深浅色跟随 .dark 自动切换 */
+      .artalk,
+      .atk-layer-wrap {
+        --at-color-main: var(--accent-strong) !important;
+        --at-color-primary: var(--accent-strong) !important;
+
+        --at-color-font: var(--foreground) !important;
+        --at-color-deep: var(--heading) !important;
+        --at-color-sub: var(--muted-foreground) !important;
+        --at-color-grey: var(--muted-foreground) !important;
+        --at-color-meta: var(--muted-foreground) !important;
+
+        --at-color-border: var(--border) !important;
+        --at-color-bg: var(--card) !important;
+        --at-color-bg-transl: oklch(from var(--card) l c h / 0.95) !important;
+        --at-color-bg-grey: oklch(
+          from var(--muted-foreground) l c h / 0.1
+        ) !important;
+        --at-color-bg-grey-transl: oklch(
+          from var(--muted-foreground) l c h / 0.05
+        ) !important;
+        --at-color-bg-light: oklch(from var(--accent) l c h / 0.05) !important;
+
+        --at-color-gradient: linear-gradient(
+          180deg,
+          transparent,
+          var(--card)
+        ) !important;
+      }
+
+      .dark .artalk,
+      .dark .atk-layer-wrap {
+        --at-color-bg: var(--card) !important;
+        --at-color-bg-transl: oklch(from var(--card) l c h / 0.95) !important;
+        --at-color-bg-grey: oklch(
+          from var(--muted-foreground) l c h / 0.3
+        ) !important;
+
+        --at-color-gradient: linear-gradient(
+          180deg,
+          transparent,
+          var(--background)
+        ) !important;
+      }
+
+      /* 按钮和编辑器对齐站内的平坦风格：4px 圆角、无阴影 */
+      .atk-send-btn {
+        border-radius: var(--radius) !important;
+        font-weight: 700 !important;
+        box-shadow: none !important;
+      }
+
+      .atk-main-editor {
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+
+      .atk-main-editor:focus-within {
+        border-color: var(--accent) !important;
+      }
+    </style>
+  </>
+)}

@@ -160,7 +160,7 @@
 /* 正文图是外链，构建时不知道尺寸。aspect-ratio 的 auto 关键字表示
    「只知道比例时按 3/2 占位，知道真实比例后用它」——既提前留出空间，
    又不会给非 3:2 的图留一圈空白 */
-.prose img {
+.prose img:not([data-embedded-media]) {
   width: 100%;
   aspect-ratio: auto 3 / 2;
   border: 1px solid var(--border-soft);
