@@ -50,7 +50,7 @@ function plainText(body: string): string {
     .replace(/`[^`\n]*`/g, " ")
     .replace(/^import\s.+$/gm, " ")
     .replace(/^export\s.+$/gm, " ")
-    .replace(/:::[a-z]+\{[^}]*\}/gi, " ")
+    .replace(/::[a-z]+\{[^}]*\}/gi, " ")
     .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
     .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/<\/?[a-z][^>]*>/gi, " ");

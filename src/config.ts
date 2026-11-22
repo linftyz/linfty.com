@@ -10,14 +10,13 @@ export const themeConfig: ThemeConfig = {
     github: "https://github.com/linftyz",
   },
   nav: [
-    { label: "首页", href: "/", icon: "home" },
-    { label: "归档", href: "/archive", icon: "archive" },
-    { label: "分类", href: "/categories", icon: "folder" },
-    { label: "标签", href: "/tags", icon: "tag" },
-    { label: "关于", href: "/about", icon: "user" },
+    { label: "首页", href: "/" },
+    { label: "归档", href: "/archive" },
+    { label: "分类", href: "/categories" },
+    { label: "标签", href: "/tags" },
+    { label: "关于", href: "/about" },
   ],
   date: {
-    format: "YYYY-MM-DD",
     separator: ".",
   },
 };

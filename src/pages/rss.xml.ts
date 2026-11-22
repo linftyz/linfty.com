@@ -19,6 +19,7 @@ export async function GET(context: APIContext) {
         (ref) => tags.get(ref.id)?.data.name ?? ref.id,
       ),
     })),
-    customData: `<language>${themeConfig.site.lang}</language>`,
+    customData: `<language>${themeConfig.site.lang}</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>`,
   });
 }

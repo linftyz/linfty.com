@@ -9,21 +9,12 @@ export interface SiteInfo {
   twitter?: string;
 }
 
-export type NavIcon = "home" | "archive" | "folder" | "tag" | "user";
-
 export interface NavItem {
   label: string;
   href: string;
-  icon: NavIcon;
 }
 
 export interface DateConfig {
-  format:
-    | "YYYY-MM-DD"
-    | "MM-DD-YYYY"
-    | "DD-MM-YYYY"
-    | "MONTH DAY YYYY"
-    | "DAY MONTH YYYY";
   separator: string;
 }
 
