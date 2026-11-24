@@ -1,12 +1,15 @@
 ---
+import Moon from "@lucide/astro/icons/moon";
+import Sun from "@lucide/astro/icons/sun";
 ---
 
 <button
   type="button"
-  class="theme-toggle cursor-pointer border-0 bg-transparent p-2 text-[1.05rem] text-muted-foreground transition-colors hover:text-accent"
+  class="theme-toggle inline-flex cursor-pointer items-center border-0 bg-transparent p-2 text-muted-foreground transition-colors hover:text-accent"
   aria-label="切换主题"
 >
-  ◐
+  <Moon size={18} stroke-width={1.5} class="block dark:hidden" />
+  <Sun size={18} stroke-width={1.5} class="hidden dark:block" />
 </button>
 
 <script>

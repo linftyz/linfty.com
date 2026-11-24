@@ -7,8 +7,11 @@
 
 @layer base {
   html {
-    /* 长短页切换时滚动条槽位恒定，否则内容会左右跳 15px */
-    scrollbar-gutter: stable;
+    /* 长短页切换时滚动条槽位恒定，否则内容会左右跳 15px。
+       只在桌面生效：移动端没有常驻滚动条，保留这 15px 会让内容左右不对称 */
+    @media (width >= 861px) {
+      scrollbar-gutter: stable;
+    }
     /* 小屏有 fixed 顶栏，锚点要让它开 */
     scroll-padding-top: 88px;
   }

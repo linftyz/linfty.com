@@ -61,6 +61,27 @@ function icon(name) {
   );
 }
 
+/** 外链箭头。插件在 hast 阶段跑，用不了 Astro 组件，这里内联同规格的 SVG */
+function arrowUpRight() {
+  return element(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      width: 12,
+      height: 12,
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: 1.5,
+      "aria-hidden": "true",
+      style: "display:inline-block;vertical-align:-1px;margin-left:.25em",
+    },
+    [
+      element("path", { d: "M7 7h10v10" }),
+      element("path", { d: "M7 17 17 7" }),
+    ],
+  );
+}
+
 function githubCard(props) {
   const repo = String(props.repo || "").trim();
   if (!/^[a-z\d](?:[a-z\d-]{0,38})\/[\w.-]+$/i.test(repo)) return null;
@@ -145,7 +166,8 @@ function video(props, kind) {
       allow: "encrypted-media; fullscreen; picture-in-picture",
     }),
     link(url.href, { className: ["embed-video-source"] }, [
-      text(`在 ${title} 打开 ↗`),
+      text(`在 ${title} 打开`),
+      arrowUpRight(),
     ]),
   ]);
 }

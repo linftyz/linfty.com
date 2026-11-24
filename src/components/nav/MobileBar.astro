@@ -1,10 +1,12 @@
 ---
+import Menu from "@lucide/astro/icons/menu";
+import X from "@lucide/astro/icons/x";
+import logo from "@/assets/brand/logo.svg?raw";
 import { themeConfig } from "@/config";
 import ThemeToggle from "../layout/ThemeToggle.astro";
 
 const { site, nav } = themeConfig;
 const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/";
-
 const isCurrent = (href: string) => {
   const target = href.replace(/\/+$/, "") || "/";
   return target === "/" ? pathname === "/" : pathname.startsWith(target);
@@ -16,23 +18,48 @@ const isCurrent = (href: string) => {
   <div class="flex items-center justify-between gap-3 border-b border-border-soft bg-background/84 px-5 py-3.5 backdrop-blur-[10px]">
     <a
       href="/"
-      class="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-serif font-semibold tracking-[5px] text-heading"
+      class="flex min-w-0 flex-1 items-center gap-2.5 overflow-hidden"
     >
-      {site.title}
+      <!-- 移动端侧栏整体隐藏，logo 图形靠这里带出来 -->
+      <span
+        aria-hidden="true"
+        class="shrink-0 text-heading [&>svg]:h-auto [&>svg]:w-[34px]"
+      >
+        <Fragment set:html={logo} />
+      </span>
+      <span class="overflow-hidden text-ellipsis whitespace-nowrap font-serif font-semibold tracking-[5px] text-heading">
+        {site.title}
+      </span>
     </a>
     <div class="flex shrink-0 items-center gap-2">
       <ThemeToggle />
       <button
         type="button"
-        class="menu-toggle cursor-pointer border-0 bg-transparent p-2 text-[1.05rem] text-muted-foreground hover:text-accent"
+        class="menu-toggle inline-flex cursor-pointer items-center border-0 bg-transparent p-2 text-[1.05rem] text-muted-foreground hover:text-accent"
         aria-expanded="false"
         aria-controls="mobile-nav"
         aria-label="打开菜单"
       >
-        ☰
+        <Menu size={18} stroke-width={1.5} class="icon-menu" />
+        <X size={18} stroke-width={1.5} class="icon-close" />
       </button>
     </div>
   </div>
+
+  <style>
+    /* 两个图标常驻 DOM，靠状态切换显隐，避免点开时重建节点 */
+    .menu-toggle .icon-close {
+      display: none;
+    }
+
+    .menu-toggle[data-open="true"] .icon-menu {
+      display: none;
+    }
+
+    .menu-toggle[data-open="true"] .icon-close {
+      display: block;
+    }
+  </style>
 
   <nav
     id="mobile-nav"
@@ -63,6 +90,7 @@ const isCurrent = (href: string) => {
     button.addEventListener("click", () => {
       const open = panel.dataset.open !== "true";
       panel.dataset.open = String(open);
+      button.dataset.open = String(open);
       button.setAttribute("aria-expanded", String(open));
       button.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
     });
