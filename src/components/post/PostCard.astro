@@ -24,7 +24,7 @@ const {
 } = Astro.props;
 ---
 
-<li class="border-b border-dashed border-border-soft py-[23px] first:pt-0">
+<li class="group border-b border-dashed border-border-soft py-[23px] first:pt-0">
   <div
     class:list={[
       cover &&
@@ -76,12 +76,13 @@ const {
 
     {cover && (
       <div class="overflow-hidden rounded-md max-[561px]:order-first">
+        <!-- 悬停时封面轻微放大；group 挂在 li 上，整行都会触发 -->
         <img
           src={cover}
           alt={title}
           loading="lazy"
           decoding="async"
-          class="aspect-[16/10] w-full rounded-md border border-border-soft object-cover saturate-[.88]"
+          class="aspect-[16/10] w-full rounded-md border border-border-soft object-cover saturate-[.88] transition-transform duration-500 ease-out group-hover:scale-[1.03]"
         />
       </div>
     )}
