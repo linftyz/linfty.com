@@ -16,7 +16,13 @@ const posts = defineCollection({
     updated: z.coerce.date().optional(),
     category: reference("categories").optional(),
     tags: z.array(reference("tags")).default([]),
-    cover: z.string().url().optional(),
+    cover: z
+      .string()
+      .refine(
+        (v) => v.startsWith("/") || /^https?:\/\//.test(v),
+        "cover 必须是站内绝对路径（/cover/x.webp）或 http(s) URL",
+      )
+      .optional(),
     /** 只影响首页顺序，大的在前 */
     pin: z.number().default(0),
     draft: z.boolean().default(false),
